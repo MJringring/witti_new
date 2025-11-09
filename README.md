@@ -39,7 +39,32 @@
      - 🤝 신규교사 멘토링
      - 🎯 실천 프로젝트
 
-#### 5. **RESTful API**
+#### 5. **Tools 페이지 - AI 도구 허브**
+   - 교사를 위한 AI 도구 허브
+   - 일상 업무를 AI로 간편하게
+   - 주요 도구:
+     - 🤖 부모면담 요약기
+     - 📝 일일일지 자동작성
+     - 💗 감정일지 & 마음진단 (WITTI Care)
+     - 📊 성장 리포트 생성기
+     - 📁 나만의 템플릿 저장소
+
+#### 6. **MyWITTI 페이지 - 나의 성장 공간**
+   - 배움의 기록부터 성취까지
+   - 나의 활동:
+     - 📚 수강 중인 강의 관리
+     - ⭐ 저장한 콘텐츠
+     - 🌱 성장 트리 & 뱃지
+   - 나의 참여:
+     - 🎯 실천 프로젝트 관리
+     - 👥 멘토·멘티 매칭
+     - 🎓 나의 클래스 (개설자 전용)
+   - 프로필 관리:
+     - 👤 역량 및 관심 분야
+     - 📈 성장 리포트
+     - 🔔 맞춤형 알림 설정
+
+#### 7. **RESTful API**
    - `/api/hello` - API 상태 확인
    - `/api/insights` - 인사이트 데이터 JSON 제공
 
@@ -50,6 +75,8 @@
 | `/learn` | GET | Learn 페이지 - 실전형 교사 강의 |
 | `/story` | GET | Story 페이지 - 교사들의 이야기 |
 | `/talk` | GET | Talk 페이지 - 교사 커뮤니티 |
+| `/tools` | GET | Tools 페이지 - AI 도구 허브 |
+| `/mywitti` | GET | MyWITTI 페이지 - 나의 성장 공간 |
 | `/api/hello` | GET | API 상태 확인 (JSON) |
 | `/api/insights` | GET | 인사이트 목록 조회 (JSON) |
 | `/static/style.css` | GET | 스타일시트 |
@@ -57,32 +84,65 @@
 
 ## 🔜 향후 구현 예정 기능
 
+### Phase 1: 페이지 상세 기능 구현
+
 1. **Learn 섹션 확장**
+   - 강의 상세 페이지
    - 동영상 강의 플레이어
    - 강의 진도 관리
    - 수료증 발급
    - 댓글 및 Q&A
+   - 교사 개설형 클래스 (Class 101 모델)
 
 2. **Story 섹션 확장**
+   - 스토리 상세 페이지
    - 스토리 작성 및 편집 기능
    - 좋아요 및 댓글 시스템
    - 카테고리별 필터링
    - 인기/최신 정렬
+   - 북카페 연동: 도담서가 큐레이션
 
 3. **Talk 섹션 확장**
    - 게시판 CRUD 기능
    - 실시간 댓글
    - 태그 시스템
    - 검색 기능
+   - 밋업 / 오프라인 행사 등록
 
-4. **Tools 섹션 신규**
-   - AI 부모면담 요약 도구
-   - 학생 관찰 기록 템플릿
-   - 수업 준비 자동화 도구
+4. **Tools 섹션 기능 구현**
+   - 부모면담 요약기 실제 기능
+   - 일일일지 자동작성 기능
+   - 감정일지 & 마음진단 도구
+   - 성장 리포트 PDF 출력
+   - 템플릿 저장/불러오기
 
-5. **MyWITTI 섹션**
-   - 개인 대시보드
-   - 북마크 관리
+5. **MyWITTI 섹션 기능 구현**
+   - 개인 대시보드 데이터 연동
+   - 수강 관리 시스템
+   - 성장 트리 & 뱃지 시스템
+   - 멘토·멘티 매칭 알고리즘
+   - 프로필 편집 기능
+
+### Phase 2: 플랫폼 고도화
+
+6. **사용자 인증 시스템**
+   - 로그인/회원가입
+   - 개인화된 콘텐츠 추천
+
+7. **데이터베이스 연동**
+   - Cloudflare D1을 활용한 사용자 데이터 관리
+   - 인사이트 및 콘텐츠 동적 관리
+
+8. **AI 도구 통합**
+   - OpenAI API를 활용한 부모면담 요약 기능
+   - 실시간 커뮤니티: WebSocket 또는 Durable Objects 활용
+   - 모바일 앱: Progressive Web App (PWA) 변환
+
+9. **B2B / 기관 관리자 페이지**
+   - 기관별 교사 대시보드
+   - 구독 관리 / 결제
+   - 학습 리포트 / 데이터 통계
+   - 교사 참여 지표 / 피드백
    - 학습 기록 및 진행상황
 
 6. **사용자 인증 시스템**
@@ -114,6 +174,8 @@
 - **Learn 페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/learn
 - **Story 페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/story
 - **Talk 페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/talk
+- **Tools 페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/tools
+- **MyWITTI 페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/mywitti
 - **API Hello**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/api/hello
 - **API Insights**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/api/insights
 
@@ -234,13 +296,14 @@ webapp/
 3. **모바일 앱**: Progressive Web App (PWA) 변환
 
 ## 📊 배포 상태
-- **현재 상태**: ✅ 개발 환경 활성화 - 멀티 페이지 구현 완료
-- **구현된 페이지**: Home, Learn, Story, Talk (4개 페이지)
+- **현재 상태**: ✅ 개발 환경 활성화 - 전체 플랫폼 구조 완성
+- **구현된 페이지**: Home, Learn, Story, Talk, Tools, MyWITTI (6개 페이지)
 - **플랫폼**: Cloudflare Pages (배포 준비 완료)
 - **마지막 업데이트**: 2025-01-09
   - 디자인 테마 변경 (초록 → 오렌지)
-  - 멀티 페이지 라우팅 구현
+  - 6개 핵심 페이지 구현 완료
   - 네비게이션 active 상태 처리
+  - Tools & MyWITTI 섹션 추가
 
 ## 📝 라이선스
 © 2025 WITTI | All Rights Reserved

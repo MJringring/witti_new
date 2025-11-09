@@ -39,7 +39,7 @@ function displayInsight() {
     <h2>${insight.title}</h2>
     <div class="insight-quote">"${insight.quote}"</div>
     <p>${insight.message}</p>
-    <p style="text-align: right; color: #4caf50; font-weight: 600; margin-top: 1rem;">
+    <p style="text-align: right; color: #ff8566; font-weight: 600; margin-top: 1rem;">
       ${insight.author}
     </p>
   `;
@@ -116,6 +116,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Console welcome message
-console.log('%c🌿 WITTI Platform', 'color: #4caf50; font-size: 24px; font-weight: bold;');
+console.log('%c🌿 WITTI Platform', 'color: #ff8566; font-size: 24px; font-weight: bold;');
 console.log('%c교사의 하루를 덜어주고, 마음을 채워주는 플랫폼', 'color: #666; font-size: 14px;');
 console.log('%c© 2025 WITTI', 'color: #999; font-size: 12px;');

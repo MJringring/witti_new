@@ -348,7 +348,7 @@ app.get('/learn', (c) => {
         <p>5분만에 배우고, 내일 바로 써먹는 실전 콘텐츠</p>
         <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
           <button onclick="window.location.href='/learn#all'" style="background-color: #ff8566; border: none; color: white; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">전체 강좌 보기</button>
-          <button onclick="alert('선임교사만 클래스를 개설할 수 있습니다')" style="background-color: white; color: #ff8566; border: 2px solid #ff8566; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">내 클래스 개설하기</button>
+          <button onclick="alert('나의 성장트리 리더십 뱃지 보유시, 업로드 가능해요!')" style="background-color: white; color: #ff8566; border: 2px solid #ff8566; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">내 클래스 개설하기</button>
         </div>
       </section>
 

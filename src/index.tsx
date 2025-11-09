@@ -136,25 +136,25 @@ app.get('/', (c) => {
             <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🎓</div>
             <b>AI로 부모면담 정리하기</b><br>
             <small>⭐ 4.9 | 1,234명 수강</small><br>
-            <span style="color: #ff8566; font-size: 0.85rem; font-weight: 600;">김민지 선생님</span>
+            <span style="color: #FF6B6B; font-size: 0.85rem; font-weight: 600;">김민지 선생님</span>
           </div>
           <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
             <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">📋</div>
             <b>놀이일지 10분 완성법</b><br>
             <small>⭐ 4.8 | 892명 수강</small><br>
-            <span style="color: #ff8566; font-size: 0.85rem; font-weight: 600;">박수진 선생님</span>
+            <span style="color: #FF8566; font-size: 0.85rem; font-weight: 600;">박수진 선생님</span>
           </div>
           <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
             <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">💬</div>
             <b>감정케어 & 회복 클래스</b><br>
             <small>⭐ 5.0 | 567명 수강</small><br>
-            <span style="color: #ff8566; font-size: 0.85rem; font-weight: 600;">이지은 상담사</span>
+            <span style="color: #00C087; font-size: 0.85rem; font-weight: 600;">이지은 상담사</span>
           </div>
           <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
             <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🎯</div>
             <b>효과적인 부모 소통 전략</b><br>
             <small>⭐ 4.9 | 432명 수강</small><br>
-            <span style="color: #ff8566; font-size: 0.85rem; font-weight: 600;">정미영 전문가</span>
+            <span style="color: #9B59B6; font-size: 0.85rem; font-weight: 600;">정미영 전문가</span>
           </div>
         </div>
       </section>

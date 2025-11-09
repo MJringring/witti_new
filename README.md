@@ -9,12 +9,13 @@
 
 ### ✅ 현재 구현된 기능
 
-#### 1. **홈페이지 (Home)**
-   - 교사들을 위한 영감을 주는 명언 및 인사이트 제공
-   - 모달 창을 통한 인터랙티브한 인사이트 표시
-   - 랜덤으로 매번 다른 인사이트 제공
-   - 시간대에 따라 변하는 환영 메시지
-   - 추천 콘텐츠 카드
+#### 1. **홈페이지 (Home)** - 사용자 플로우 기반 리뉴얼
+   - **오늘의 AI 추천 인사이트** (3개 카드)
+   - **지금 인기 클래스** (평점 및 수강생 수 표시)
+   - **교사 인터뷰 하이라이트** (실제 교사 사례)
+   - **오늘의 질문** (공감 참여형 CTA) - "요즘 가장 힘든 순간은 언제인가요?"
+   - 234명 실시간 참여 표시
+   - 시작하기 버튼 (회원가입으로 연결)
 
 #### 2. **Learn 페이지 - 실전형 교사 강의**
    - "5분만에 배우고, 내일 바로 써먹는 실전 콘텐츠"
@@ -64,14 +65,30 @@
      - 📈 성장 리포트
      - 🔔 맞춤형 알림 설정
 
-#### 7. **RESTful API**
+#### 7. **회원가입/로그인 시스템**
+   - 이메일 기반 회원가입
+   - 직무 선택 (신입/주임/선임/원장/학생)
+   - 관심 키워드 선택 (놀이/상담/AI/성장/리더십/발달)
+   - 카카오 로그인 연동 준비
+   - 폼 유효성 검사
+
+#### 8. **온보딩 페이지**
+   - AI 맞춤 콘텐츠 3개 추천
+   - 직무별 맞춤형 제안
+   - 나만의 WITTI 루틴 시작
+   - 홈으로 부드러운 전환
+
+#### 9. **RESTful API**
    - `/api/hello` - API 상태 확인
    - `/api/insights` - 인사이트 데이터 JSON 제공
 
 ### 🚀 현재 기능 URI 요약
 | 엔드포인트 | 메서드 | 설명 |
 |-----------|--------|------|
-| `/` | GET | 메인 홈페이지 |
+| `/` | GET | 메인 홈페이지 (리뉴얼 - 사용자 플로우 기반) |
+| `/signup` | GET | 회원가입 페이지 |
+| `/login` | GET | 로그인 페이지 |
+| `/onboarding` | GET | 온보딩 페이지 (AI 맞춤 추천) |
 | `/learn` | GET | Learn 페이지 - 실전형 교사 강의 |
 | `/story` | GET | Story 페이지 - 교사들의 이야기 |
 | `/talk` | GET | Talk 페이지 - 교사 커뮤니티 |
@@ -170,12 +187,21 @@
 ## 🌐 URLs
 
 ### Development (Sandbox)
-- **홈페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai
-- **Learn 페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/learn
-- **Story 페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/story
-- **Talk 페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/talk
-- **Tools 페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/tools
-- **MyWITTI 페이지**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/mywitti
+
+**핵심 페이지:**
+- **홈페이지** (리뉴얼): https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai
+- **회원가입**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/signup
+- **로그인**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/login
+- **온보딩**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/onboarding
+
+**메인 섹션:**
+- **Learn**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/learn
+- **Story**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/story
+- **Talk**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/talk
+- **Tools**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/tools
+- **MyWITTI**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/mywitti
+
+**API:**
 - **API Hello**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/api/hello
 - **API Insights**: https://3000-inf87fujpavw034thos04-583b4d74.sandbox.novita.ai/api/insights
 
@@ -296,14 +322,15 @@ webapp/
 3. **모바일 앱**: Progressive Web App (PWA) 변환
 
 ## 📊 배포 상태
-- **현재 상태**: ✅ 개발 환경 활성화 - 전체 플랫폼 구조 완성
-- **구현된 페이지**: Home, Learn, Story, Talk, Tools, MyWITTI (6개 페이지)
+- **현재 상태**: ✅ 개발 환경 활성화 - 사용자 플로우 완성
+- **구현된 페이지**: 9개 페이지 (Home, Signup, Login, Onboarding + 6개 메인 섹션)
 - **플랫폼**: Cloudflare Pages (배포 준비 완료)
 - **마지막 업데이트**: 2025-01-09
-  - 디자인 테마 변경 (초록 → 오렌지)
-  - 6개 핵심 페이지 구현 완료
-  - 네비게이션 active 상태 처리
-  - Tools & MyWITTI 섹션 추가
+  - **사용자 플로우 구현**: 회원가입 → 온보딩 → 맞춤 추천
+  - 홈페이지 리뉴얼 (AI 추천, 인기 클래스, 인터뷰, 공감 CTA)
+  - 회원가입/로그인 시스템 (직무/관심사 선택)
+  - AI 맞춤 온보딩 페이지
+  - 6개 핵심 섹션 완성
 
 ## 📝 라이선스
 © 2025 WITTI | All Rights Reserved

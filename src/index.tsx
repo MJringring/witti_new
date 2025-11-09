@@ -61,116 +61,160 @@ app.get('/', (c) => {
     </head>
     <body>
 
-      <header>
-        <h1>🌿 WITTI</h1>
-        <nav>
-          <a href="/" class="active">Home</a>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;">
+        <h1 style="margin: 0;">🌿 WITTI</h1>
+        <nav style="display: flex; gap: 2rem; align-items: center;">
           <a href="/learn">Learn</a>
           <a href="/story">Story</a>
           <a href="/talk">Talk</a>
           <a href="/tools">Tools</a>
           <a href="/mywitti">MyWITTI</a>
+          <div style="display: flex; gap: 1rem; margin-left: 1rem;">
+            <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;">🔍</button>
+            <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;">
+              🔔
+              <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+            </button>
+          </div>
         </nav>
       </header>
 
       <section id="hero">
-        <h2>교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</h2>
-        <p>출근길 5분, 위트 있는 인사이트 한 컷.</p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
-          <button id="viewInsight" style="background-color: #ff8566;">오늘의 인사이트 보기</button>
-          <button onclick="window.location.href='/signup'" style="background-color: white; color: #ff8566; border: 2px solid #ff8566;">시작하기</button>
-        </div>
+        <h2 style="font-size: 2.8rem; margin-bottom: 1rem;">교사의 하루를 덜어주고, 마음을 채워주는 플랫폼.</h2>
+        <p style="font-size: 1.3rem; color: #666; margin-bottom: 2rem;">출근길 5분, 위트 있는 인사이트 한 컷.</p>
+        <button id="viewInsight" style="background-color: #ff8566; border: none; color: white; padding: 15px 40px; border-radius: 12px; font-size: 18px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);">
+          오늘의 인사이트 보기
+        </button>
       </section>
 
-      <!-- 오늘의 인사이트 섹션 -->
+      <!-- AI 추천 카드 영역 -->
       <section id="content">
-        <h3>🌟 오늘의 AI 추천 인사이트</h3>
+        <h3 style="text-align: center; margin-bottom: 1rem;">🎯 오늘의 추천 콘텐츠</h3>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem; font-size: 0.95rem;">AI가 김민지님을 위해 큐레이션한 콘텐츠</p>
         <div class="cards">
-          <div class="card" onclick="alert('인사이트 상세 페이지로 이동합니다')">
-            💡 <b>"완벽한 수업보다 완벽한 관심"</b><br>
-            <small>학생 한 명 한 명의 작은 변화를 알아차리는 것</small>
+          <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
+            <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; font-size: 3rem;">📖</div>
+            <span style="position: absolute; top: 10px; right: 10px; background: #ff8566; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">아티클</span>
+            <b>"첫 출근, 그리고 첫 눈물"</b><br>
+            <small style="color: #666;">신규 교사의 첫 한 달 이야기 | 10분 읽기</small>
           </div>
-          <div class="card" onclick="alert('인사이트 상세 페이지로 이동합니다')">
-            ❤️ <b>"교사를 위로하면 보육이 달라진다"</b><br>
-            <small>당신의 마음 건강이 최우선입니다</small>
+          <div class="card" onclick="window.location.href='/learn'" style="cursor: pointer; position: relative;">
+            <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🎬</div>
+            <span style="position: absolute; top: 10px; right: 10px; background: #ff8566; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">영상</span>
+            <b>"5분 완성 부모면담 준비"</b><br>
+            <small style="color: #666;">짧은 강의 | 5분 | 조회수 2.3K</small>
           </div>
-          <div class="card" onclick="alert('인사이트 상세 페이지로 이동합니다')">
-            🌱 <b>"작은 실천이 큰 변화를 만든다"</b><br>
-            <small>오늘부터 시작하는 긍정적 변화</small>
+          <div class="card" onclick="window.location.href='/learn'" style="cursor: pointer; position: relative;">
+            <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🎓</div>
+            <span style="position: absolute; top: 10px; right: 10px; background: #ff8566; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">클래스</span>
+            <b>"AI로 부모면담 정리하기"</b><br>
+            <small style="color: #666;">⭐ 4.9 | 1,234명 수강 중</small>
           </div>
         </div>
       </section>
 
-      <!-- 지금 인기 클래스 -->
+      <!-- 지금 인기 클래스 (가로 스크롤) -->
       <section id="content" style="background-color: #fff0e6; padding: 3rem 2rem; margin-top: 2rem;">
-        <h3>🔥 지금 인기 클래스</h3>
-        <div class="cards">
-          <div class="card" onclick="window.location.href='/learn'">
-            🎓 <b>AI로 부모면담 정리하기</b><br>
-            <small>⭐ 4.9 | 수강생 1,234명</small>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+          <h3 style="margin: 0;">🔥 지금 인기 클래스</h3>
+          <a href="/learn" style="color: #ff8566; text-decoration: none; font-weight: 600; font-size: 0.95rem;">전체보기 →</a>
+        </div>
+        <div style="display: flex; gap: 1.5rem; overflow-x: auto; padding-bottom: 1rem; scroll-behavior: smooth;">
+          <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
+            <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🎓</div>
+            <b>AI로 부모면담 정리하기</b><br>
+            <small>⭐ 4.9 | 1,234명 수강</small><br>
+            <span style="color: #ff8566; font-size: 0.85rem; font-weight: 600;">김민지 선생님</span>
           </div>
-          <div class="card" onclick="window.location.href='/learn'">
-            📋 <b>놀이일지 쉽게 작성하기</b><br>
-            <small>⭐ 4.8 | 수강생 892명</small>
+          <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
+            <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">📋</div>
+            <b>놀이일지 10분 완성법</b><br>
+            <small>⭐ 4.8 | 892명 수강</small><br>
+            <span style="color: #ff8566; font-size: 0.85rem; font-weight: 600;">박수진 선생님</span>
           </div>
-          <div class="card" onclick="window.location.href='/learn'">
-            💬 <b>감정케어 & 회복 클래스</b><br>
-            <small>⭐ 5.0 | 수강생 567명</small>
+          <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
+            <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">💬</div>
+            <b>감정케어 & 회복 클래스</b><br>
+            <small>⭐ 5.0 | 567명 수강</small><br>
+            <span style="color: #ff8566; font-size: 0.85rem; font-weight: 600;">이지은 상담사</span>
+          </div>
+          <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
+            <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🎯</div>
+            <b>효과적인 부모 소통 전략</b><br>
+            <small>⭐ 4.9 | 432명 수강</small><br>
+            <span style="color: #ff8566; font-size: 0.85rem; font-weight: 600;">정미영 전문가</span>
           </div>
         </div>
       </section>
 
-      <!-- 교사 인터뷰 하이라이트 -->
-      <section id="content">
-        <h3>🎤 교사 인터뷰 하이라이트</h3>
+      <!-- 교사 인터뷰 (짧은 영상형 썸네일) -->
+      <section id="content" style="background: #fff0e6; padding: 3rem 2rem; margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+          <h3 style="margin: 0;">🎤 교사 인터뷰</h3>
+          <a href="/story" style="color: #ff8566; text-decoration: none; font-weight: 600; font-size: 0.95rem;">전체보기 →</a>
+        </div>
         <div class="cards">
-          <div class="card" onclick="window.location.href='/story'">
-            📖 <b>"첫 출근, 그리고 첫 눈물"</b><br>
-            <small>신규 교사 김민지 선생님의 이야기</small>
+          <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
+            <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; position: relative;">
+              <div style="font-size: 3rem;">🎬</div>
+              <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">05:23</div>
+            </div>
+            <b>"첫 출근, 그리고 첫 눈물"</b><br>
+            <small style="color: #666;">신규 교사 김민지 | 조회수 3.2K</small>
           </div>
-          <div class="card" onclick="window.location.href='/story'">
-            💝 <b>"아이의 작은 변화가 준 감동"</b><br>
-            <small>10년차 박수진 선생님의 경험담</small>
+          <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
+            <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; position: relative;">
+              <div style="font-size: 3rem;">🎬</div>
+              <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">07:45</div>
+            </div>
+            <b>"아이의 작은 변화가 준 감동"</b><br>
+            <small style="color: #666;">10년차 박수진 | 조회수 5.1K</small>
           </div>
-          <div class="card" onclick="window.location.href='/story'">
-            🌈 <b>"번아웃에서 회복까지"</b><br>
-            <small>다시 교사로 살아가기</small>
+          <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
+            <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; position: relative;">
+              <div style="font-size: 3rem;">🎬</div>
+              <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">06:12</div>
+            </div>
+            <b>"번아웃에서 회복까지"</b><br>
+            <small style="color: #666;">선임교사 이지은 | 조회수 4.7K</small>
           </div>
         </div>
       </section>
 
-      <!-- 커뮤니티 최신글 -->
+      <!-- 공감 많이 받은 이야기 (커뮤니티 Top3) -->
       <section id="content">
-        <h3>💬 커뮤니티 최신글</h3>
-        <div class="cards">
-          <div class="card" onclick="window.location.href='/talk'">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
-              <b>"신규교사인데 부모님과 대화가 너무 어려워요"</b>
-              <span style="color: #ff8566; font-size: 0.8rem;">NEW</span>
-            </div>
-            <small style="color: #666;">김민지 | 댓글 12개 | 5분 전</small><br>
-            <span style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; display: block;">첫 면담이 다가오는데 어떻게 준비해야 할지...</span>
-          </div>
-          <div class="card" onclick="window.location.href='/talk'">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
-              <b>"요즘 번아웃이 심한데 어떻게 극복하셨나요?"</b>
-              <span style="color: #ff8566; font-size: 0.8rem;">HOT</span>
-            </div>
-            <small style="color: #666;">박수진 | 댓글 34개 | 1시간 전</small><br>
-            <span style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; display: block;">5년차인데 최근 들어 힘이 드네요...</span>
-          </div>
-          <div class="card" onclick="window.location.href='/talk'">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
-              <b>"AI 도구 사용해보신 분 계신가요?"</b>
-            </div>
-            <small style="color: #666;">이지은 | 댓글 23개 | 2시간 전</small><br>
-            <span style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; display: block;">부모면담 요약기 정말 유용한가요?</span>
-          </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+          <h3 style="margin: 0;">❤️ 공감 많이 받은 이야기</h3>
+          <a href="/talk" style="color: #ff8566; text-decoration: none; font-weight: 600; font-size: 0.95rem;">더보기 →</a>
         </div>
-        <div style="text-align: center; margin-top: 2rem;">
-          <button onclick="window.location.href='/talk'" style="background: white; color: #ff8566; border: 2px solid #ff8566; padding: 10px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">
-            커뮤니티 전체 보기
-          </button>
+        <div class="cards">
+          <div class="card" onclick="window.location.href='/talk'" style="cursor: pointer;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
+              <span style="background: #ff8566; color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">1위</span>
+              <span style="color: #ff8566; font-size: 1.2rem;">❤️ 234</span>
+            </div>
+            <b>"신규교사인데 부모님과 대화가 너무 어려워요"</b><br>
+            <small style="color: #666;">김민지 | 댓글 45개</small><br>
+            <p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; line-height: 1.5;">첫 면담이 다가오는데 어떻게 준비해야 할지 막막합니다. 선배님들의 조언 부탁드려요...</p>
+          </div>
+          <div class="card" onclick="window.location.href='/talk'" style="cursor: pointer;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
+              <span style="background: #ffb396; color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">2위</span>
+              <span style="color: #ff8566; font-size: 1.2rem;">❤️ 189</span>
+            </div>
+            <b>"요즘 번아웃이 심한데 어떻게 극복하셨나요?"</b><br>
+            <small style="color: #666;">박수진 | 댓글 67개</small><br>
+            <p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; line-height: 1.5;">5년차인데 최근 들어 힘이 드네요. 같은 경험 하신 분들 계신가요?</p>
+          </div>
+          <div class="card" onclick="window.location.href='/talk'" style="cursor: pointer;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
+              <span style="background: #ffc9b8; color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">3위</span>
+              <span style="color: #ff8566; font-size: 1.2rem;">❤️ 156</span>
+            </div>
+            <b>"작은 칭찬 하나가 아이를 변화시켰어요"</b><br>
+            <small style="color: #666;">이지은 | 댓글 34개</small><br>
+            <p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; line-height: 1.5;">6개월 동안 말이 없던 아이가 오늘 처음으로 웃었어요. 정말 감동이에요...</p>
+          </div>
         </div>
       </section>
 
@@ -200,8 +244,45 @@ app.get('/', (c) => {
         </div>
       </div>
 
-      <footer>
-        <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+      <!-- 푸터 특별 섹션 -->
+      <section id="content" style="background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); padding: 3rem 2rem; margin-top: 3rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto;">
+          <!-- 도담서가 큐레이션 -->
+          <div style="text-align: center;">
+            <h4 style="color: #ff8566; margin-bottom: 1rem;">📚 도담서가 큐레이션</h4>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">교사를 위한 추천 도서</p>
+            <button onclick="window.location.href='/story'" style="background: white; color: #ff8566; border: 2px solid #ff8566; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+              책 추천 보기
+            </button>
+          </div>
+
+          <!-- 뉴스레터 구독 -->
+          <div style="text-align: center;">
+            <h4 style="color: #ff8566; margin-bottom: 1rem;">📬 뉴스레터 구독</h4>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">매주 화요일 인사이트 받기</p>
+            <button onclick="alert('뉴스레터 구독 페이지로 이동합니다')" style="background: #ff8566; color: white; border: none; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+              무료 구독하기
+            </button>
+          </div>
+
+          <!-- 카카오 채널 -->
+          <div style="text-align: center;">
+            <h4 style="color: #ff8566; margin-bottom: 1rem;">💬 카카오 채널</h4>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">실시간 알림 받기</p>
+            <button onclick="alert('카카오 채널 추가 페이지로 이동합니다')" style="background: #FEE500; color: #000; border: none; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+              채널 추가하기
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <footer style="background: #2e2e2e; color: white; text-align: center; padding: 2rem;">
+        <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+        <p style="color: #999; font-size: 0.85rem;">
+          <a href="#" style="color: #999; text-decoration: none; margin: 0 0.5rem;">이용약관</a> |
+          <a href="#" style="color: #999; text-decoration: none; margin: 0 0.5rem;">개인정보처리방침</a> |
+          <a href="#" style="color: #999; text-decoration: none; margin: 0 0.5rem;">문의하기</a>
+        </p>
       </footer>
 
       <script src="/static/script.js"></script>
@@ -224,36 +305,40 @@ app.get('/learn', (c) => {
     </head>
     <body>
 
-      <header>
-        <h1>🌿 WITTI</h1>
-        <nav>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;">
+        <h1 style="margin: 0;">🌿 WITTI</h1>
+        <nav style="display: flex; gap: 2rem; align-items: center;">
           <a href="/">Home</a>
           <a href="/learn" class="active">Learn</a>
           <a href="/story">Story</a>
           <a href="/talk">Talk</a>
           <a href="/tools">Tools</a>
           <a href="/mywitti">MyWITTI</a>
+          <div style="display: flex; gap: 1rem; margin-left: 1rem;">
+            <button onclick="alert('검색 기능')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;">🔍</button>
+            <button onclick="alert('알림')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;">🔔</button>
+          </div>
         </nav>
       </header>
 
-      <section id="hero">
+      <section id="hero" style="padding: 60px 20px;">
         <h2>실전에서 바로 쓰는 교사 강의</h2>
         <p>5분만에 배우고, 내일 바로 써먹는 실전 콘텐츠</p>
         <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
-          <button onclick="window.location.href='/learn/classes'" style="background-color: #ff8566; border: none; color: white; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">전체 강좌 보기</button>
+          <button onclick="window.location.href='/learn#all'" style="background-color: #ff8566; border: none; color: white; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">전체 강좌 보기</button>
           <button onclick="alert('선임교사만 클래스를 개설할 수 있습니다')" style="background-color: white; color: #ff8566; border: 2px solid #ff8566; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">내 클래스 개설하기</button>
         </div>
       </section>
 
-      <!-- 강좌 카테고리 -->
-      <section id="content">
-        <h3>📚 카테고리별 강좌</h3>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
-          <button onclick="alert('전체 강좌를 보여드립니다')" style="padding: 10px 20px; background: #fff0e6; border: none; border-radius: 20px; cursor: pointer; font-weight: 600;">전체</button>
-          <button onclick="alert('AI 도구 강좌')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer;">AI 도구</button>
-          <button onclick="alert('부모상담 강좌')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer;">부모상담</button>
-          <button onclick="alert('놀이기록 강좌')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer;">놀이기록</button>
-          <button onclick="alert('리더십 강좌')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer;">리더십</button>
+      <!-- 상단 카테고리 탭 -->
+      <section style="background: white; padding: 1.5rem 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+          <button onclick="alert('전체 콘텐츠')" style="padding: 10px 20px; background: #ff8566; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600;">🔹 All</button>
+          <button onclick="alert('부모상담')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500;">부모상담</button>
+          <button onclick="alert('놀이기록')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500;">놀이기록</button>
+          <button onclick="alert('AI활용')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500;">AI활용</button>
+          <button onclick="alert('감정관리')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500;">감정관리</button>
+          <button onclick="alert('커리어')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500;">커리어</button>
         </div>
       </section>
 
@@ -279,44 +364,138 @@ app.get('/learn', (c) => {
         </div>
       </section>
 
-      <!-- 5분 짧은 강의 -->
+      <!-- 5분 강의 모음 (썸네일+재생버튼) -->
       <section id="content" style="background: #fff0e6; padding: 3rem 2rem; margin-top: 2rem;">
-        <h3>⚡ 5분 짧은 강의</h3>
+        <h3>⚡ 5분 강의 모음</h3>
         <p style="text-align: center; color: #666; margin-bottom: 2rem;">출퇴근 시간에 가볍게 듣는 미니 강좌</p>
         <div class="cards">
-          <div class="card" onclick="alert('5분 영상 재생')">
-            🎬 <b>부모님과의 첫 만남 준비</b><br>
-            <small>5분 | 조회수 2.3K</small>
+          <div class="card" onclick="alert('영상 재생')" style="position: relative; cursor: pointer;">
+            <div style="background: #ffe9d6; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; position: relative;">
+              <span style="font-size: 3rem;">▶️</span>
+            </div>
+            <b>부모님과의 첫 만남 준비</b><br>
+            <small>5분 | 조회수 2.3K | 김민지 선생님</small>
           </div>
-          <div class="card" onclick="alert('5분 영상 재생')">
-            🎬 <b>아이의 칭찬 받는 법</b><br>
-            <small>5분 | 조회수 1.8K</small>
+          <div class="card" onclick="alert('영상 재생')" style="position: relative; cursor: pointer;">
+            <div style="background: #ffe9d6; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              <span style="font-size: 3rem;">▶️</span>
+            </div>
+            <b>아이 칭찬하는 효과적인 방법</b><br>
+            <small>5분 | 조회수 1.8K | 박수진 선생님</small>
           </div>
-          <div class="card" onclick="alert('5분 영상 재생')">
-            🎬 <b>스트레스 해소 3가지 팁</b><br>
-            <small>5분 | 조회수 3.1K</small>
+          <div class="card" onclick="alert('영상 재생')" style="position: relative; cursor: pointer;">
+            <div style="background: #ffe9d6; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              <span style="font-size: 3rem;">▶️</span>
+            </div>
+            <b>스트레스 해소 3가지 팁</b><br>
+            <small>5분 | 조회수 3.1K | 이지은 상담사</small>
           </div>
         </div>
       </section>
 
-      <!-- 세미나 & 실습 -->
+      <!-- 실무 꿀팁 리포트 (텍스트 카드형) -->
       <section id="content">
-        <h3>🎯 세미나 & 실습 워크샵</h3>
+        <h3>📄 실무 꿀팁 리포트</h3>
         <div class="cards">
-          <div class="card" onclick="alert('세미나 상세 정보')">
-            📅 <b>AI 활용 교사 워크샵</b><br>
-            <small>2025.02.15 | 온라인 LIVE | 선착순 50명</small><br>
-            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">신청하기</button>
+          <div class="card" onclick="alert('리포트 다운로드')">
+            📊 <b>2025 부모면담 체크리스트</b><br>
+            <small>PDF 다운로드 | 567회</small><br>
+            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
           </div>
-          <div class="card" onclick="alert('세미나 상세 정보')">
-            📅 <b>부모상담 실전 세미나</b><br>
-            <small>2025.02.22 | 오프라인 | 잠실 WITTI 센터</small><br>
-            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">신청하기</button>
+          <div class="card" onclick="alert('리포트 다운로드')">
+            📝 <b>놀이일지 작성 가이드</b><br>
+            <small>PDF 다운로드 | 892회</small><br>
+            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
           </div>
-          <div class="card" onclick="alert('세미나 상세 정보')">
-            📅 <b>신규교사 오리엔테이션</b><br>
-            <small>2025.03.01 | 온라인 | 무료</small><br>
-            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">신청하기</button>
+          <div class="card" onclick="alert('리포트 다운로드')">
+            💡 <b>AI 도구 활용 매뉴얼</b><br>
+            <small>PDF 다운로드 | 1.2K회</small><br>
+            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 세미나/웨비나 일정 (캘린더형 블록) -->
+      <section id="content" style="background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); padding: 3rem 2rem; margin-top: 2rem;">
+        <h3>📅 세미나/웨비나 일정</h3>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">실시간으로 소통하는 교육 프로그램</p>
+        <div class="cards">
+          <div class="card" style="background: white;">
+            <div style="background: #ff8566; color: white; padding: 8px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px; text-align: center; font-weight: 600;">
+              2월 15일 (토) 14:00
+            </div>
+            <b>AI 활용 교사 워크샵</b><br>
+            <small>온라인 LIVE | 선착순 50명 | 무료</small><br>
+            <button style="margin-top: 0.5rem; padding: 8px 20px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; width: 100%;">신청하기</button>
+          </div>
+          <div class="card" style="background: white;">
+            <div style="background: #ff8566; color: white; padding: 8px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px; text-align: center; font-weight: 600;">
+              2월 22일 (토) 10:00
+            </div>
+            <b>부모상담 실전 세미나</b><br>
+            <small>오프라인 | 잠실 WITTI 센터 | 3만원</small><br>
+            <button style="margin-top: 0.5rem; padding: 8px 20px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; width: 100%;">신청하기</button>
+          </div>
+          <div class="card" style="background: white;">
+            <div style="background: #ff8566; color: white; padding: 8px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px; text-align: center; font-weight: 600;">
+              3월 1일 (토) 15:00
+            </div>
+            <b>신규교사 오리엔테이션</b><br>
+            <small>온라인 | 신규교사 대상 | 무료</small><br>
+            <button style="margin-top: 0.5rem; padding: 8px 20px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; width: 100%;">신청하기</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 교사 개설형 클래스 -->
+      <section id="content">
+        <h3>👩‍🏫 선생님이 직접 가르치는 수업</h3>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">현장 경험이 담긴 실전 클래스</p>
+        <div class="cards">
+          <div class="card" onclick="alert('클래스 상세보기')">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+              <div style="width: 50px; height: 50px; background: #ffe9d6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👩</div>
+              <div style="text-align: left;">
+                <b>김민지 선생님</b><br>
+                <small style="color: #999;">10년차 | 주임교사</small>
+              </div>
+            </div>
+            <b>AI로 부모면담 100% 활용하기</b><br>
+            <small>⭐ 4.9 (234개 리뷰) | 1,234명 수강</small><br>
+            <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 1.2rem; color: #ff8566; font-weight: 600;">₩29,000</span>
+              <button style="padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer;">수강하기</button>
+            </div>
+          </div>
+          <div class="card" onclick="alert('클래스 상세보기')">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+              <div style="width: 50px; height: 50px; background: #ffe9d6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👨</div>
+              <div style="text-align: left;">
+                <b>박수진 선생님</b><br>
+                <small style="color: #999;">15년차 | 선임교사</small>
+              </div>
+            </div>
+            <b>놀이관찰 & 기록의 모든 것</b><br>
+            <small>⭐ 5.0 (189개 리뷰) | 892명 수강</small><br>
+            <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 1.2rem; color: #ff8566; font-weight: 600;">₩35,000</span>
+              <button style="padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer;">수강하기</button>
+            </div>
+          </div>
+          <div class="card" onclick="alert('클래스 상세보기')">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+              <div style="width: 50px; height: 50px; background: #ffe9d6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👩</div>
+              <div style="text-align: left;">
+                <b>이지은 상담사</b><br>
+                <small style="color: #999;">20년차 | 전문상담사</small>
+              </div>
+            </div>
+            <b>교사 마음케어 프로그램</b><br>
+            <small>⭐ 5.0 (312개 리뷰) | 567명 수강</small><br>
+            <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 1.2rem; color: #ff8566; font-weight: 600;">₩25,000</span>
+              <button style="padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer;">수강하기</button>
+            </div>
           </div>
         </div>
       </section>

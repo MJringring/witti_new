@@ -80,9 +80,9 @@ app.get('/', (c) => {
       </header>
 
       <section id="hero">
-        <h2 style="font-size: 2.8rem; margin-bottom: 1rem;">교사의 하루를 덜어주고, 마음을 채워주는 플랫폼.</h2>
-        <p style="font-size: 1.3rem; color: #666; margin-bottom: 2rem;">출근길 5분, 위트 있는 인사이트 한 컷.</p>
-        <button id="viewInsight" style="background-color: #ff8566; border: none; color: white; padding: 15px 40px; border-radius: 12px; font-size: 18px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);">
+        <h2>선생님을 위한 5분의 여유</h2>
+        <p>WITTI로 하루를 시작하세요</p>
+        <button id="viewInsight">
           오늘의 인사이트 보기
         </button>
       </section>

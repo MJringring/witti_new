@@ -30,13 +30,17 @@ document.addEventListener('DOMContentLoaded', function() {
 function updateGreeting() {
   const hour = new Date().getHours();
   const heroText = document.querySelector('#hero h2');
+  const heroSubtext = document.querySelector('#hero p');
   
   if (hour < 12) {
-    heroText.innerHTML = '☀️ 좋은 아침입니다, 선생님!<br>교사의 하루를 덜어주고, 마음을 채워주는 플랫폼';
+    heroText.innerHTML = '선생님을 위한 5분의 여유';
+    heroSubtext.innerHTML = 'WITTI로 하루를 시작하세요';
   } else if (hour < 18) {
-    heroText.innerHTML = '🌤️ 오늘도 수고하셨습니다, 선생님!<br>교사의 하루를 덜어주고, 마음을 채워주는 플랫폼';
+    heroText.innerHTML = '바쁜 하루의 쉼표';
+    heroSubtext.innerHTML = 'WITTI가 함께합니다';
   } else {
-    heroText.innerHTML = '🌙 하루를 마무리하며...<br>교사의 하루를 덜어주고, 마음을 채워주는 플랫폼';
+    heroText.innerHTML = '오늘 하루도 고생 많으셨어요.';
+    heroSubtext.innerHTML = '내일의 나를 위한 시간, WITTI와 함께!';
   }
 }
 

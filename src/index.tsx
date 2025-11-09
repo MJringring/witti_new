@@ -122,16 +122,6 @@ app.get('/', (c) => {
             </div>
             <div class="card-instructor instructor-lee">이지은 상담사</div>
           </div>
-          <div class="card" onclick="window.location.href='/learn'">
-            <div class="card-icon">🎯</div>
-            <div class="card-title">학급 운영 꿀팁 모음</div>
-            <div class="card-meta">
-              <span class="card-rating">⭐ 4.7</span>
-              <span class="card-students">643명 수강</span>
-              <span class="card-duration">18분</span>
-            </div>
-            <div class="card-instructor instructor-jung">정수아 선생님</div>
-          </div>
         </div>
       </section>
 

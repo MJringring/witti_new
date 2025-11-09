@@ -68,6 +68,8 @@ app.get('/', (c) => {
           <a href="/learn">Learn</a>
           <a href="/story">Story</a>
           <a href="/talk">Talk</a>
+          <a href="/tools">Tools</a>
+          <a href="/mywitti">MyWITTI</a>
         </nav>
       </header>
 
@@ -127,6 +129,8 @@ app.get('/learn', (c) => {
           <a href="/learn" class="active">Learn</a>
           <a href="/story">Story</a>
           <a href="/talk">Talk</a>
+          <a href="/tools">Tools</a>
+          <a href="/mywitti">MyWITTI</a>
         </nav>
       </header>
 
@@ -183,6 +187,8 @@ app.get('/story', (c) => {
           <a href="/learn">Learn</a>
           <a href="/story" class="active">Story</a>
           <a href="/talk">Talk</a>
+          <a href="/tools">Tools</a>
+          <a href="/mywitti">MyWITTI</a>
         </nav>
       </header>
 
@@ -239,6 +245,8 @@ app.get('/talk', (c) => {
           <a href="/learn">Learn</a>
           <a href="/story">Story</a>
           <a href="/talk" class="active">Talk</a>
+          <a href="/tools">Tools</a>
+          <a href="/mywitti">MyWITTI</a>
         </nav>
       </header>
 
@@ -261,6 +269,170 @@ app.get('/talk', (c) => {
           <div class="card">
             🎯 <b>실천 프로젝트</b><br>
             <small>함께 성장하는 챌린지</small>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+      </footer>
+
+    </body>
+    </html>
+  `)
+})
+
+// Tools page route
+app.get('/tools', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>WITTI Tools - AI 도구 허브</title>
+      <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+
+      <header>
+        <h1>🌿 WITTI</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/learn">Learn</a>
+          <a href="/story">Story</a>
+          <a href="/talk">Talk</a>
+          <a href="/tools" class="active">Tools</a>
+          <a href="/mywitti">MyWITTI</a>
+        </nav>
+      </header>
+
+      <section id="hero">
+        <h2>교사를 위한 AI 도구 허브</h2>
+        <p>일상 업무를 AI로 간편하게, 나만의 시간을 되찾으세요</p>
+      </section>
+
+      <section id="content">
+        <h3>인기 도구</h3>
+        <div class="cards">
+          <div class="card">
+            🤖 <b>부모면담 요약기</b><br>
+            <small>AI가 자동으로 요약해주는 면담 기록</small>
+          </div>
+          <div class="card">
+            📝 <b>일일일지 자동작성</b><br>
+            <small>오늘의 활동을 빠르게 기록</small>
+          </div>
+          <div class="card">
+            💗 <b>감정일지 & 마음진단</b><br>
+            <small>WITTI Care로 마음 건강 체크</small>
+          </div>
+        </div>
+        
+        <h3 style="margin-top: 3rem;">더 많은 도구</h3>
+        <div class="cards">
+          <div class="card">
+            📊 <b>성장 리포트 생성기</b><br>
+            <small>아이 발달 리포트 PDF 출력</small>
+          </div>
+          <div class="card">
+            📁 <b>나만의 템플릿 저장소</b><br>
+            <small>자주 쓰는 문서 템플릿 관리</small>
+          </div>
+          <div class="card">
+            ⚙️ <b>맞춤형 도구 개발 중</b><br>
+            <small>교사들의 제안으로 만들어집니다</small>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p>© 2025 WITTI | AI로 더 스마트하게, 더 따뜻하게</p>
+      </footer>
+
+    </body>
+    </html>
+  `)
+})
+
+// MyWITTI page route
+app.get('/mywitti', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>MyWITTI - 나의 성장 공간</title>
+      <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+
+      <header>
+        <h1>🌿 WITTI</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/learn">Learn</a>
+          <a href="/story">Story</a>
+          <a href="/talk">Talk</a>
+          <a href="/tools">Tools</a>
+          <a href="/mywitti" class="active">MyWITTI</a>
+        </nav>
+      </header>
+
+      <section id="hero">
+        <h2>나만의 성장 공간</h2>
+        <p>배움의 기록부터 성취까지, 당신의 성장을 응원합니다</p>
+      </section>
+
+      <section id="content">
+        <h3>나의 활동</h3>
+        <div class="cards">
+          <div class="card">
+            📚 <b>수강 중인 강의</b><br>
+            <small>진행 중: 3개 | 완료: 12개</small>
+          </div>
+          <div class="card">
+            ⭐ <b>저장한 콘텐츠</b><br>
+            <small>Story 5개 | 도구 3개</small>
+          </div>
+          <div class="card">
+            🌱 <b>성장 트리</b><br>
+            <small>획득한 뱃지: 8개</small>
+          </div>
+        </div>
+        
+        <h3 style="margin-top: 3rem;">나의 참여</h3>
+        <div class="cards">
+          <div class="card">
+            🎯 <b>실천 프로젝트</b><br>
+            <small>참여 중인 프로젝트 관리</small>
+          </div>
+          <div class="card">
+            👥 <b>멘토·멘티 매칭</b><br>
+            <small>AI 기반 추천 시스템</small>
+          </div>
+          <div class="card">
+            🎓 <b>나의 클래스</b><br>
+            <small>내가 개설한 강의 (곧 오픈)</small>
+          </div>
+        </div>
+        
+        <h3 style="margin-top: 3rem;">프로필 관리</h3>
+        <div class="cards">
+          <div class="card">
+            👤 <b>프로필 설정</b><br>
+            <small>역량 및 관심 분야 관리</small>
+          </div>
+          <div class="card">
+            📈 <b>나의 성장 리포트</b><br>
+            <small>학습 패턴 및 성취도 분석</small>
+          </div>
+          <div class="card">
+            🔔 <b>알림 설정</b><br>
+            <small>맞춤형 추천 알림 관리</small>
           </div>
         </div>
       </section>

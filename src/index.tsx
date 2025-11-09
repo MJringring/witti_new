@@ -2324,7 +2324,7 @@ app.get('/tools', (c) => {
   `)
 })
 
-// MyWITTI page route
+// MyWITTI page route - Personal dashboard with profile, stats, and growth tree
 app.get('/mywitti', (c) => {
   return c.html(`
     <!DOCTYPE html>
@@ -2335,6 +2335,356 @@ app.get('/mywitti', (c) => {
       <title>MyWITTI - 나의 성장 공간</title>
       <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
       <link rel="stylesheet" href="/static/style.css">
+      <style>
+        .dashboard-container {
+          max-width: 1200px;
+          margin: 2rem auto;
+          padding: 0 2rem;
+        }
+        
+        .profile-section {
+          background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
+          border-radius: 20px;
+          padding: 2.5rem;
+          margin-bottom: 2rem;
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .profile-avatar {
+          width: 120px;
+          height: 120px;
+          background: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 4rem;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          flex-shrink: 0;
+        }
+        
+        .profile-info {
+          flex: 1;
+        }
+        
+        .profile-name {
+          font-size: 2rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+        
+        .profile-role {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 1rem;
+        }
+        
+        .profile-level {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: white;
+          padding: 10px 20px;
+          border-radius: 25px;
+          font-weight: 700;
+          color: #ff8566;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .profile-level-icon {
+          font-size: 1.5rem;
+        }
+        
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+          margin-bottom: 3rem;
+        }
+        
+        @media (max-width: 968px) {
+          .profile-section {
+            flex-direction: column;
+            text-align: center;
+          }
+          
+          .stats-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        .stat-card {
+          background: white;
+          border-radius: 16px;
+          padding: 2rem;
+          text-align: center;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          border: 3px solid transparent;
+        }
+        
+        .stat-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+          border-color: #ff8566;
+        }
+        
+        .stat-number {
+          font-size: 3rem;
+          font-weight: 700;
+          color: #ff8566;
+          margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+          font-size: 1.1rem;
+          color: #666;
+          font-weight: 600;
+        }
+        
+        .section-title {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 1.5rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        
+        .growth-tree {
+          background: white;
+          border-radius: 20px;
+          padding: 3rem;
+          margin-bottom: 3rem;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .tree-branches {
+          display: flex;
+          justify-content: space-around;
+          align-items: flex-end;
+          height: 300px;
+          position: relative;
+        }
+        
+        .tree-branch {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        
+        .tree-branch:hover {
+          transform: scale(1.05);
+        }
+        
+        .branch-nodes {
+          display: flex;
+          flex-direction: column-reverse;
+          gap: 1rem;
+          align-items: center;
+        }
+        
+        .tree-node {
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.8rem;
+          position: relative;
+          border: 3px solid #ff8566;
+          box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
+        }
+        
+        .tree-node.locked {
+          background: #f0f0f0;
+          border-color: #ccc;
+          opacity: 0.5;
+        }
+        
+        .tree-node.locked::after {
+          content: '🔒';
+          position: absolute;
+          font-size: 1.2rem;
+        }
+        
+        .branch-label {
+          margin-top: 1rem;
+          font-weight: 700;
+          color: #333;
+          text-align: center;
+        }
+        
+        .class-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+          margin-bottom: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+          .class-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        .class-card {
+          background: white;
+          border-radius: 16px;
+          padding: 2rem;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          transition: all 0.3s ease;
+        }
+        
+        .class-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .class-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 1rem;
+        }
+        
+        .class-title {
+          font-size: 1.3rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+        
+        .class-status {
+          padding: 6px 12px;
+          border-radius: 12px;
+          font-size: 0.85rem;
+          font-weight: 600;
+        }
+        
+        .class-status.active {
+          background: #fff0e6;
+          color: #ff8566;
+        }
+        
+        .class-status.completed {
+          background: #e8f5e9;
+          color: #4caf50;
+        }
+        
+        .class-progress {
+          margin-top: 1rem;
+        }
+        
+        .progress-bar {
+          width: 100%;
+          height: 8px;
+          background: #f0f0f0;
+          border-radius: 4px;
+          overflow: hidden;
+        }
+        
+        .progress-fill {
+          height: 100%;
+          background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%);
+          transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+          margin-top: 0.5rem;
+          font-size: 0.9rem;
+          color: #999;
+        }
+        
+        .mentor-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+        }
+        
+        @media (max-width: 968px) {
+          .mentor-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        .mentor-card {
+          background: white;
+          border-radius: 16px;
+          padding: 2rem;
+          text-align: center;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          transition: all 0.3s ease;
+        }
+        
+        .mentor-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .mentor-avatar {
+          width: 80px;
+          height: 80px;
+          background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2.5rem;
+          margin: 0 auto 1rem;
+        }
+        
+        .mentor-name {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+        
+        .mentor-role {
+          font-size: 0.9rem;
+          color: #666;
+          margin-bottom: 1rem;
+        }
+        
+        .mentor-match {
+          background: #fff0e6;
+          color: #ff8566;
+          padding: 6px 12px;
+          border-radius: 12px;
+          font-size: 0.85rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+          display: inline-block;
+        }
+        
+        .mentor-btn {
+          width: 100%;
+          padding: 12px;
+          background: #ff8566;
+          color: white;
+          border: none;
+          border-radius: 10px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+        
+        .mentor-btn:hover {
+          background: #ff9f80;
+          transform: translateY(-2px);
+        }
+      </style>
     </head>
     <body>
 
@@ -2355,57 +2705,199 @@ app.get('/mywitti', (c) => {
         <p>배움의 기록부터 성취까지, 당신의 성장을 응원합니다</p>
       </section>
 
-      <section id="content">
-        <h3>나의 활동</h3>
-        <div class="cards">
-          <div class="card">
-            📚 <b>수강 중인 강의</b><br>
-            <small>진행 중: 3개 | 완료: 12개</small>
-          </div>
-          <div class="card">
-            ⭐ <b>저장한 콘텐츠</b><br>
-            <small>Story 5개 | 도구 3개</small>
-          </div>
-          <div class="card">
-            🌱 <b>성장 트리</b><br>
-            <small>획득한 뱃지: 8개</small>
+      <div class="dashboard-container">
+        <!-- Profile Section -->
+        <div class="profile-section">
+          <div class="profile-avatar">👩‍🏫</div>
+          <div class="profile-info">
+            <div class="profile-name">김민지 선생님</div>
+            <div class="profile-role">유치원 교사 · 3년차</div>
+            <div class="profile-level">
+              <span class="profile-level-icon">⭐</span>
+              <span>Lv.3 주임교사</span>
+            </div>
           </div>
         </div>
-        
-        <h3 style="margin-top: 3rem;">나의 참여</h3>
-        <div class="cards">
-          <div class="card">
-            🎯 <b>실천 프로젝트</b><br>
-            <small>참여 중인 프로젝트 관리</small>
-          </div>
-          <div class="card">
-            👥 <b>멘토·멘티 매칭</b><br>
-            <small>AI 기반 추천 시스템</small>
-          </div>
-          <div class="card">
-            🎓 <b>나의 클래스</b><br>
-            <small>내가 개설한 강의 (곧 오픈)</small>
-          </div>
-        </div>
-        
-        <h3 style="margin-top: 3rem;">프로필 관리</h3>
-        <div class="cards">
-          <div class="card">
-            👤 <b>프로필 설정</b><br>
-            <small>역량 및 관심 분야 관리</small>
-          </div>
-          <div class="card">
-            📈 <b>나의 성장 리포트</b><br>
-            <small>학습 패턴 및 성취도 분석</small>
-          </div>
-          <div class="card">
-            🔔 <b>알림 설정</b><br>
-            <small>맞춤형 추천 알림 관리</small>
-          </div>
-        </div>
-      </section>
 
-      <footer>
+        <!-- Activity Summary Stats -->
+        <div class="stats-grid">
+          <div class="stat-card" onclick="alert('수강 강의 목록')">
+            <div class="stat-number">12</div>
+            <div class="stat-label">수강한 강의</div>
+          </div>
+
+          <div class="stat-card" onclick="alert('공감한 이야기')">
+            <div class="stat-number">37</div>
+            <div class="stat-label">공감한 이야기</div>
+          </div>
+
+          <div class="stat-card" onclick="alert('획득한 뱃지')">
+            <div class="stat-number">5</div>
+            <div class="stat-label">획득한 뱃지</div>
+          </div>
+        </div>
+
+        <!-- Growth Tree -->
+        <div class="growth-tree">
+          <div class="section-title">
+            <span>🌳</span>
+            <span>나의 성장 트리</span>
+          </div>
+          <div class="tree-branches">
+            <div class="tree-branch" onclick="alert('부모상담 브랜치')">
+              <div class="branch-nodes">
+                <div class="tree-node">🤝</div>
+                <div class="tree-node">💬</div>
+                <div class="tree-node locked"></div>
+              </div>
+              <div class="branch-label">부모상담</div>
+            </div>
+
+            <div class="tree-branch" onclick="alert('놀이지도 브랜치')">
+              <div class="branch-nodes">
+                <div class="tree-node">🎨</div>
+                <div class="tree-node">🎭</div>
+                <div class="tree-node">🎪</div>
+              </div>
+              <div class="branch-label">놀이지도</div>
+            </div>
+
+            <div class="tree-branch" onclick="alert('AI 활용 브랜치')">
+              <div class="branch-nodes">
+                <div class="tree-node">🤖</div>
+                <div class="tree-node locked"></div>
+                <div class="tree-node locked"></div>
+              </div>
+              <div class="branch-label">AI 활용</div>
+            </div>
+
+            <div class="tree-branch" onclick="alert('감정케어 브랜치')">
+              <div class="branch-nodes">
+                <div class="tree-node">💗</div>
+                <div class="tree-node">🧘</div>
+                <div class="tree-node locked"></div>
+              </div>
+              <div class="branch-label">감정케어</div>
+            </div>
+
+            <div class="tree-branch" onclick="alert('리더십 브랜치')">
+              <div class="branch-nodes">
+                <div class="tree-node">👑</div>
+                <div class="tree-node locked"></div>
+                <div class="tree-node locked"></div>
+              </div>
+              <div class="branch-label">리더십</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Classes Management -->
+        <div class="section-title">
+          <span>🎓</span>
+          <span>나의 클래스 관리</span>
+        </div>
+        <div class="class-grid">
+          <div class="class-card">
+            <div class="class-header">
+              <div>
+                <div class="class-title">AI로 부모면담 정리하기</div>
+                <div style="color: #999; font-size: 0.9rem;">수강 중</div>
+              </div>
+              <div class="class-status active">진행중</div>
+            </div>
+            <div class="class-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 65%;"></div>
+              </div>
+              <div class="progress-text">65% 완료 (13/20 강의)</div>
+            </div>
+          </div>
+
+          <div class="class-card">
+            <div class="class-header">
+              <div>
+                <div class="class-title">놀이일지 쉽게 작성하기</div>
+                <div style="color: #999; font-size: 0.9rem;">수강 완료</div>
+              </div>
+              <div class="class-status completed">완료</div>
+            </div>
+            <div class="class-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%;"></div>
+              </div>
+              <div class="progress-text">100% 완료 (15/15 강의)</div>
+            </div>
+          </div>
+
+          <div class="class-card">
+            <div class="class-header">
+              <div>
+                <div class="class-title">부모상담 개선 실험</div>
+                <div style="color: #999; font-size: 0.9rem;">참여 프로젝트</div>
+              </div>
+              <div class="class-status active">참여중</div>
+            </div>
+            <div style="margin-top: 1rem; color: #666; font-size: 0.95rem;">
+              👥 4명과 함께 · 4주 프로젝트 2주차
+            </div>
+          </div>
+
+          <div class="class-card">
+            <div class="class-header">
+              <div>
+                <div class="class-title">감정케어 & 회복 클래스</div>
+                <div style="color: #999; font-size: 0.9rem;">수강 예정</div>
+              </div>
+              <div class="class-status" style="background: #f0f0f0; color: #999;">예정</div>
+            </div>
+            <div style="margin-top: 1rem; color: #666; font-size: 0.95rem;">
+              📅 2025년 2월 1일 시작
+            </div>
+          </div>
+        </div>
+
+        <!-- Mentoring Section -->
+        <div class="section-title">
+          <span>🤝</span>
+          <span>AI 추천 멘토</span>
+        </div>
+        <div class="mentor-grid">
+          <div class="mentor-card">
+            <div class="mentor-avatar">👨‍🏫</div>
+            <div class="mentor-name">이준호 선생님</div>
+            <div class="mentor-role">초등학교 교사 · 7년차</div>
+            <div class="mentor-match">매칭도 92%</div>
+            <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
+              부모상담 · AI활용 전문
+            </div>
+            <button class="mentor-btn" onclick="alert('멘토 신청')">멘토 신청하기</button>
+          </div>
+
+          <div class="mentor-card">
+            <div class="mentor-avatar">👩‍🏫</div>
+            <div class="mentor-name">박수진 선생님</div>
+            <div class="mentor-role">중학교 교사 · 10년차</div>
+            <div class="mentor-match">매칭도 88%</div>
+            <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
+              감정케어 · 리더십 전문
+            </div>
+            <button class="mentor-btn" onclick="alert('멘토 신청')">멘토 신청하기</button>
+          </div>
+
+          <div class="mentor-card">
+            <div class="mentor-avatar">👨‍🏫</div>
+            <div class="mentor-name">최민수 선생님</div>
+            <div class="mentor-role">유치원 원장 · 15년차</div>
+            <div class="mentor-match">매칭도 85%</div>
+            <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
+              놀이지도 · 학급운영 전문
+            </div>
+            <button class="mentor-btn" onclick="alert('멘토 신청')">멘토 신청하기</button>
+          </div>
+        </div>
+      </div>
+
+      <footer style="margin-top: 4rem;">
         <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
       </footer>
 

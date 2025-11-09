@@ -940,7 +940,7 @@ app.get('/story', (c) => {
   `)
 })
 
-// Talk page route
+// Talk page route - Tabbed community with Feed, Projects, Meetups, Suggestions
 app.get('/talk', (c) => {
   return c.html(`
     <!DOCTYPE html>
@@ -951,6 +951,339 @@ app.get('/talk', (c) => {
       <title>WITTI Talk - 교사 커뮤니티</title>
       <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
       <link rel="stylesheet" href="/static/style.css">
+      <style>
+        .tab-content {
+          max-width: 1200px;
+          margin: 2rem auto;
+          padding: 0 2rem;
+        }
+        
+        .feed-card {
+          background: white;
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          transition: all 0.3s ease;
+        }
+        
+        .feed-card:hover {
+          box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        
+        .feed-header {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+        
+        .feed-avatar {
+          width: 50px;
+          height: 50px;
+          background: #ffe9d6;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+        }
+        
+        .feed-user-info h4 {
+          margin: 0;
+          font-size: 1rem;
+          color: #333;
+        }
+        
+        .feed-user-info p {
+          margin: 0;
+          font-size: 0.85rem;
+          color: #999;
+        }
+        
+        .feed-content {
+          font-size: 1rem;
+          line-height: 1.6;
+          color: #555;
+          margin-bottom: 1rem;
+        }
+        
+        .feed-actions {
+          display: flex;
+          gap: 1.5rem;
+          padding-top: 1rem;
+          border-top: 1px solid #f0f0f0;
+        }
+        
+        .feed-action-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 0.9rem;
+          color: #666;
+          transition: color 0.2s;
+        }
+        
+        .feed-action-btn:hover {
+          color: #ff8566;
+        }
+        
+        .feed-action-btn.active {
+          color: #ff8566;
+          font-weight: 600;
+        }
+        
+        .project-card {
+          background: white;
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          border-left: 4px solid #ff8566;
+        }
+        
+        .project-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 1rem;
+        }
+        
+        .project-title {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+        
+        .project-badge {
+          background: #fff0e6;
+          color: #ff8566;
+          padding: 4px 12px;
+          border-radius: 12px;
+          font-size: 0.8rem;
+          font-weight: 600;
+        }
+        
+        .project-desc {
+          color: #666;
+          line-height: 1.6;
+          margin-bottom: 1rem;
+        }
+        
+        .project-meta {
+          display: flex;
+          gap: 2rem;
+          margin-bottom: 1rem;
+          font-size: 0.9rem;
+          color: #999;
+        }
+        
+        .project-members {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        
+        .project-join-btn {
+          background: #ff8566;
+          color: white;
+          border: none;
+          padding: 10px 24px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: all 0.2s;
+        }
+        
+        .project-join-btn:hover {
+          background: #ff9f80;
+          transform: translateY(-2px);
+        }
+        
+        .meetup-card {
+          background: white;
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          display: flex;
+          gap: 1.5rem;
+        }
+        
+        .meetup-date {
+          min-width: 80px;
+          text-align: center;
+          background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
+          border-radius: 8px;
+          padding: 1rem;
+        }
+        
+        .meetup-month {
+          font-size: 0.85rem;
+          color: #ff8566;
+          font-weight: 600;
+        }
+        
+        .meetup-day {
+          font-size: 2rem;
+          font-weight: 700;
+          color: #333;
+        }
+        
+        .meetup-info {
+          flex: 1;
+        }
+        
+        .meetup-title {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+        
+        .meetup-location {
+          color: #666;
+          margin-bottom: 0.5rem;
+        }
+        
+        .meetup-attendees {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #999;
+          font-size: 0.9rem;
+          margin-bottom: 1rem;
+        }
+        
+        .meetup-btn-group {
+          display: flex;
+          gap: 1rem;
+        }
+        
+        .meetup-btn {
+          padding: 8px 20px;
+          border-radius: 8px;
+          border: none;
+          cursor: pointer;
+          font-weight: 600;
+          transition: all 0.2s;
+        }
+        
+        .meetup-btn.primary {
+          background: #ff8566;
+          color: white;
+        }
+        
+        .meetup-btn.primary:hover {
+          background: #ff9f80;
+        }
+        
+        .meetup-btn.secondary {
+          background: white;
+          color: #ff8566;
+          border: 2px solid #ff8566;
+        }
+        
+        .meetup-btn.secondary:hover {
+          background: #fff0e6;
+        }
+        
+        .suggestion-card {
+          background: white;
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .suggestion-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+        }
+        
+        .suggestion-vote {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.25rem;
+          min-width: 60px;
+        }
+        
+        .vote-btn {
+          background: white;
+          border: 2px solid #ffe9d6;
+          border-radius: 8px;
+          padding: 8px 16px;
+          cursor: pointer;
+          font-size: 1.2rem;
+          transition: all 0.2s;
+        }
+        
+        .vote-btn:hover {
+          background: #fff0e6;
+          border-color: #ff8566;
+        }
+        
+        .vote-count {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #ff8566;
+        }
+        
+        .suggestion-content {
+          flex: 1;
+        }
+        
+        .suggestion-title {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+        
+        .suggestion-desc {
+          color: #666;
+          line-height: 1.6;
+        }
+        
+        .create-post-btn {
+          position: fixed;
+          right: 2rem;
+          bottom: 2rem;
+          width: 60px;
+          height: 60px;
+          background: #ff8566;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          font-size: 1.5rem;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(255, 133, 102, 0.4);
+          transition: all 0.3s;
+          z-index: 100;
+        }
+        
+        .create-post-btn:hover {
+          transform: scale(1.1);
+          box-shadow: 0 6px 16px rgba(255, 133, 102, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+          .meetup-card {
+            flex-direction: column;
+          }
+          
+          .meetup-date {
+            min-width: auto;
+          }
+        }
+      </style>
     </head>
     <body>
 
@@ -971,27 +1304,379 @@ app.get('/talk', (c) => {
         <p>고민 상담부터 경험 공유까지, 혼자가 아닙니다</p>
       </section>
 
-      <section id="content">
-        <h3>인기 토픽</h3>
-        <div class="cards">
-          <div class="card">
-            💬 <b>부모 상담 노하우</b><br>
-            <small>98개의 댓글</small>
-          </div>
-          <div class="card">
-            🤝 <b>신규교사 멘토링</b><br>
-            <small>실전 경험 공유 중</small>
-          </div>
-          <div class="card">
-            🎯 <b>실천 프로젝트</b><br>
-            <small>함께 성장하는 챌린지</small>
-          </div>
+      <!-- Tab Navigation -->
+      <section style="background: white; padding: 1.5rem 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+          <button onclick="switchTab('feed')" id="tab-feed" style="padding: 10px 20px; background: #ff8566; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.2s;">🔹 공감 피드</button>
+          <button onclick="switchTab('projects')" id="tab-projects" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">실천 프로젝트</button>
+          <button onclick="switchTab('meetups')" id="tab-meetups" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">밋업</button>
+          <button onclick="switchTab('suggestions')" id="tab-suggestions" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">제안</button>
         </div>
       </section>
+
+      <!-- Feed Tab Content -->
+      <div id="content-feed" class="tab-content">
+        <div class="feed-card">
+          <div class="feed-header">
+            <div class="feed-avatar">👩</div>
+            <div class="feed-user-info">
+              <h4>김민지 선생님</h4>
+              <p>유치원 교사 · 3년차 · 5분 전</p>
+            </div>
+          </div>
+          <div class="feed-content">
+            오늘 아이들과 산책을 하는데, 한 아이가 갑자기 제 손을 꼭 잡고 "선생님 좋아해요"라고 하더라고요. 
+            요즘 힘든 일이 많았는데 그 한마디에 다 녹아버렸어요. 이래서 교사를 계속하는구나 싶었습니다 💕
+          </div>
+          <div class="feed-actions">
+            <button class="feed-action-btn active">
+              <span>❤️</span>
+              <span>공감 234</span>
+            </button>
+            <button class="feed-action-btn">
+              <span>💬</span>
+              <span>댓글 45</span>
+            </button>
+            <button class="feed-action-btn">
+              <span>🔔</span>
+              <span>팔로우</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="feed-card">
+          <div class="feed-header">
+            <div class="feed-avatar">👨</div>
+            <div class="feed-user-info">
+              <h4>이준호 선생님</h4>
+              <p>초등학교 교사 · 7년차 · 1시간 전</p>
+            </div>
+          </div>
+          <div class="feed-content">
+            부모상담 준비하면서 너무 긴장됐는데, WITTI에서 배운 대로 했더니 생각보다 잘 풀렸어요!
+            특히 "아이의 강점을 먼저 말하기" 팁이 정말 유용했습니다. 학부모님도 좋아하셨어요 🙏
+          </div>
+          <div class="feed-actions">
+            <button class="feed-action-btn">
+              <span>❤️</span>
+              <span>공감 156</span>
+            </button>
+            <button class="feed-action-btn">
+              <span>💬</span>
+              <span>댓글 28</span>
+            </button>
+            <button class="feed-action-btn">
+              <span>🔔</span>
+              <span>팔로우</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="feed-card">
+          <div class="feed-header">
+            <div class="feed-avatar">👩</div>
+            <div class="feed-user-info">
+              <h4>박수진 선생님</h4>
+              <p>중학교 교사 · 10년차 · 3시간 전</p>
+            </div>
+          </div>
+          <div class="feed-content">
+            오늘 한 학생이 지난번에 제가 조언해줬던 걸 실천해서 시험을 잘 봤다고 고맙다고 하더라고요.
+            교사로서 정말 보람찬 순간이었습니다. 작은 관심이 큰 변화를 만들 수 있다는 걸 다시 느꼈어요 ✨
+          </div>
+          <div class="feed-actions">
+            <button class="feed-action-btn">
+              <span>❤️</span>
+              <span>공감 312</span>
+            </button>
+            <button class="feed-action-btn">
+              <span>💬</span>
+              <span>댓글 67</span>
+            </button>
+            <button class="feed-action-btn">
+              <span>🔔</span>
+              <span>팔로우</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projects Tab Content -->
+      <div id="content-projects" class="tab-content" style="display: none;">
+        <div class="project-card">
+          <div class="project-header">
+            <div>
+              <div class="project-title">부모상담 개선 실험</div>
+              <div class="project-badge">모집 중 · 4/6명</div>
+            </div>
+          </div>
+          <div class="project-desc">
+            부모상담을 더 효과적으로 진행하기 위한 다양한 방법을 실험하고 공유합니다. 
+            AI 도구 활용, 대화 기법, 사전 준비 등을 함께 연구합니다.
+          </div>
+          <div class="project-meta">
+            <div class="project-members">
+              <span>👥</span>
+              <span>4명 참여 중</span>
+            </div>
+            <div>
+              <span>📅</span>
+              <span>4주 프로젝트</span>
+            </div>
+            <div>
+              <span>🎯</span>
+              <span>주 1회 온라인 모임</span>
+            </div>
+          </div>
+          <button class="project-join-btn" onclick="alert('프로젝트 참가 신청')">프로젝트 참가하기</button>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div>
+              <div class="project-title">교실 놀이연구회</div>
+              <div class="project-badge">진행 중 · 6/6명</div>
+            </div>
+          </div>
+          <div class="project-desc">
+            아이들과 함께 할 수 있는 창의적인 놀이를 연구하고 개발합니다. 
+            매주 새로운 놀이를 시도하고 그 결과를 공유하며 개선해나갑니다.
+          </div>
+          <div class="project-meta">
+            <div class="project-members">
+              <span>👥</span>
+              <span>6명 참여 중</span>
+            </div>
+            <div>
+              <span>📅</span>
+              <span>8주 프로젝트</span>
+            </div>
+            <div>
+              <span>🎯</span>
+              <span>주 1회 실습 + 공유</span>
+            </div>
+          </div>
+          <button class="project-join-btn" style="background: #ccc; cursor: not-allowed;" disabled>모집 완료</button>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div>
+              <div class="project-title">AI 도구 마스터 챌린지</div>
+              <div class="project-badge">모집 중 · 2/6명</div>
+            </div>
+          </div>
+          <div class="project-desc">
+            교사 업무에 도움이 되는 AI 도구들을 하나씩 배우고 실제로 활용해봅니다. 
+            ChatGPT, Notion AI, Canva 등 실용적인 도구를 함께 공부합니다.
+          </div>
+          <div class="project-meta">
+            <div class="project-members">
+              <span>👥</span>
+              <span>2명 참여 중</span>
+            </div>
+            <div>
+              <span>📅</span>
+              <span>6주 프로젝트</span>
+            </div>
+            <div>
+              <span>🎯</span>
+              <span>주 2회 온라인 실습</span>
+            </div>
+          </div>
+          <button class="project-join-btn" onclick="alert('프로젝트 참가 신청')">프로젝트 참가하기</button>
+        </div>
+      </div>
+
+      <!-- Meetups Tab Content -->
+      <div id="content-meetups" class="tab-content" style="display: none;">
+        <div class="meetup-card">
+          <div class="meetup-date">
+            <div class="meetup-month">2월</div>
+            <div class="meetup-day">15</div>
+          </div>
+          <div class="meetup-info">
+            <div class="meetup-title">서울 교사 네트워킹 모임</div>
+            <div class="meetup-location">📍 서울 강남구 · 카페 라운지</div>
+            <div class="meetup-attendees">
+              <span>👥</span>
+              <span>23명 참석 예정</span>
+            </div>
+            <div class="meetup-btn-group">
+              <button class="meetup-btn primary" onclick="alert('참가 신청')">참가 신청</button>
+              <button class="meetup-btn secondary" onclick="alert('알림 설정')">🔔 알림 받기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="meetup-card">
+          <div class="meetup-date">
+            <div class="meetup-month">2월</div>
+            <div class="meetup-day">22</div>
+          </div>
+          <div class="meetup-info">
+            <div class="meetup-title">부산 신규교사 멘토링 데이</div>
+            <div class="meetup-location">📍 부산 해운대구 · 커뮤니티 센터</div>
+            <div class="meetup-attendees">
+              <span>👥</span>
+              <span>15명 참석 예정</span>
+            </div>
+            <div class="meetup-btn-group">
+              <button class="meetup-btn primary" onclick="alert('참가 신청')">참가 신청</button>
+              <button class="meetup-btn secondary" onclick="alert('알림 설정')">🔔 알림 받기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="meetup-card">
+          <div class="meetup-date">
+            <div class="meetup-month">3월</div>
+            <div class="meetup-day">08</div>
+          </div>
+          <div class="meetup-info">
+            <div class="meetup-title">대전 AI 교육 도구 워크샵</div>
+            <div class="meetup-location">📍 대전 유성구 · 교육청 연수원</div>
+            <div class="meetup-attendees">
+              <span>👥</span>
+              <span>8명 참석 예정</span>
+            </div>
+            <div class="meetup-btn-group">
+              <button class="meetup-btn primary" onclick="alert('참가 신청')">참가 신청</button>
+              <button class="meetup-btn secondary" onclick="alert('알림 설정')">🔔 알림 받기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="meetup-card">
+          <div class="meetup-date">
+            <div class="meetup-month">3월</div>
+            <div class="meetup-day">20</div>
+          </div>
+          <div class="meetup-info">
+            <div class="meetup-title">온라인 교사 북클럽 - 도담서가</div>
+            <div class="meetup-location">📍 온라인 Zoom · 저녁 8시</div>
+            <div class="meetup-attendees">
+              <span>👥</span>
+              <span>34명 참석 예정</span>
+            </div>
+            <div class="meetup-btn-group">
+              <button class="meetup-btn primary" onclick="alert('참가 신청')">참가 신청</button>
+              <button class="meetup-btn secondary" onclick="alert('알림 설정')">🔔 알림 받기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Suggestions Tab Content -->
+      <div id="content-suggestions" class="tab-content" style="display: none;">
+        <div class="suggestion-card">
+          <div class="suggestion-header">
+            <div class="suggestion-content">
+              <div class="suggestion-title">학급 경영 노하우 시리즈 콘텐츠</div>
+              <div class="suggestion-desc">
+                신규 교사들을 위한 학급 경영 실전 가이드가 있으면 좋겠어요. 
+                첫 담임을 맡았을 때 어떻게 시작해야 할지 막막했던 기억이 나네요.
+              </div>
+              <div style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">
+                제안자: 이수진 선생님 · 2일 전
+              </div>
+            </div>
+            <div class="suggestion-vote">
+              <button class="vote-btn" onclick="alert('추천하기')">👍</button>
+              <div class="vote-count">156</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="suggestion-card">
+          <div class="suggestion-header">
+            <div class="suggestion-content">
+              <div class="suggestion-title">학부모 소통 메시지 템플릿 모음</div>
+              <div class="suggestion-desc">
+                다양한 상황별로 학부모님께 보낼 수 있는 메시지 템플릿이 있으면 유용할 것 같아요. 
+                특히 민감한 상황에서 어떻게 말을 꺼내야 할지 어려울 때가 많거든요.
+              </div>
+              <div style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">
+                제안자: 박준호 선생님 · 5일 전
+              </div>
+            </div>
+            <div class="suggestion-vote">
+              <button class="vote-btn" onclick="alert('추천하기')">👍</button>
+              <div class="vote-count">203</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="suggestion-card">
+          <div class="suggestion-header">
+            <div class="suggestion-content">
+              <div class="suggestion-title">교사 자기계발 북리스트</div>
+              <div class="suggestion-desc">
+                교사로서 성장하는 데 도움이 되는 책들을 주제별로 정리한 큐레이션이 있으면 좋겠습니다. 
+                교육 철학, 심리학, 자기계발 등 다양한 카테고리로 나눠서요.
+              </div>
+              <div style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">
+                제안자: 최민지 선생님 · 1주일 전
+              </div>
+            </div>
+            <div class="suggestion-vote">
+              <button class="vote-btn" onclick="alert('추천하기')">👍</button>
+              <div class="vote-count">89</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="suggestion-card">
+          <div class="suggestion-header">
+            <div class="suggestion-content">
+              <div class="suggestion-title">지역별 교사 모임 정보 공유</div>
+              <div class="suggestion-desc">
+                각 지역에서 열리는 교사 모임이나 스터디 정보를 한눈에 볼 수 있는 게시판이 있으면 좋을 것 같아요. 
+                지역 선생님들과 네트워킹할 기회가 많아질 것 같습니다.
+              </div>
+              <div style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">
+                제안자: 강혜진 선생님 · 2주일 전
+              </div>
+            </div>
+            <div class="suggestion-vote">
+              <button class="vote-btn" onclick="alert('추천하기')">👍</button>
+              <div class="vote-count">124</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Create Post Button -->
+      <button class="create-post-btn" onclick="alert('글쓰기 (로그인 필요)')" title="글쓰기">✏️</button>
 
       <footer>
         <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
       </footer>
+
+      <script>
+        function switchTab(tabName) {
+          // Hide all tab contents
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.style.display = 'none';
+          });
+          
+          // Reset all tab buttons
+          document.querySelectorAll('[id^="tab-"]').forEach(btn => {
+            btn.style.background = 'white';
+            btn.style.color = '#333';
+            btn.style.border = '2px solid #ffe9d6';
+          });
+          
+          // Show selected tab content
+          document.getElementById('content-' + tabName).style.display = 'block';
+          
+          // Highlight active tab button
+          const activeBtn = document.getElementById('tab-' + tabName);
+          activeBtn.style.background = '#ff8566';
+          activeBtn.style.color = 'white';
+          activeBtn.style.border = 'none';
+        }
+      </script>
 
     </body>
     </html>

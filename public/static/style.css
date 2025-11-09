@@ -6,7 +6,7 @@
 
 body {
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
-  background-color: #FFF5E9;
+  background-color: #FAFAFA;
   margin: 0;
   padding: 0;
   color: #333333;
@@ -14,70 +14,96 @@ body {
 }
 
 header {
-  background-color: #FFF5E9;
-  padding: 15px;
+  background-color: #FFFFFF;
+  padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 header h1 {
   margin: 0;
   color: #FF8566;
-  font-size: 2rem;
+  font-size: 1.75rem;
+  font-weight: 700;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  letter-spacing: -0.02em;
 }
 
 nav {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 nav a {
-  margin: 0 10px;
+  margin: 0;
   text-decoration: none;
   color: #333333;
   font-weight: 600;
-  transition: color 0.3s ease;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  padding: 0.5rem 0;
+  border-radius: 0;
+  position: relative;
 }
 
 nav a:hover {
   color: #FF8566;
-  background-color: rgba(255, 133, 102, 0.1);
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #FF8566;
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+  width: 100%;
 }
 
 nav a.active {
   color: #FF8566;
-  text-decoration: underline;
+  font-weight: 700;
+}
+
+nav a.active::after {
+  width: 100%;
 }
 
 #hero {
   text-align: center;
-  padding: 80px 20px;
-  background: #FFF5E9;
+  padding: 100px 20px;
+  background: #FFFFFF;
 }
 
 #hero h2 {
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
   font-weight: 700;
-  font-size: 36px;
-  color: #333333;
-  margin-bottom: 1rem;
+  font-size: 42px;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
   line-height: 1.3;
+  letter-spacing: -0.02em;
 }
 
 #hero p {
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  color: #333333;
-  margin-bottom: 2rem;
+  font-weight: 400;
+  font-size: 18px;
+  color: #666666;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
 }
 
 #hero button,
@@ -85,21 +111,22 @@ nav a.active {
   background-color: #FF8566;
   border: none;
   color: #FFFFFF;
-  padding: 15px 40px;
-  border-radius: 12px;
+  padding: 16px 48px;
+  border-radius: 8px;
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(255, 133, 102, 0.25);
+  letter-spacing: -0.01em;
 }
 
 #hero button:hover,
 #viewInsight:hover {
-  background-color: #FF9F80;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 133, 102, 0.4);
+  background-color: #FF6F4D;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 133, 102, 0.35);
 }
 
 #hero button:active,
@@ -109,9 +136,10 @@ nav a.active {
 
 #content {
   text-align: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
   max-width: 1200px;
   margin: 0 auto;
+  background: #FAFAFA;
 }
 
 #content h3 {
@@ -129,34 +157,37 @@ nav a.active {
 
 .card {
   background-color: #FFFFFF;
-  border-radius: 15px;
-  padding: 20px;
-  width: 200px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 30px 24px;
+  width: 220px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
   font-weight: 500;
   font-size: 16px;
   color: #333333;
-  transition: transform 0.2s;
+  transition: all 0.2s ease;
   cursor: pointer;
   text-align: center;
   line-height: 1.8;
 }
 
 .card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: rgba(255, 133, 102, 0.3);
 }
 
 footer {
   text-align: center;
-  background-color: #FFF5E9;
-  padding: 20px;
-  margin-top: 40px;
-  color: #A9B7A2;
+  background-color: #FFFFFF;
+  padding: 40px 20px;
+  margin-top: 60px;
+  color: #999999;
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
   font-weight: 400;
   font-size: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 /* Modal Styles */

@@ -509,7 +509,7 @@ app.get('/learn', (c) => {
   `)
 })
 
-// Story page route
+// Story page route - Redesigned with filters, 3-column grid, and newsletter
 app.get('/story', (c) => {
   return c.html(`
     <!DOCTYPE html>
@@ -520,6 +520,151 @@ app.get('/story', (c) => {
       <title>WITTI Story - 교사들의 이야기</title>
       <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
       <link rel="stylesheet" href="/static/style.css">
+      <style>
+        .story-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 2rem;
+        }
+        
+        @media (max-width: 968px) {
+          .story-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        
+        @media (max-width: 640px) {
+          .story-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        .story-card {
+          background: white;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+        }
+        
+        .story-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+        
+        .story-thumbnail {
+          width: 100%;
+          height: 200px;
+          background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 3rem;
+          position: relative;
+        }
+        
+        .ai-badge {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          background: #ff8566;
+          color: white;
+          padding: 4px 12px;
+          border-radius: 12px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        
+        .story-content {
+          padding: 1.5rem;
+        }
+        
+        .story-title {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.75rem;
+          line-height: 1.4;
+        }
+        
+        .story-summary {
+          font-size: 0.9rem;
+          color: #666;
+          line-height: 1.6;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          margin-bottom: 1rem;
+        }
+        
+        .story-meta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 0.85rem;
+          color: #999;
+        }
+        
+        .newsletter-section {
+          background: linear-gradient(135deg, #fff0e6 0%, #ffe9d6 100%);
+          padding: 4rem 2rem;
+          margin-top: 3rem;
+          text-align: center;
+        }
+        
+        .newsletter-content {
+          max-width: 600px;
+          margin: 0 auto;
+        }
+        
+        .newsletter-title {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 1rem;
+        }
+        
+        .newsletter-desc {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 2rem;
+          line-height: 1.6;
+        }
+        
+        .kakao-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: #FEE500;
+          color: #000;
+          padding: 1rem 2rem;
+          border-radius: 12px;
+          font-size: 1.1rem;
+          font-weight: 700;
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s;
+          box-shadow: 0 4px 12px rgba(254, 229, 0, 0.3);
+        }
+        
+        .kakao-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(254, 229, 0, 0.4);
+        }
+        
+        .subscriber-count {
+          margin-top: 1.5rem;
+          font-size: 0.95rem;
+          color: #999;
+        }
+      </style>
     </head>
     <body>
 
@@ -540,94 +685,255 @@ app.get('/story', (c) => {
         <p>교사들의 진솔한 이야기와 공감의 공간</p>
       </section>
 
-      <!-- 교사 인터뷰 -->
-      <section id="content">
-        <h3>🎤 교사 인터뷰</h3>
-        <div class="cards">
-          <div class="card" onclick="alert('인터뷰 전문 보기')">
-            📖 <b>"첫 출근, 그리고 첫 눈물"</b><br>
-            <small>신규 교사 김민지 | 10분 읽기 | 💬 234</small>
-          </div>
-          <div class="card" onclick="alert('인터뷰 전문 보기')">
-            💝 <b>"아이의 작은 변화가 준 감동"</b><br>
-            <small>10년차 박수진 | 8분 읽기 | 💬 189</small>
-          </div>
-          <div class="card" onclick="alert('인터뷰 전문 보기')">
-            🌈 <b>"번아웃에서 회복까지"</b><br>
-            <small>선임교사 이지은 | 12분 읽기 | 💬 312</small>
-          </div>
+      <!-- Sticky Filter Navigation -->
+      <section style="background: white; padding: 1.5rem 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+          <button onclick="filterStories('all')" id="filter-all" style="padding: 10px 20px; background: #ff8566; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.2s;">🔹 전체</button>
+          <button onclick="filterStories('interview')" id="filter-interview" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">인터뷰</button>
+          <button onclick="filterStories('column')" id="filter-column" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">칼럼</button>
+          <button onclick="filterStories('video')" id="filter-video" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">영상</button>
+          <button onclick="filterStories('newsletter')" id="filter-newsletter" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">뉴스레터</button>
         </div>
       </section>
 
-      <!-- 아티클 & 리포트 -->
-      <section id="content" style="background: #fff0e6; padding: 3rem 2rem; margin-top: 2rem;">
-        <h3>📄 아티클 & 리포트</h3>
-        <p style="text-align: center; color: #666; margin-bottom: 2rem;">교육 현장의 인사이트를 담은 깊이 있는 콘텐츠</p>
-        <div class="cards">
-          <div class="card" onclick="alert('아티클 읽기')">
-            📊 <b>2025 보육 트렌드 리포트</b><br>
-            <small>WITTI 리서치팀 | 20분 읽기</small>
+      <!-- Story Cards Grid -->
+      <div class="story-grid" id="story-grid">
+        <!-- Interview Stories -->
+        <div class="story-card" data-category="interview" onclick="alert('인터뷰 상세보기 예정')">
+          <div class="story-thumbnail">
+            🎤
+            <span class="ai-badge">AI 추천</span>
           </div>
-          <div class="card" onclick="alert('아티클 읽기')">
-            💡 <b>AI 시대, 교사의 역할 재정의</b><br>
-            <small>교육학 박사 김철수 | 15분 읽기</small>
+          <div class="story-content">
+            <div class="story-title">"첫 출근, 그리고 첫 눈물"</div>
+            <div class="story-summary">신규 교사로서 처음 맞이한 3월. 설렘과 두려움이 교차하던 그 날의 이야기를 솔직하게 풀어봅니다.</div>
+            <div class="story-meta">
+              <span>김민지 선생님</span>
+              <span>💬 234 · ❤️ 1.2k</span>
+            </div>
           </div>
-          <div class="card" onclick="alert('아티클 읽기')">
-            🔍 <b>효과적인 부모 소통 전략</b><br>
-            <small>상담 전문가 정미영 | 12분 읽기</small>
-          </div>
-        </div>
-      </section>
-
-      <!-- 뉴스레터 & 카드뉴스 -->
-      <section id="content">
-        <h3>📬 뉴스레터 & 카드뉴스</h3>
-        <div style="text-align: center; background: white; padding: 2rem; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-          <h4 style="color: #ff8566; margin-bottom: 1rem;">📨 WITTI 주간 뉴스레터</h4>
-          <p style="color: #666; margin-bottom: 1.5rem;">매주 화요일, 교사를 위한 인사이트를 카카오톡으로 받아보세요</p>
-          <button onclick="alert('뉴스레터 구독 신청')" style="background: #ff8566; color: white; border: none; padding: 12px 32px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 16px;">무료 구독하기</button>
-          <p style="margin-top: 1rem; color: #999; font-size: 0.85rem;">현재 3,456명이 구독 중이에요</p>
         </div>
 
-        <div class="cards">
-          <div class="card" onclick="alert('카드뉴스 보기')">
-            🎨 <b>오늘의 카드뉴스</b><br>
-            <small>"교사의 자존감 높이는 3가지 방법"</small>
+        <div class="story-card" data-category="interview" onclick="alert('인터뷰 상세보기 예정')">
+          <div class="story-thumbnail">
+            🎤
           </div>
-          <div class="card" onclick="alert('카드뉴스 보기')">
-            🎨 <b>이번 주 하이라이트</b><br>
-            <small>"부모상담 꿀팁 Top 5"</small>
-          </div>
-          <div class="card" onclick="alert('카드뉴스 보기')">
-            🎨 <b>인기 카드뉴스</b><br>
-            <small>"신규교사가 알아야 할 것들"</small>
+          <div class="story-content">
+            <div class="story-title">"20년 차 부장님의 조언"</div>
+            <div class="story-summary">교직 생활 20년, 이제는 후배 교사들에게 전하고 싶은 진심 어린 이야기들을 나눕니다.</div>
+            <div class="story-meta">
+              <span>박상민 선생님</span>
+              <span>💬 567 · ❤️ 2.5k</span>
+            </div>
           </div>
         </div>
-      </section>
 
-      <!-- 도담서가 큐레이션 -->
-      <section id="content" style="background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); padding: 3rem 2rem; margin-top: 2rem;">
-        <h3>📚 도담서가 큐레이션</h3>
-        <p style="text-align: center; color: #666; margin-bottom: 2rem;">교사를 위한 책 추천 & 북카페 연동</p>
-        <div class="cards">
-          <div class="card" onclick="alert('책 상세 정보')">
-            📕 <b>"교사의 말공부"</b><br>
-            <small>김성우 저 | 추천 ⭐⭐⭐⭐⭐</small>
+        <div class="story-card" data-category="interview" onclick="alert('인터뷰 상세보기 예정')">
+          <div class="story-thumbnail">
+            🎤
+            <span class="ai-badge">AI 추천</span>
           </div>
-          <div class="card" onclick="alert('책 상세 정보')">
-            📘 <b>"아이의 마음을 읽는 기술"</b><br>
-            <small>이임숙 저 | 추천 ⭐⭐⭐⭐</small>
-          </div>
-          <div class="card" onclick="alert('책 상세 정보')">
-            📗 <b>"교사 회복 프로젝트"</b><br>
-            <small>정은주 저 | 추천 ⭐⭐⭐⭐⭐</small>
+          <div class="story-content">
+            <div class="story-title">"아이들과의 소통 비결"</div>
+            <div class="story-summary">중학교 현장에서 아이들과 진정한 소통을 이루어낸 한 교사의 특별한 노하우를 공개합니다.</div>
+            <div class="story-meta">
+              <span>이수진 선생님</span>
+              <span>💬 890 · ❤️ 3.1k</span>
+            </div>
           </div>
         </div>
-      </section>
+
+        <!-- Column Stories -->
+        <div class="story-card" data-category="column" onclick="alert('칼럼 상세보기 예정')">
+          <div class="story-thumbnail">
+            ✍️
+            <span class="ai-badge">AI 추천</span>
+          </div>
+          <div class="story-content">
+            <div class="story-title">"번아웃에서 벗어나기"</div>
+            <div class="story-summary">교직에서 찾아오는 번아웃 증후군. 이를 극복하고 다시 활력을 되찾은 과정을 심리학적 관점에서 분석합니다.</div>
+            <div class="story-meta">
+              <span>정신건강 전문가</span>
+              <span>💬 345 · ❤️ 1.8k</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-card" data-category="column" onclick="alert('칼럼 상세보기 예정')">
+          <div class="story-thumbnail">
+            ✍️
+          </div>
+          <div class="story-content">
+            <div class="story-title">"디지털 시대의 교육법"</div>
+            <div class="story-summary">AI와 디지털 도구가 넘쳐나는 시대, 진정한 교육의 본질은 무엇인지 교육학적 시각으로 고찰합니다.</div>
+            <div class="story-meta">
+              <span>교육학 박사</span>
+              <span>💬 678 · ❤️ 2.2k</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-card" data-category="column" onclick="alert('칼럼 상세보기 예정')">
+          <div class="story-thumbnail">
+            ✍️
+          </div>
+          <div class="story-content">
+            <div class="story-title">"학부모와의 신뢰 쌓기"</div>
+            <div class="story-summary">어려운 학부모 관계를 긍정적으로 전환하는 실질적인 커뮤니케이션 전략을 제시합니다.</div>
+            <div class="story-meta">
+              <span>상담전문가</span>
+              <span>💬 423 · ❤️ 1.6k</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Stories -->
+        <div class="story-card" data-category="video" onclick="alert('영상 재생 예정')">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #ff9f80 0%, #ff8566 100%);">
+            ▶️
+            <span class="ai-badge">AI 추천</span>
+          </div>
+          <div class="story-content">
+            <div class="story-title">"교실 속 작은 기적들"</div>
+            <div class="story-summary">교실에서 벌어지는 감동적인 순간들을 담은 5분짜리 다큐멘터리 영상입니다.</div>
+            <div class="story-meta">
+              <span>WITTI 제작팀</span>
+              <span>👁️ 12k · ❤️ 4.5k</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-card" data-category="video" onclick="alert('영상 재생 예정')">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #ff9f80 0%, #ff8566 100%);">
+            ▶️
+          </div>
+          <div class="story-content">
+            <div class="story-title">"선생님의 하루 VLOG"</div>
+            <div class="story-summary">초등학교 담임선생님의 실제 하루 일과를 생생하게 따라가 봅니다.</div>
+            <div class="story-meta">
+              <span>최유진 선생님</span>
+              <span>👁️ 8.7k · ❤️ 3.2k</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-card" data-category="video" onclick="alert('영상 재생 예정')">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #ff9f80 0%, #ff8566 100%);">
+            ▶️
+          </div>
+          <div class="story-content">
+            <div class="story-title">"AI 도구 활용 실전편"</div>
+            <div class="story-summary">교사들이 실제로 사용하는 AI 도구들을 직접 시연하며 소개하는 튜토리얼 영상입니다.</div>
+            <div class="story-meta">
+              <span>테크교사 모임</span>
+              <span>👁️ 15k · ❤️ 5.8k</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Newsletter Stories -->
+        <div class="story-card" data-category="newsletter" onclick="alert('뉴스레터 보기 예정')">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #fff0e6 0%, #ffe9d6 100%);">
+            📧
+          </div>
+          <div class="story-content">
+            <div class="story-title">"이번 주 교육 트렌드"</div>
+            <div class="story-summary">2025년 1월 둘째 주, 교육계를 뜨겁게 달군 이슈들과 현장의 목소리를 담았습니다.</div>
+            <div class="story-meta">
+              <span>WITTI 편집팀</span>
+              <span>💬 156 · ❤️ 892</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-card" data-category="newsletter" onclick="alert('뉴스레터 보기 예정')">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #fff0e6 0%, #ffe9d6 100%);">
+            📧
+          </div>
+          <div class="story-content">
+            <div class="story-title">"마음을 덜어주는 월요일"</div>
+            <div class="story-summary">힘든 한 주를 시작하는 선생님들께 전하는 위로와 응원의 메시지입니다.</div>
+            <div class="story-meta">
+              <span>WITTI 편집팀</span>
+              <span>💬 234 · ❤️ 1.5k</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-card" data-category="newsletter" onclick="alert('뉴스레터 보기 예정')">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #fff0e6 0%, #ffe9d6 100%);">
+            📧
+          </div>
+          <div class="story-content">
+            <div class="story-title">"추천 도서: 교사를 위한 책"</div>
+            <div class="story-summary">이번 달 WITTI가 선정한 교사들을 위한 필독서 3권을 소개합니다.</div>
+            <div class="story-meta">
+              <span>도담서가</span>
+              <span>💬 89 · ❤️ 567</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Newsletter Subscription Section -->
+      <div class="newsletter-section">
+        <div class="newsletter-content">
+          <div class="newsletter-title">📬 매주 월요일, 교사 마음을 덜어주는 뉴스레터</div>
+          <div class="newsletter-desc">
+            힘든 한 주를 시작하는 선생님들께 위로와 영감을 전합니다.<br>
+            교육 트렌드, 실천 팁, 감동적인 이야기를 매주 받아보세요.
+          </div>
+          <button class="kakao-btn" onclick="alert('카카오 로그인 연동 예정')">
+            <span style="font-size: 1.5rem;">💬</span>
+            <span>카카오로 3초만에 구독하기</span>
+          </button>
+          <div class="subscriber-count">
+            이미 <strong style="color: #ff8566;">12,847명</strong>의 선생님이 구독 중입니다
+          </div>
+        </div>
+      </div>
 
       <footer>
         <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
       </footer>
+
+      <script>
+        function filterStories(category) {
+          const cards = document.querySelectorAll('.story-card');
+          const buttons = document.querySelectorAll('[id^="filter-"]');
+          
+          // Reset all buttons
+          buttons.forEach(btn => {
+            btn.style.background = 'white';
+            btn.style.color = '#333';
+            btn.style.border = '2px solid #ffe9d6';
+          });
+          
+          // Highlight active button
+          const activeBtn = document.getElementById('filter-' + category);
+          activeBtn.style.background = '#ff8566';
+          activeBtn.style.color = 'white';
+          activeBtn.style.border = 'none';
+          
+          // Filter cards
+          cards.forEach(card => {
+            if (category === 'all' || card.dataset.category === category) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        }
+        
+        // Lazy loading simulation (scroll event)
+        let page = 1;
+        window.addEventListener('scroll', () => {
+          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+            // Load more stories (placeholder for future implementation)
+            console.log('Load more stories - page', ++page);
+          }
+        });
+      </script>
 
     </body>
     </html>

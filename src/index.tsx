@@ -139,6 +139,41 @@ app.get('/', (c) => {
         </div>
       </section>
 
+      <!-- 커뮤니티 최신글 -->
+      <section id="content">
+        <h3>💬 커뮤니티 최신글</h3>
+        <div class="cards">
+          <div class="card" onclick="window.location.href='/talk'">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+              <b>"신규교사인데 부모님과 대화가 너무 어려워요"</b>
+              <span style="color: #ff8566; font-size: 0.8rem;">NEW</span>
+            </div>
+            <small style="color: #666;">김민지 | 댓글 12개 | 5분 전</small><br>
+            <span style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; display: block;">첫 면담이 다가오는데 어떻게 준비해야 할지...</span>
+          </div>
+          <div class="card" onclick="window.location.href='/talk'">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+              <b>"요즘 번아웃이 심한데 어떻게 극복하셨나요?"</b>
+              <span style="color: #ff8566; font-size: 0.8rem;">HOT</span>
+            </div>
+            <small style="color: #666;">박수진 | 댓글 34개 | 1시간 전</small><br>
+            <span style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; display: block;">5년차인데 최근 들어 힘이 드네요...</span>
+          </div>
+          <div class="card" onclick="window.location.href='/talk'">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+              <b>"AI 도구 사용해보신 분 계신가요?"</b>
+            </div>
+            <small style="color: #666;">이지은 | 댓글 23개 | 2시간 전</small><br>
+            <span style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; display: block;">부모면담 요약기 정말 유용한가요?</span>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+          <button onclick="window.location.href='/talk'" style="background: white; color: #ff8566; border: 2px solid #ff8566; padding: 10px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">
+            커뮤니티 전체 보기
+          </button>
+        </div>
+      </section>
+
       <!-- 오늘의 질문 (공감 참여형 CTA) -->
       <section id="content" style="background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); padding: 3rem 2rem; margin-top: 2rem; text-align: center;">
         <h3 style="margin-bottom: 1rem;">💭 오늘의 질문</h3>

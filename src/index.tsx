@@ -299,7 +299,7 @@ app.get('/', (c) => {
       </section>
 
       <footer style="background: #2e2e2e; color: white; text-align: center; padding: 2rem;">
-        <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+        <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
         <p style="color: #999; font-size: 0.85rem;">
           <a href="#" style="color: #999; text-decoration: none; margin: 0 0.5rem;">이용약관</a> |
           <a href="#" style="color: #999; text-decoration: none; margin: 0 0.5rem;">개인정보처리방침</a> |
@@ -916,7 +916,7 @@ app.get('/story', (c) => {
       </div>
 
       <footer>
-        <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+        <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
       </footer>
 
       <script>
@@ -1672,7 +1672,7 @@ app.get('/talk', (c) => {
       <button class="create-post-btn" onclick="alert('글쓰기 (로그인 필요)')" title="글쓰기">✏️</button>
 
       <footer>
-        <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+        <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
       </footer>
 
       <script>
@@ -2920,7 +2920,7 @@ app.get('/mywitti', (c) => {
       </div>
 
       <footer style="margin-top: 4rem;">
-        <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+        <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
       </footer>
 
     </body>
@@ -3049,7 +3049,7 @@ app.get('/signup', (c) => {
       </section>
 
       <footer>
-        <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+        <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
       </footer>
 
       <script>
@@ -3140,7 +3140,7 @@ app.get('/login', (c) => {
       </section>
 
       <footer>
-        <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+        <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
       </footer>
 
       <script>
@@ -3213,7 +3213,7 @@ app.get('/onboarding', (c) => {
       </section>
 
       <footer>
-        <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+        <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
       </footer>
 
     </body>

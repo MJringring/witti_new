@@ -1683,7 +1683,7 @@ app.get('/talk', (c) => {
   `)
 })
 
-// Tools page route
+// Tools page route - AI Tools Dashboard with interactive tools
 app.get('/tools', (c) => {
   return c.html(`
     <!DOCTYPE html>
@@ -1694,6 +1694,364 @@ app.get('/tools', (c) => {
       <title>WITTI Tools - AI 도구 허브</title>
       <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
       <link rel="stylesheet" href="/static/style.css">
+      <style>
+        .tools-container {
+          max-width: 1200px;
+          margin: 2rem auto;
+          padding: 0 2rem;
+        }
+        
+        .tool-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2rem;
+          margin-bottom: 3rem;
+        }
+        
+        @media (max-width: 968px) {
+          .tool-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        .tool-card {
+          background: white;
+          border-radius: 16px;
+          padding: 2rem;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          border: 3px solid transparent;
+        }
+        
+        .tool-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+          border-color: #ff8566;
+        }
+        
+        .tool-card.active {
+          border-color: #ff8566;
+          background: linear-gradient(135deg, #fff0e6 0%, #ffffff 100%);
+        }
+        
+        .tool-icon {
+          width: 80px;
+          height: 80px;
+          background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
+          border-radius: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2.5rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        .tool-title {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.75rem;
+        }
+        
+        .tool-desc {
+          color: #666;
+          line-height: 1.6;
+          margin-bottom: 1rem;
+        }
+        
+        .tool-badge {
+          display: inline-block;
+          background: #fff0e6;
+          color: #ff8566;
+          padding: 6px 12px;
+          border-radius: 8px;
+          font-size: 0.85rem;
+          font-weight: 600;
+        }
+        
+        .ai-workspace {
+          background: white;
+          border-radius: 16px;
+          padding: 2.5rem;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          margin-bottom: 3rem;
+        }
+        
+        .workspace-header {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 2rem;
+          padding-bottom: 1.5rem;
+          border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .workspace-icon {
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%);
+          border-radius: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2rem;
+          color: white;
+        }
+        
+        .workspace-title {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #333;
+        }
+        
+        .input-section {
+          margin-bottom: 2rem;
+        }
+        
+        .input-label {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 0.75rem;
+          display: block;
+        }
+        
+        .ai-textarea {
+          width: 100%;
+          min-height: 200px;
+          padding: 1.5rem;
+          border: 2px solid #ffe9d6;
+          border-radius: 12px;
+          font-size: 1rem;
+          font-family: "Pretendard", -apple-system, sans-serif;
+          resize: vertical;
+          transition: border-color 0.3s;
+        }
+        
+        .ai-textarea:focus {
+          outline: none;
+          border-color: #ff8566;
+        }
+        
+        .ai-textarea::placeholder {
+          color: #999;
+        }
+        
+        .action-buttons {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 2rem;
+        }
+        
+        .ai-button {
+          flex: 1;
+          padding: 1rem 2rem;
+          border: none;
+          border-radius: 12px;
+          font-size: 1.1rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.3s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+        }
+        
+        .ai-button.primary {
+          background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%);
+          color: white;
+          box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
+        }
+        
+        .ai-button.primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(255, 133, 102, 0.4);
+        }
+        
+        .ai-button.secondary {
+          background: white;
+          color: #ff8566;
+          border: 2px solid #ff8566;
+        }
+        
+        .ai-button.secondary:hover {
+          background: #fff0e6;
+        }
+        
+        .result-section {
+          background: #f9f9f9;
+          border-radius: 12px;
+          padding: 2rem;
+          display: none;
+        }
+        
+        .result-section.show {
+          display: block;
+        }
+        
+        .result-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+        }
+        
+        .result-title {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #333;
+        }
+        
+        .copy-button {
+          padding: 8px 20px;
+          background: #ff8566;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: all 0.2s;
+        }
+        
+        .copy-button:hover {
+          background: #ff9f80;
+        }
+        
+        .result-content {
+          background: white;
+          padding: 1.5rem;
+          border-radius: 8px;
+          line-height: 1.8;
+          color: #555;
+          white-space: pre-wrap;
+        }
+        
+        .toolkit-section {
+          background: white;
+          border-radius: 16px;
+          padding: 2.5rem;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+        
+        .section-title {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #333;
+        }
+        
+        .view-all-btn {
+          color: #ff8566;
+          font-weight: 600;
+          cursor: pointer;
+          transition: color 0.2s;
+        }
+        
+        .view-all-btn:hover {
+          color: #ff9f80;
+        }
+        
+        .history-list {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+        
+        .history-item {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+          padding: 1.5rem;
+          background: #f9f9f9;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+        
+        .history-item:hover {
+          background: #fff0e6;
+          transform: translateX(4px);
+        }
+        
+        .history-icon {
+          width: 50px;
+          height: 50px;
+          background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+          flex-shrink: 0;
+        }
+        
+        .history-info {
+          flex: 1;
+        }
+        
+        .history-tool {
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.25rem;
+        }
+        
+        .history-date {
+          font-size: 0.85rem;
+          color: #999;
+        }
+        
+        .template-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+          margin-top: 2rem;
+        }
+        
+        @media (max-width: 968px) {
+          .template-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        
+        @media (max-width: 640px) {
+          .template-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        .template-card {
+          background: #f9f9f9;
+          padding: 1.5rem;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.3s;
+          border: 2px solid transparent;
+        }
+        
+        .template-card:hover {
+          background: #fff0e6;
+          border-color: #ff8566;
+        }
+        
+        .template-name {
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+        
+        .template-desc {
+          font-size: 0.9rem;
+          color: #666;
+        }
+      </style>
     </head>
     <body>
 
@@ -1714,43 +2072,252 @@ app.get('/tools', (c) => {
         <p>일상 업무를 AI로 간편하게, 나만의 시간을 되찾으세요</p>
       </section>
 
-      <section id="content">
-        <h3>인기 도구</h3>
-        <div class="cards">
-          <div class="card">
-            🤖 <b>부모면담 요약기</b><br>
-            <small>AI가 자동으로 요약해주는 면담 기록</small>
+      <div class="tools-container">
+        <!-- Tool Selection Grid -->
+        <div class="tool-grid">
+          <div class="tool-card" onclick="selectTool('meeting')">
+            <div class="tool-icon">🤖</div>
+            <div class="tool-title">부모면담 요약기</div>
+            <div class="tool-desc">
+              긴 면담 내용을 AI가 핵심만 추려서 정리해드립니다. 
+              면담 기록 시간을 90% 단축하세요.
+            </div>
+            <div class="tool-badge">가장 인기</div>
           </div>
-          <div class="card">
-            📝 <b>일일일지 자동작성</b><br>
-            <small>오늘의 활동을 빠르게 기록</small>
-          </div>
-          <div class="card">
-            💗 <b>감정일지 & 마음진단</b><br>
-            <small>WITTI Care로 마음 건강 체크</small>
-          </div>
-        </div>
-        
-        <h3 style="margin-top: 3rem;">더 많은 도구</h3>
-        <div class="cards">
-          <div class="card">
-            📊 <b>성장 리포트 생성기</b><br>
-            <small>아이 발달 리포트 PDF 출력</small>
-          </div>
-          <div class="card">
-            📁 <b>나만의 템플릿 저장소</b><br>
-            <small>자주 쓰는 문서 템플릿 관리</small>
-          </div>
-          <div class="card">
-            ⚙️ <b>맞춤형 도구 개발 중</b><br>
-            <small>교사들의 제안으로 만들어집니다</small>
-          </div>
-        </div>
-      </section>
 
-      <footer>
+          <div class="tool-card" onclick="selectTool('diary')">
+            <div class="tool-icon">📝</div>
+            <div class="tool-title">일일일지 자동작성</div>
+            <div class="tool-desc">
+              오늘 있었던 활동을 간단히 입력하면 체계적인 일지로 정리됩니다.
+            </div>
+            <div class="tool-badge">시간 절약</div>
+          </div>
+
+          <div class="tool-card" onclick="selectTool('emotion')">
+            <div class="tool-icon">💗</div>
+            <div class="tool-title">감정일지 & 마음진단</div>
+            <div class="tool-desc">
+              교사의 감정 상태를 체크하고 번아웃을 예방합니다. WITTI Care.
+            </div>
+            <div class="tool-badge">마음 건강</div>
+          </div>
+
+          <div class="tool-card" onclick="selectTool('report')">
+            <div class="tool-icon">📊</div>
+            <div class="tool-title">성장 리포트 생성기</div>
+            <div class="tool-desc">
+              아이의 발달 과정을 PDF 리포트로 자동 생성. 학부모 공유용.
+            </div>
+            <div class="tool-badge">PDF 출력</div>
+          </div>
+        </div>
+
+        <!-- AI Workspace -->
+        <div class="ai-workspace" id="ai-workspace" style="display: none;">
+          <div class="workspace-header">
+            <div class="workspace-icon" id="workspace-icon">🤖</div>
+            <div>
+              <div class="workspace-title" id="workspace-title">부모면담 요약기</div>
+              <div style="color: #666;">AI가 정리해드릴게요</div>
+            </div>
+          </div>
+
+          <div class="input-section">
+            <label class="input-label" id="input-label">
+              면담 내용을 입력하거나 붙여넣기 해주세요
+            </label>
+            <textarea 
+              class="ai-textarea" 
+              id="ai-input" 
+              placeholder="예시: 오늘 OOO 학부모님과 면담을 진행했습니다. 아이가 최근 친구들과 잘 어울리지 못하는 것 같다는 고민을 상담했고, 집에서도 조금 위축된 모습을 보인다고 하셨습니다..."
+            ></textarea>
+          </div>
+
+          <div class="action-buttons">
+            <button class="ai-button primary" onclick="generateResult()">
+              <span>✨</span>
+              <span>AI가 정리해드릴게요</span>
+            </button>
+            <button class="ai-button secondary" onclick="clearInput()">
+              <span>🔄</span>
+              <span>초기화</span>
+            </button>
+          </div>
+
+          <div class="result-section" id="result-section">
+            <div class="result-header">
+              <div class="result-title">✅ AI 정리 완료</div>
+              <button class="copy-button" onclick="copyResult()">📋 복사하기</button>
+            </div>
+            <div class="result-content" id="result-content"></div>
+          </div>
+        </div>
+
+        <!-- My Toolkit Section -->
+        <div class="toolkit-section">
+          <div class="section-header">
+            <div class="section-title">📂 My Toolkit</div>
+            <div class="view-all-btn" onclick="alert('전체 보기')">전체 보기 →</div>
+          </div>
+
+          <div style="margin-bottom: 3rem;">
+            <h4 style="color: #666; margin-bottom: 1rem;">최근 사용 도구</h4>
+            <div class="history-list">
+              <div class="history-item" onclick="alert('도구 불러오기')">
+                <div class="history-icon">🤖</div>
+                <div class="history-info">
+                  <div class="history-tool">부모면담 요약기</div>
+                  <div class="history-date">2025년 1월 9일 · 오후 3:24</div>
+                </div>
+              </div>
+
+              <div class="history-item" onclick="alert('도구 불러오기')">
+                <div class="history-icon">📝</div>
+                <div class="history-info">
+                  <div class="history-tool">일일일지 자동작성</div>
+                  <div class="history-date">2025년 1월 8일 · 오후 5:12</div>
+                </div>
+              </div>
+
+              <div class="history-item" onclick="alert('도구 불러오기')">
+                <div class="history-icon">💗</div>
+                <div class="history-info">
+                  <div class="history-tool">감정일지</div>
+                  <div class="history-date">2025년 1월 7일 · 오후 7:45</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 style="color: #666; margin-bottom: 1rem;">내 템플릿 저장소</h4>
+            <div class="template-grid">
+              <div class="template-card" onclick="alert('템플릿 불러오기')">
+                <div class="template-name">📄 학부모 상담 템플릿</div>
+                <div class="template-desc">정기 상담용 기본 양식</div>
+              </div>
+
+              <div class="template-card" onclick="alert('템플릿 불러오기')">
+                <div class="template-name">📋 월간 활동 보고서</div>
+                <div class="template-desc">매월 작성하는 활동 일지</div>
+              </div>
+
+              <div class="template-card" onclick="alert('템플릿 불러오기')">
+                <div class="template-name">📊 발달 체크리스트</div>
+                <div class="template-desc">영유아 발달 평가 양식</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer style="margin-top: 4rem;">
         <p>© 2025 WITTI | AI로 더 스마트하게, 더 따뜻하게</p>
       </footer>
+
+      <script>
+        const toolConfigs = {
+          meeting: {
+            icon: '🤖',
+            title: '부모면담 요약기',
+            label: '면담 내용을 입력하거나 붙여넣기 해주세요',
+            placeholder: '예시: 오늘 OOO 학부모님과 면담을 진행했습니다. 아이가 최근 친구들과 잘 어울리지 못하는 것 같다는 고민을 상담했고...',
+            sample: '【면담 요약】\\n\\n일시: 2025년 1월 9일\\n대상: OOO 학부모\\n\\n[주요 내용]\\n- 아이가 또래 관계에서 어려움을 겪고 있음\\n- 가정에서도 위축된 모습 관찰\\n- 자신감 저하가 주요 원인으로 파악\\n\\n[조치 사항]\\n1. 교실 내 소그룹 활동 참여 독려\\n2. 긍정적 피드백 강화\\n3. 학부모님께 가정에서의 지지 방법 안내\\n\\n[후속 계획]\\n- 2주 후 진척 상황 재확인\\n- 필요시 상담교사 연계'
+          },
+          diary: {
+            icon: '📝',
+            title: '일일일지 자동작성',
+            label: '오늘 진행한 활동을 간단히 입력해주세요',
+            placeholder: '예시: 오전에는 미술활동으로 손바닥 나무 그리기를 했고, 점심 후에는 운동장에서 공놀이를 했습니다...',
+            sample: '【일일 활동 일지】\\n\\n날짜: 2025년 1월 9일 (목)\\n날씨: 맑음\\n\\n[오전 활동]\\n◆ 미술 활동: 손바닥 나무 그리기\\n- 참여도: 높음\\n- 창의성 발휘 우수\\n- 색채 감각 발달 관찰\\n\\n[점심 이후]\\n◆ 실외 활동: 운동장 공놀이\\n- 대근육 발달 활동\\n- 협동심 향상\\n- 규칙 준수 연습\\n\\n[특이사항]\\n- 전반적으로 적극적인 참여도\\n- 친구들 간 협력이 잘 이루어짐\\n\\n[교사 소견]\\n오늘 아이들이 특히 즐겁게 활동에 참여했습니다.'
+          },
+          emotion: {
+            icon: '💗',
+            title: '감정일지 & 마음진단',
+            label: '오늘 느낀 감정과 상황을 자유롭게 적어주세요',
+            placeholder: '예시: 오늘은 아이들과의 활동이 잘 풀리지 않아서 조금 지쳤습니다. 업무가 많아서 퇴근 후에도 마음이 무겁네요...',
+            sample: '【WITTI Care 마음 진단】\\n\\n감정 상태: 피로 및 스트레스\\n번아웃 위험도: 중간 (주의 필요)\\n\\n[감지된 감정]\\n- 신체적 피로감 ★★★☆☆\\n- 정서적 소진 ★★★★☆\\n- 성취감 저하 ★★☆☆☆\\n\\n[추천 케어]\\n1. 오늘은 일찍 퇴근해서 충분한 휴식을 취하세요\\n2. 좋아하는 음악이나 영화로 기분 전환\\n3. 가벼운 산책이나 스트레칭 추천\\n\\n[장기 관리]\\n- 업무 우선순위 재조정 필요\\n- 동료 교사와의 고민 나누기\\n- 필요시 전문 상담 연계\\n\\n💚 선생님, 힘든 하루였군요. 오늘 하루도 최선을 다한 자신을 칭찬해주세요.'
+          },
+          report: {
+            icon: '📊',
+            title: '성장 리포트 생성기',
+            label: '아이의 이름과 최근 발달 상황을 입력해주세요',
+            placeholder: '예시: 김OO 아이는 최근 3개월간 언어 발달이 눈에 띄게 향상되었습니다. 문장 구성 능력이 좋아졌고...',
+            sample: '【발달 성장 리포트】\\n\\n아동명: 김OO\\n관찰 기간: 2024년 10월 ~ 2025년 1월\\n\\n[언어 발달]\\n★★★★★ 우수\\n- 문장 구성 능력 향상\\n- 어휘력 확장\\n- 의사소통 적극적\\n\\n[사회성 발달]\\n★★★★☆ 양호\\n- 또래 관계 원만\\n- 협동 활동 참여 우수\\n- 감정 표현 발달\\n\\n[신체 발달]\\n★★★★☆ 양호\\n- 대근육 운동 능력 향상\\n- 소근육 활동 적극 참여\\n\\n[종합 의견]\\n전반적으로 균형 잡힌 발달을 보이고 있습니다. 특히 언어 영역에서 두드러진 성장이 관찰됩니다.\\n\\n※ 본 리포트는 학부모 상담 및 기록용으로 활용 가능합니다.'
+          }
+        };
+
+        let currentTool = null;
+
+        function selectTool(toolType) {
+          currentTool = toolType;
+          const config = toolConfigs[toolType];
+          
+          // Update workspace
+          document.getElementById('workspace-icon').textContent = config.icon;
+          document.getElementById('workspace-title').textContent = config.title;
+          document.getElementById('input-label').textContent = config.label;
+          document.getElementById('ai-input').placeholder = config.placeholder;
+          
+          // Show workspace
+          document.getElementById('ai-workspace').style.display = 'block';
+          
+          // Hide result
+          document.getElementById('result-section').classList.remove('show');
+          
+          // Clear input
+          document.getElementById('ai-input').value = '';
+          
+          // Scroll to workspace
+          document.getElementById('ai-workspace').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          // Update active state
+          document.querySelectorAll('.tool-card').forEach(card => {
+            card.classList.remove('active');
+          });
+          event.currentTarget.classList.add('active');
+        }
+
+        function generateResult() {
+          const input = document.getElementById('ai-input').value;
+          
+          if (!input.trim()) {
+            alert('내용을 입력해주세요.');
+            return;
+          }
+          
+          if (!currentTool) {
+            alert('도구를 먼저 선택해주세요.');
+            return;
+          }
+          
+          // Show loading
+          const resultSection = document.getElementById('result-section');
+          const resultContent = document.getElementById('result-content');
+          
+          resultContent.textContent = '✨ AI가 열심히 정리 중입니다...';
+          resultSection.classList.add('show');
+          
+          // Simulate AI processing
+          setTimeout(() => {
+            const config = toolConfigs[currentTool];
+            resultContent.textContent = config.sample;
+          }, 1500);
+        }
+
+        function clearInput() {
+          document.getElementById('ai-input').value = '';
+          document.getElementById('result-section').classList.remove('show');
+        }
+
+        function copyResult() {
+          const resultText = document.getElementById('result-content').textContent;
+          navigator.clipboard.writeText(resultText).then(() => {
+            alert('✅ 복사되었습니다!');
+          });
+        }
+      </script>
 
     </body>
     </html>

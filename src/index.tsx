@@ -64,12 +64,10 @@ app.get('/', (c) => {
       <header>
         <h1>🌿 WITTI</h1>
         <nav>
-          <a href="#">Home</a>
-          <a href="#">Learn</a>
-          <a href="#">Story</a>
-          <a href="#">Talk</a>
-          <a href="#">Tools</a>
-          <a href="#">MyWITTI</a>
+          <a href="/" class="active">Home</a>
+          <a href="/learn">Learn</a>
+          <a href="/story">Story</a>
+          <a href="/talk">Talk</a>
         </nav>
       </header>
 
@@ -103,6 +101,174 @@ app.get('/', (c) => {
       </footer>
 
       <script src="/static/script.js"></script>
+    </body>
+    </html>
+  `)
+})
+
+// Learn page route
+app.get('/learn', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>WITTI Learn - 실전형 교사 강의</title>
+      <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+
+      <header>
+        <h1>🌿 WITTI</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/learn" class="active">Learn</a>
+          <a href="/story">Story</a>
+          <a href="/talk">Talk</a>
+        </nav>
+      </header>
+
+      <section id="hero">
+        <h2>실전에서 바로 쓰는 교사 강의</h2>
+        <p>5분만에 배우고, 내일 바로 써먹는 실전 콘텐츠</p>
+      </section>
+
+      <section id="content">
+        <h3>오늘의 추천 클래스</h3>
+        <div class="cards">
+          <div class="card">
+            🎓 <b>AI로 부모면담 정리하기</b><br>
+            <small>대화기록을 자동으로 요약해주는 실무 꿀팁</small>
+          </div>
+          <div class="card">
+            📋 <b>놀이일지 쉽게 작성하기</b><br>
+            <small>AI 템플릿으로 10분 안에 완성!</small>
+          </div>
+          <div class="card">
+            💬 <b>감정케어 & 회복 클래스</b><br>
+            <small>교사 마음건강 회복을 위한 미니 클래스</small>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p>© 2025 WITTI | Learn smarter, grow warmer.</p>
+      </footer>
+
+    </body>
+    </html>
+  `)
+})
+
+// Story page route
+app.get('/story', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>WITTI Story - 교사들의 이야기</title>
+      <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+
+      <header>
+        <h1>🌿 WITTI</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/learn">Learn</a>
+          <a href="/story" class="active">Story</a>
+          <a href="/talk">Talk</a>
+        </nav>
+      </header>
+
+      <section id="hero">
+        <h2>오늘도 괜찮아요, 선생님</h2>
+        <p>교사들의 진솔한 이야기와 공감의 공간</p>
+      </section>
+
+      <section id="content">
+        <h3>이번 주 인기 스토리</h3>
+        <div class="cards">
+          <div class="card">
+            📖 <b>"첫 출근, 그리고 첫 눈물"</b><br>
+            <small>신규 교사의 첫 한 달 이야기</small>
+          </div>
+          <div class="card">
+            💝 <b>"아이의 작은 변화가 준 감동"</b><br>
+            <small>6개월 만에 웃게 된 아이</small>
+          </div>
+          <div class="card">
+            🌈 <b>"번아웃에서 회복까지"</b><br>
+            <small>다시 교사로 살아가기</small>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+      </footer>
+
+    </body>
+    </html>
+  `)
+})
+
+// Talk page route
+app.get('/talk', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>WITTI Talk - 교사 커뮤니티</title>
+      <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+
+      <header>
+        <h1>🌿 WITTI</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/learn">Learn</a>
+          <a href="/story">Story</a>
+          <a href="/talk" class="active">Talk</a>
+        </nav>
+      </header>
+
+      <section id="hero">
+        <h2>함께 나누는 교사 커뮤니티</h2>
+        <p>고민 상담부터 경험 공유까지, 혼자가 아닙니다</p>
+      </section>
+
+      <section id="content">
+        <h3>인기 토픽</h3>
+        <div class="cards">
+          <div class="card">
+            💬 <b>부모 상담 노하우</b><br>
+            <small>98개의 댓글</small>
+          </div>
+          <div class="card">
+            🤝 <b>신규교사 멘토링</b><br>
+            <small>실전 경험 공유 중</small>
+          </div>
+          <div class="card">
+            🎯 <b>실천 프로젝트</b><br>
+            <small>함께 성장하는 챌린지</small>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p>© 2025 WITTI | 교사의 하루를 덜어주고, 마음을 채워주는 플랫폼</p>
+      </footer>
+
     </body>
     </html>
   `)

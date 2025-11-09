@@ -60,19 +60,23 @@ nav a.active {
 #hero {
   text-align: center;
   padding: 80px 20px;
-  background: linear-gradient(135deg, #FFF5E9 0%, #C5E8D0 100%);
+  background: #FFF5E9;
 }
 
 #hero h2 {
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  font-weight: 700;
+  font-size: 36px;
   color: #333333;
-  font-size: 2.5rem;
   margin-bottom: 1rem;
   line-height: 1.3;
 }
 
 #hero p {
-  font-size: 1.25rem;
-  color: #666;
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #333333;
   margin-bottom: 2rem;
 }
 
@@ -80,21 +84,22 @@ nav a.active {
 #viewInsight {
   background-color: #FF8566;
   border: none;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
+  color: #FFFFFF;
+  padding: 15px 40px;
+  border-radius: 12px;
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
   font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(255, 133, 102, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
 }
 
 #hero button:hover,
 #viewInsight:hover {
   background-color: #FF9F80;
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(255, 133, 102, 0.3);
+  box-shadow: 0 6px 16px rgba(255, 133, 102, 0.4);
 }
 
 #hero button:active,
@@ -123,30 +128,34 @@ nav a.active {
 }
 
 .card {
-  background-color: white;
+  background-color: #FFFFFF;
   border-radius: 15px;
   padding: 20px;
   width: 200px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
   font-weight: 500;
+  font-size: 16px;
+  color: #333333;
   transition: transform 0.2s;
   cursor: pointer;
   text-align: center;
-  font-size: 1rem;
   line-height: 1.8;
 }
 
 .card:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 footer {
   text-align: center;
-  background-color: #C5E8D0;
-  padding: 10px;
+  background-color: #FFF5E9;
+  padding: 20px;
   margin-top: 40px;
-  color: #333333;
+  color: #A9B7A2;
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  font-weight: 400;
   font-size: 14px;
 }
 
@@ -228,6 +237,17 @@ footer {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Label and Badge Styles */
+.label-secondary,
+.badge-secondary {
+  background-color: #C5E8D0;
+  color: #333333;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 /* Responsive Design */

@@ -92,23 +92,35 @@ app.get('/', (c) => {
         <h3 style="text-align: center; margin-bottom: 1rem;">🎯 오늘의 추천 콘텐츠</h3>
         <p style="text-align: center; color: #666; margin-bottom: 2rem; font-size: 0.95rem;">AI가 김민지님을 위해 큐레이션한 콘텐츠</p>
         <div class="cards">
-          <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
-            <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; font-size: 3rem;">📖</div>
-            <span style="position: absolute; top: 10px; right: 10px; background: #ff8566; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">아티클</span>
-            <b>"첫 출근, 그리고 첫 눈물"</b><br>
-            <small style="color: #666;">신규 교사의 첫 한 달 이야기 | 10분 읽기</small>
+          <div class="card" onclick="window.location.href='/learn'">
+            <div class="card-icon">🎓</div>
+            <div class="card-title">AI로 부모멘담 정리하기</div>
+            <div class="card-meta">
+              <span class="card-rating">⭐ 4.9</span>
+              <span class="card-students">1,234명 수강</span>
+              <span class="card-duration">15분</span>
+            </div>
+            <div class="card-instructor instructor-kim">김민지 선생님</div>
           </div>
-          <div class="card" onclick="window.location.href='/learn'" style="cursor: pointer; position: relative;">
-            <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🎬</div>
-            <span style="position: absolute; top: 10px; right: 10px; background: #ff8566; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">영상</span>
-            <b>"5분 완성 부모면담 준비"</b><br>
-            <small style="color: #666;">짧은 강의 | 5분 | 조회수 2.3K</small>
+          <div class="card" onclick="window.location.href='/learn'">
+            <div class="card-icon">📋</div>
+            <div class="card-title">놀이일지 10분 완성법</div>
+            <div class="card-meta">
+              <span class="card-rating">⭐ 4.8</span>
+              <span class="card-students">892명 수강</span>
+              <span class="card-duration">12분</span>
+            </div>
+            <div class="card-instructor instructor-park">박수진 선생님</div>
           </div>
-          <div class="card" onclick="window.location.href='/learn'" style="cursor: pointer; position: relative;">
-            <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🎓</div>
-            <span style="position: absolute; top: 10px; right: 10px; background: #ff8566; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">클래스</span>
-            <b>"AI로 부모면담 정리하기"</b><br>
-            <small style="color: #666;">⭐ 4.9 | 1,234명 수강 중</small>
+          <div class="card" onclick="window.location.href='/learn'">
+            <div class="card-icon">💬</div>
+            <div class="card-title">감정케어 & 회복 클래스</div>
+            <div class="card-meta">
+              <span class="card-rating">⭐ 5.0</span>
+              <span class="card-students">567명 수강</span>
+              <span class="card-duration">20분</span>
+            </div>
+            <div class="card-instructor instructor-lee">이지은 상담사</div>
           </div>
         </div>
       </section>

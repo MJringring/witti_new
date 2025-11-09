@@ -1,71 +1,13 @@
-// Modal functionality
-const modal = document.getElementById('insightModal');
-const btn = document.getElementById('viewInsight');
-const span = document.getElementsByClassName('close')[0];
-
-// Insight data
-const insights = [
-  {
-    title: "오늘의 인사이트",
-    quote: "완벽한 수업보다 완벽한 관심이 학생들에게 더 큰 영향을 줍니다.",
-    message: "학생 한 명 한 명의 작은 변화를 알아차리는 것, 그것이 진짜 교육의 시작입니다.",
-    author: "― 교육 심리학자 김민정"
-  },
-  {
-    title: "마음을 채우는 한 마디",
-    quote: "가르침은 두 번의 학습이다.",
-    message: "가르치면서 우리도 함께 성장합니다. 오늘 하루도 학생들과 함께 배우는 시간이었습니다.",
-    author: "― 조셉 주베르"
-  },
-  {
-    title: "교사의 지혜",
-    quote: "학생들은 당신이 얼마나 아는지 상관하지 않습니다. 당신이 얼마나 관심을 가지는지를 알 때까지는.",
-    message: "오늘 하루, 한 명의 학생에게라도 진심 어린 관심을 보여주셨나요?",
-    author: "― 존 맥스웰"
-  }
-];
-
-// Random insight selector
-function getRandomInsight() {
-  return insights[Math.floor(Math.random() * insights.length)];
-}
-
-// Display insight in modal
-function displayInsight() {
-  const insight = getRandomInsight();
-  const insightContent = document.querySelector('.insight-content');
+// View Insight button - Simple alert version
+document.addEventListener('DOMContentLoaded', function() {
+  const viewInsightBtn = document.getElementById('viewInsight');
   
-  insightContent.innerHTML = `
-    <h2>${insight.title}</h2>
-    <div class="insight-quote">"${insight.quote}"</div>
-    <p>${insight.message}</p>
-    <p style="text-align: right; color: #ff8566; font-weight: 600; margin-top: 1rem;">
-      ${insight.author}
-    </p>
-  `;
-}
-
-// Open modal
-if (btn) {
-  btn.onclick = function() {
-    displayInsight();
-    modal.style.display = 'block';
+  if (viewInsightBtn) {
+    viewInsightBtn.addEventListener('click', function() {
+      alert("오늘의 인사이트 🌿\n\n'교사를 위로하면, 보육이 달라진다.'");
+    });
   }
-}
-
-// Close modal
-if (span) {
-  span.onclick = function() {
-    modal.style.display = 'none';
-  }
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = 'none';
-  }
-}
+});
 
 // Card click events
 document.addEventListener('DOMContentLoaded', function() {

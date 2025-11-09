@@ -151,8 +151,10 @@ nav a.active::after {
 .cards {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 24px;
   flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .card {
@@ -222,6 +224,10 @@ nav a.active::after {
 
 .instructor-lee {
   color: #FF8566;
+}
+
+.instructor-jung {
+  color: #00C087;
 }
 
 .card:hover {

@@ -204,22 +204,84 @@ app.get('/learn', (c) => {
       <section id="hero">
         <h2>실전에서 바로 쓰는 교사 강의</h2>
         <p>5분만에 배우고, 내일 바로 써먹는 실전 콘텐츠</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+          <button onclick="window.location.href='/learn/classes'" style="background-color: #ff8566; border: none; color: white; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">전체 강좌 보기</button>
+          <button onclick="alert('선임교사만 클래스를 개설할 수 있습니다')" style="background-color: white; color: #ff8566; border: 2px solid #ff8566; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">내 클래스 개설하기</button>
+        </div>
       </section>
 
+      <!-- 강좌 카테고리 -->
       <section id="content">
-        <h3>오늘의 추천 클래스</h3>
+        <h3>📚 카테고리별 강좌</h3>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+          <button onclick="alert('전체 강좌를 보여드립니다')" style="padding: 10px 20px; background: #fff0e6; border: none; border-radius: 20px; cursor: pointer; font-weight: 600;">전체</button>
+          <button onclick="alert('AI 도구 강좌')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer;">AI 도구</button>
+          <button onclick="alert('부모상담 강좌')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer;">부모상담</button>
+          <button onclick="alert('놀이기록 강좌')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer;">놀이기록</button>
+          <button onclick="alert('리더십 강좌')" style="padding: 10px 20px; background: white; border: 2px solid #ffe9d6; border-radius: 20px; cursor: pointer;">리더십</button>
+        </div>
+      </section>
+
+      <!-- 인기 강좌 -->
+      <section id="content">
+        <h3>🔥 인기 강좌</h3>
         <div class="cards">
-          <div class="card">
+          <div class="card" onclick="alert('강좌 상세 페이지로 이동')">
             🎓 <b>AI로 부모면담 정리하기</b><br>
-            <small>대화기록을 자동으로 요약해주는 실무 꿀팁</small>
+            <small>⭐ 4.9 | 1,234명 수강 | 15분</small><br>
+            <span style="color: #ff8566; font-size: 0.85rem;">김민지 선생님</span>
           </div>
-          <div class="card">
-            📋 <b>놀이일지 쉽게 작성하기</b><br>
-            <small>AI 템플릿으로 10분 안에 완성!</small>
+          <div class="card" onclick="alert('강좌 상세 페이지로 이동')">
+            📋 <b>놀이일지 10분 완성법</b><br>
+            <small>⭐ 4.8 | 892명 수강 | 12분</small><br>
+            <span style="color: #ff8566; font-size: 0.85rem;">박수진 선생님</span>
           </div>
-          <div class="card">
+          <div class="card" onclick="alert('강좌 상세 페이지로 이동')">
             💬 <b>감정케어 & 회복 클래스</b><br>
-            <small>교사 마음건강 회복을 위한 미니 클래스</small>
+            <small>⭐ 5.0 | 567명 수강 | 20분</small><br>
+            <span style="color: #ff8566; font-size: 0.85rem;">이지은 상담사</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5분 짧은 강의 -->
+      <section id="content" style="background: #fff0e6; padding: 3rem 2rem; margin-top: 2rem;">
+        <h3>⚡ 5분 짧은 강의</h3>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">출퇴근 시간에 가볍게 듣는 미니 강좌</p>
+        <div class="cards">
+          <div class="card" onclick="alert('5분 영상 재생')">
+            🎬 <b>부모님과의 첫 만남 준비</b><br>
+            <small>5분 | 조회수 2.3K</small>
+          </div>
+          <div class="card" onclick="alert('5분 영상 재생')">
+            🎬 <b>아이의 칭찬 받는 법</b><br>
+            <small>5분 | 조회수 1.8K</small>
+          </div>
+          <div class="card" onclick="alert('5분 영상 재생')">
+            🎬 <b>스트레스 해소 3가지 팁</b><br>
+            <small>5분 | 조회수 3.1K</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- 세미나 & 실습 -->
+      <section id="content">
+        <h3>🎯 세미나 & 실습 워크샵</h3>
+        <div class="cards">
+          <div class="card" onclick="alert('세미나 상세 정보')">
+            📅 <b>AI 활용 교사 워크샵</b><br>
+            <small>2025.02.15 | 온라인 LIVE | 선착순 50명</small><br>
+            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">신청하기</button>
+          </div>
+          <div class="card" onclick="alert('세미나 상세 정보')">
+            📅 <b>부모상담 실전 세미나</b><br>
+            <small>2025.02.22 | 오프라인 | 잠실 WITTI 센터</small><br>
+            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">신청하기</button>
+          </div>
+          <div class="card" onclick="alert('세미나 상세 정보')">
+            📅 <b>신규교사 오리엔테이션</b><br>
+            <small>2025.03.01 | 온라인 | 무료</small><br>
+            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">신청하기</button>
           </div>
         </div>
       </section>
@@ -264,20 +326,87 @@ app.get('/story', (c) => {
         <p>교사들의 진솔한 이야기와 공감의 공간</p>
       </section>
 
+      <!-- 교사 인터뷰 -->
       <section id="content">
-        <h3>이번 주 인기 스토리</h3>
+        <h3>🎤 교사 인터뷰</h3>
         <div class="cards">
-          <div class="card">
+          <div class="card" onclick="alert('인터뷰 전문 보기')">
             📖 <b>"첫 출근, 그리고 첫 눈물"</b><br>
-            <small>신규 교사의 첫 한 달 이야기</small>
+            <small>신규 교사 김민지 | 10분 읽기 | 💬 234</small>
           </div>
-          <div class="card">
+          <div class="card" onclick="alert('인터뷰 전문 보기')">
             💝 <b>"아이의 작은 변화가 준 감동"</b><br>
-            <small>6개월 만에 웃게 된 아이</small>
+            <small>10년차 박수진 | 8분 읽기 | 💬 189</small>
           </div>
-          <div class="card">
+          <div class="card" onclick="alert('인터뷰 전문 보기')">
             🌈 <b>"번아웃에서 회복까지"</b><br>
-            <small>다시 교사로 살아가기</small>
+            <small>선임교사 이지은 | 12분 읽기 | 💬 312</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- 아티클 & 리포트 -->
+      <section id="content" style="background: #fff0e6; padding: 3rem 2rem; margin-top: 2rem;">
+        <h3>📄 아티클 & 리포트</h3>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">교육 현장의 인사이트를 담은 깊이 있는 콘텐츠</p>
+        <div class="cards">
+          <div class="card" onclick="alert('아티클 읽기')">
+            📊 <b>2025 보육 트렌드 리포트</b><br>
+            <small>WITTI 리서치팀 | 20분 읽기</small>
+          </div>
+          <div class="card" onclick="alert('아티클 읽기')">
+            💡 <b>AI 시대, 교사의 역할 재정의</b><br>
+            <small>교육학 박사 김철수 | 15분 읽기</small>
+          </div>
+          <div class="card" onclick="alert('아티클 읽기')">
+            🔍 <b>효과적인 부모 소통 전략</b><br>
+            <small>상담 전문가 정미영 | 12분 읽기</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- 뉴스레터 & 카드뉴스 -->
+      <section id="content">
+        <h3>📬 뉴스레터 & 카드뉴스</h3>
+        <div style="text-align: center; background: white; padding: 2rem; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+          <h4 style="color: #ff8566; margin-bottom: 1rem;">📨 WITTI 주간 뉴스레터</h4>
+          <p style="color: #666; margin-bottom: 1.5rem;">매주 화요일, 교사를 위한 인사이트를 카카오톡으로 받아보세요</p>
+          <button onclick="alert('뉴스레터 구독 신청')" style="background: #ff8566; color: white; border: none; padding: 12px 32px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 16px;">무료 구독하기</button>
+          <p style="margin-top: 1rem; color: #999; font-size: 0.85rem;">현재 3,456명이 구독 중이에요</p>
+        </div>
+
+        <div class="cards">
+          <div class="card" onclick="alert('카드뉴스 보기')">
+            🎨 <b>오늘의 카드뉴스</b><br>
+            <small>"교사의 자존감 높이는 3가지 방법"</small>
+          </div>
+          <div class="card" onclick="alert('카드뉴스 보기')">
+            🎨 <b>이번 주 하이라이트</b><br>
+            <small>"부모상담 꿀팁 Top 5"</small>
+          </div>
+          <div class="card" onclick="alert('카드뉴스 보기')">
+            🎨 <b>인기 카드뉴스</b><br>
+            <small>"신규교사가 알아야 할 것들"</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- 도담서가 큐레이션 -->
+      <section id="content" style="background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); padding: 3rem 2rem; margin-top: 2rem;">
+        <h3>📚 도담서가 큐레이션</h3>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">교사를 위한 책 추천 & 북카페 연동</p>
+        <div class="cards">
+          <div class="card" onclick="alert('책 상세 정보')">
+            📕 <b>"교사의 말공부"</b><br>
+            <small>김성우 저 | 추천 ⭐⭐⭐⭐⭐</small>
+          </div>
+          <div class="card" onclick="alert('책 상세 정보')">
+            📘 <b>"아이의 마음을 읽는 기술"</b><br>
+            <small>이임숙 저 | 추천 ⭐⭐⭐⭐</small>
+          </div>
+          <div class="card" onclick="alert('책 상세 정보')">
+            📗 <b>"교사 회복 프로젝트"</b><br>
+            <small>정은주 저 | 추천 ⭐⭐⭐⭐⭐</small>
           </div>
         </div>
       </section>

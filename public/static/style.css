@@ -5,16 +5,16 @@
 }
 
 body {
-  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #f9f9f9;
+  font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #FFF5E9;
   margin: 0;
   padding: 0;
-  color: #333;
+  color: #333333;
   line-height: 1.6;
 }
 
 header {
-  background-color: #ffe9d6;
+  background-color: #C5E8D0;
   padding: 15px;
   display: flex;
   justify-content: space-between;
@@ -24,7 +24,7 @@ header {
 
 header h1 {
   margin: 0;
-  color: #ff8566;
+  color: #FF8566;
   font-size: 2rem;
   display: flex;
   align-items: center;
@@ -40,7 +40,7 @@ nav {
 nav a {
   margin: 0 10px;
   text-decoration: none;
-  color: #333;
+  color: #333333;
   font-weight: 600;
   transition: color 0.3s ease;
   padding: 0.5rem 1rem;
@@ -48,23 +48,23 @@ nav a {
 }
 
 nav a:hover {
-  color: #ff8566;
+  color: #FF8566;
   background-color: rgba(255, 133, 102, 0.1);
 }
 
 nav a.active {
-  color: #ff8566;
+  color: #FF8566;
   text-decoration: underline;
 }
 
 #hero {
   text-align: center;
   padding: 80px 20px;
-  background-color: #fff0e6;
+  background: linear-gradient(135deg, #FFF5E9 0%, #C5E8D0 100%);
 }
 
 #hero h2 {
-  color: #333;
+  color: #333333;
   font-size: 2.5rem;
   margin-bottom: 1rem;
   line-height: 1.3;
@@ -78,7 +78,7 @@ nav a.active {
 
 #hero button,
 #viewInsight {
-  background-color: #ff8566;
+  background-color: #FF8566;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -92,7 +92,7 @@ nav a.active {
 
 #hero button:hover,
 #viewInsight:hover {
-  background-color: #ff9f80;
+  background-color: #FF9F80;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(255, 133, 102, 0.3);
 }
@@ -111,7 +111,7 @@ nav a.active {
 
 #content h3 {
   font-size: 2rem;
-  color: #ff8566;
+  color: #FF8566;
   margin-bottom: 2rem;
 }
 
@@ -143,10 +143,10 @@ nav a.active {
 
 footer {
   text-align: center;
-  background-color: #ffe9d6;
+  background-color: #C5E8D0;
   padding: 10px;
   margin-top: 40px;
-  color: #555;
+  color: #333333;
   font-size: 14px;
 }
 
@@ -184,7 +184,7 @@ footer {
 }
 
 .close:hover {
-  color: #ff8566;
+  color: #FF8566;
 }
 
 .insight-content {
@@ -193,7 +193,7 @@ footer {
 }
 
 .insight-content h2 {
-  color: #ff8566;
+  color: #FF8566;
   margin-bottom: 1rem;
   font-size: 1.8rem;
 }
@@ -206,12 +206,12 @@ footer {
 }
 
 .insight-quote {
-  background: #fff0e6;
+  background: #FFF5E9;
   padding: 1.5rem;
-  border-left: 4px solid #ff8566;
+  border-left: 4px solid #FF8566;
   margin: 1.5rem 0;
   font-style: italic;
-  color: #ff8566;
+  color: #FF8566;
 }
 
 @keyframes fadeIn {

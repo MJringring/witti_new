@@ -167,10 +167,11 @@ nav a.active::after {
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
   transition: all 0.3s ease;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  align-items: center;
 }
 
 .card-icon {
@@ -187,6 +188,8 @@ nav a.active::after {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
+  width: 100%;
 }
 
 .card-meta {

@@ -94,7 +94,7 @@ app.get('/', (c) => {
         <div class="cards">
           <div class="card" onclick="window.location.href='/learn'">
             <div class="card-icon">🎓</div>
-            <div class="card-title">AI로 부모멘담 정리하기</div>
+            <div class="card-title">AI로 부모면담 정리하기</div>
             <div class="card-meta">
               <span class="card-rating">⭐ 4.9</span>
               <span class="card-students">1,234명 수강</span>

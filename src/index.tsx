@@ -162,7 +162,7 @@ app.get('/', (c) => {
       <!-- 교사 인터뷰 (짧은 영상형 썸네일) -->
       <section id="content" style="background: #fff0e6; padding: 3rem 2rem; margin-top: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-          <h3 style="margin: 0;">🎤 교사 인터뷰</h3>
+          <h3 style="margin: 0;">🎤 지금 주목받는 인터뷰</h3>
           <a href="/story" style="color: #ff8566; text-decoration: none; font-weight: 600; font-size: 0.95rem;">전체보기 →</a>
         </div>
         <div class="cards">
@@ -172,23 +172,23 @@ app.get('/', (c) => {
               <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">05:23</div>
             </div>
             <b>"첫 출근, 그리고 첫 눈물"</b><br>
-            <small style="color: #666;">신규 교사 김민지 | 조회수 3.2K</small>
+            <small style="color: #666;">신규 교사 김민지 선생님 | 조회수 3.2K</small>
           </div>
           <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
             <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; position: relative;">
               <div style="font-size: 3rem;">🎬</div>
               <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">07:45</div>
             </div>
-            <b>"아이의 작은 변화가 준 감동"</b><br>
-            <small style="color: #666;">10년차 박수진 | 조회수 5.1K</small>
+            <b>"AI 시대, 교사의 역할은?"</b><br>
+            <small style="color: #666;">교육학과 정민수 교수님 | 조회수 8.3K</small>
           </div>
           <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
             <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; position: relative;">
               <div style="font-size: 3rem;">🎬</div>
               <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">06:12</div>
             </div>
-            <b>"번아웃에서 회복까지"</b><br>
-            <small style="color: #666;">선임교사 이지은 | 조회수 4.7K</small>
+            <b>"예비교사가 꼭 알아야 할 것"</b><br>
+            <small style="color: #666;">교대 4학년 박지혜 | 조회수 6.1K</small>
           </div>
         </div>
       </section>

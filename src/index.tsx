@@ -566,22 +566,66 @@ app.get('/', (c) => {
     <body>
 
       <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;">
-        <h1 style="margin: 0;">🌿 WITTI</h1>
+        <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
         <nav style="display: flex; gap: 2rem; align-items: center;">
           <a href="/learn">Learn</a>
           <a href="/story">Story</a>
           <a href="/talk">Talk</a>
           <a href="/tools">Tools</a>
-          <a href="/mywitti">MyWITTI</a>
-          <div style="display: flex; gap: 1rem; margin-left: 1rem;">
-            <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;">🔍</button>
-            <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;">
+          <div style="display: flex; gap: 1rem; margin-left: 1rem; align-items: center;">
+            <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+              🛒
+              <span id="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+            </button>
+            <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+            <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
               🔔
               <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
             </button>
+            <div id="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+              <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+              <button id="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
+            </div>
+            <div id="authMenu" style="display: flex; gap: 0.5rem;">
+              <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+              <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+            </div>
           </div>
         </nav>
       </header>
+      
+      <script>
+        // 로그인 상태 확인 및 메뉴 표시
+        (function() {
+          const token = localStorage.getItem('witti_token');
+          const userMenu = document.getElementById('userMenu');
+          const authMenu = document.getElementById('authMenu');
+          
+          if (token) {
+            userMenu.style.display = 'flex';
+            authMenu.style.display = 'none';
+          } else {
+            userMenu.style.display = 'none';
+            authMenu.style.display = 'flex';
+          }
+          
+          // 로그아웃 버튼
+          document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('witti_token');
+            localStorage.removeItem('witti_user');
+            alert('로그아웃되었습니다.');
+            window.location.href = '/';
+          });
+          
+          // 장바구니 아이템 수 표시
+          const cart = JSON.parse(localStorage.getItem('witti_cart') || '[]');
+          const cartBadge = document.getElementById('cartBadge');
+          if (cart.length > 0) {
+            cartBadge.textContent = cart.length;
+            cartBadge.style.display = 'flex';
+          }
+        })();
+      </script>
 
       <section id="hero">
         <h2>선생님을 위한 5분의 여유</h2>
@@ -822,20 +866,67 @@ app.get('/learn', (c) => {
     <body>
 
       <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;">
-        <h1 style="margin: 0;">🌿 WITTI</h1>
+        <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
         <nav style="display: flex; gap: 2rem; align-items: center;">
           <a href="/">Home</a>
           <a href="/learn" class="active">Learn</a>
           <a href="/story">Story</a>
           <a href="/talk">Talk</a>
           <a href="/tools">Tools</a>
-          <a href="/mywitti">MyWITTI</a>
-          <div style="display: flex; gap: 1rem; margin-left: 1rem;">
-            <button onclick="alert('검색 기능')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;">🔍</button>
-            <button onclick="alert('알림')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;">🔔</button>
+          <div style="display: flex; gap: 1rem; margin-left: 1rem; align-items: center;">
+            <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+              🛒
+              <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+            </button>
+            <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+            <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
+              🔔
+              <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+            </button>
+            <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+              <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+              <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
+            </div>
+            <div class="authMenu" style="display: flex; gap: 0.5rem;">
+              <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+              <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+            </div>
           </div>
         </nav>
       </header>
+      
+      <script>
+        // 로그인 상태 확인 및 메뉴 표시
+        (function() {
+          const token = localStorage.getItem('witti_token');
+          const userMenu = document.querySelector('.userMenu');
+          const authMenu = document.querySelector('.authMenu');
+          
+          if (token) {
+            userMenu.style.display = 'flex';
+            authMenu.style.display = 'none';
+          } else {
+            userMenu.style.display = 'none';
+            authMenu.style.display = 'flex';
+          }
+          
+          // 로그아웃 버튼
+          document.querySelector('.logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('witti_token');
+            localStorage.removeItem('witti_user');
+            alert('로그아웃되었습니다.');
+            window.location.href = '/';
+          });
+          
+          // 장바구니 아이템 수 표시
+          const cart = JSON.parse(localStorage.getItem('witti_cart') || '[]');
+          const cartBadge = document.querySelector('.cartBadge');
+          if (cart.length > 0) {
+            cartBadge.textContent = cart.length;
+            cartBadge.style.display = 'flex';
+          }
+        })();
+      </script>
 
       <section id="hero" style="padding: 60px 20px;">
         <h2>실전에서 바로 쓰는 교사 강의</h2>

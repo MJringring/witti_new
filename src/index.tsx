@@ -6275,13 +6275,16 @@ app.get('/books', (c) => {
         .book-cover {
           width: 100%;
           height: 350px;
-          background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
           border-radius: 12px;
           margin-bottom: 1rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 4rem;
+          overflow: hidden;
+          background: #f5f5f5;
+        }
+        
+        .book-cover img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
         
         .book-title {
@@ -6602,16 +6605,16 @@ app.get('/books', (c) => {
         <div class="book-grid">
           <!-- Book Card 1 -->
           <div class="book-card">
-            <div class="book-cover">📘</div>
-            <div class="book-title">교사, 수업에서 나를 만나다</div>
-            <div class="book-author">파커 파머 저 | 한문화</div>
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/ABt6yubT" alt="혼적 MARKS 말 WORDS MATERIAL 재료와 모자이크 MOSAIC"></div>
+            <div class="book-title">혼적 MARKS 말 WORDS MATERIAL 재료와 모자이크 MOSAIC</div>
+            <div class="book-author">한솔어린이보육재단 도담도담이야기</div>
             <div class="book-description">
-              교사의 정체성과 온전함에 관한 깊이 있는 성찰. 진정한 교육은 교사 내면에서 시작됨을 일깨우는 책.
+              레지오 에밀리아 접근의 핵심 개념들을 실제 교육 현장에서 어떻게 구현할 수 있는지 보여주는 실천 가이드.
             </div>
             <div class="book-tags">
-              <span class="book-tag">#교사성장</span>
-              <span class="book-tag">#자기계발</span>
-              <span class="book-tag">#교육철학</span>
+              <span class="book-tag">#레지오에밀리아</span>
+              <span class="book-tag">#영유아교육</span>
+              <span class="book-tag">#교육실천</span>
             </div>
             <div class="book-actions">
               <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
@@ -6621,16 +6624,16 @@ app.get('/books', (c) => {
 
           <!-- Book Card 2 -->
           <div class="book-card">
-            <div class="book-cover">📗</div>
-            <div class="book-title">교사독립선언</div>
-            <div class="book-author">이혁규 저 | 더불어책</div>
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/HtRjDDe0" alt="기록작업을 통해 다시 만난 어린이"></div>
+            <div class="book-title">기록작업을 통해 다시 만난 어린이</div>
+            <div class="book-author">한솔어린이보육재단 도담도담이야기</div>
             <div class="book-description">
-              학교와 교실에서 교사로 산다는 것의 의미를 되묻고, 진정한 교사의 자율성과 전문성을 탐구하는 책.
+              관찰과 기록을 통해 어린이를 더 깊이 이해하고, 교육의 질을 높이는 방법을 제시하는 교사 실천서.
             </div>
             <div class="book-tags">
-              <span class="book-tag">#교권</span>
-              <span class="book-tag">#전문성</span>
-              <span class="book-tag">#교육현장</span>
+              <span class="book-tag">#관찰기록</span>
+              <span class="book-tag">#어린이이해</span>
+              <span class="book-tag">#교사성찰</span>
             </div>
             <div class="book-actions">
               <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
@@ -6640,16 +6643,16 @@ app.get('/books', (c) => {
 
           <!-- Book Card 3 -->
           <div class="book-card">
-            <div class="book-cover">📙</div>
-            <div class="book-title">학급긍정훈육법</div>
-            <div class="book-author">제인 넬슨 외 저 | 에듀니티</div>
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/AwbGvuYe" alt="레지오 에밀리아 시립 유아학교와 영유아센터 지침"></div>
+            <div class="book-title">레지오 에밀리아 시립 유아학교와 영유아센터 지침</div>
+            <div class="book-author">레지오 에밀리아</div>
             <div class="book-description">
-              처벌도 허용도 아닌 제3의 교육방식. 아들러 심리학에 기반한 실용적 학급경영 가이드.
+              세계적으로 인정받는 레지오 에밀리아 접근법의 공식 지침서. 교육 철학과 실천의 기초를 다지는 필독서.
             </div>
             <div class="book-tags">
-              <span class="book-tag">#학급경영</span>
-              <span class="book-tag">#생활지도</span>
-              <span class="book-tag">#긍정훈육</span>
+              <span class="book-tag">#레지오에밀리아</span>
+              <span class="book-tag">#교육철학</span>
+              <span class="book-tag">#영유아교육</span>
             </div>
             <div class="book-actions">
               <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
@@ -6659,16 +6662,16 @@ app.get('/books', (c) => {
 
           <!-- Book Card 4 -->
           <div class="book-card">
-            <div class="book-cover">📕</div>
-            <div class="book-title">교실이 없는 시대가 온다</div>
-            <div class="book-author">정제영 저 | 쌤앤파커스</div>
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/KCllkQiC" alt="모든 것에 그림자가 있었어요 개미만 빼고"></div>
+            <div class="book-title">모든 것에 그림자가 있었어요 개미만 빼고</div>
+            <div class="book-author">레지오 칠드런</div>
             <div class="book-description">
-              AI 시대, 교육의 미래를 예측하고 교사의 새로운 역할을 제시하는 미래교육 가이드북.
+              어린이의 호기심과 탐구를 통해 빛과 그림자를 배우는 과정. 레지오 에밀리아 프로젝트의 생생한 기록.
             </div>
             <div class="book-tags">
-              <span class="book-tag">#미래교육</span>
-              <span class="book-tag">#에듀테크</span>
-              <span class="book-tag">#AI교육</span>
+              <span class="book-tag">#프로젝트수업</span>
+              <span class="book-tag">#과학탐구</span>
+              <span class="book-tag">#창의성</span>
             </div>
             <div class="book-actions">
               <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
@@ -6678,16 +6681,16 @@ app.get('/books', (c) => {
 
           <!-- Book Card 5 -->
           <div class="book-card">
-            <div class="book-cover">📓</div>
-            <div class="book-title">우리는 왜 질문하지 않는가</div>
-            <div class="book-author">한국교육연구네트워크 저 | 살림터</div>
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/vNykUMeD" alt="어린이와 자연 사이의 벽을 허물다 : 만나고 놀아하며"></div>
+            <div class="book-title">어린이와 자연 사이의 벽을 허물다</div>
+            <div class="book-author">한솔어린이보육재단 도담도담이야기 III</div>
             <div class="book-description">
-              한국 교육의 근본적 문제를 진단하고, 질문이 살아있는 교실을 만들기 위한 실천방법을 제시.
+              어린이와 자연의 만남을 통해 환경교육의 진정한 의미를 탐구하고, 생태적 감수성을 키우는 방법을 제시합니다.
             </div>
             <div class="book-tags">
-              <span class="book-tag">#질문</span>
-              <span class="book-tag">#토론수업</span>
-              <span class="book-tag">#교육혁신</span>
+              <span class="book-tag">#환경교육</span>
+              <span class="book-tag">#자연탐구</span>
+              <span class="book-tag">#생태교육</span>
             </div>
             <div class="book-actions">
               <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
@@ -6697,16 +6700,111 @@ app.get('/books', (c) => {
 
           <!-- Book Card 6 -->
           <div class="book-card">
-            <div class="book-cover">📔</div>
-            <div class="book-title">교사를 위한 감정코칭</div>
-            <div class="book-author">최성애, 조벽 저 | 해냄</div>
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/C4LRsUUI" alt="지켜보는 육아 예주는 육아에서 지켜보는 육아로"></div>
+            <div class="book-title">지켜보는 육아 : 예주는 육아에서 지켜보는 육아로</div>
+            <div class="book-author">호지모리 해이지</div>
             <div class="book-description">
-              학생과 교사 자신의 감정을 이해하고 다루는 법. 관계의 질을 높이는 감정코칭 실천서.
+              일본의 유명 유아교육학자가 제시하는 새로운 육아 패러다임. 예측과 통제가 아닌 관찰과 공감에 기반한 육아.
             </div>
             <div class="book-tags">
-              <span class="book-tag">#감정코칭</span>
-              <span class="book-tag">#상담</span>
-              <span class="book-tag">#관계맺기</span>
+              <span class="book-tag">#영유아교육</span>
+              <span class="book-tag">#관찰</span>
+              <span class="book-tag">#공감</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+
+          <!-- Book Card 7 -->
+          <div class="book-card">
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/5ComJgPM" alt="MIMAMORU 지켜보는 보육"></div>
+            <div class="book-title">MIMAMORU 지켜보는 보육</div>
+            <div class="book-author">호지모리 해이지</div>
+            <div class="book-description">
+              아이들을 믿고 기다리는 보육. 일본 유아교육 전문가가 제시하는 아이 중심 교육의 핵심 가치와 실천 방법.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#보육철학</span>
+              <span class="book-tag">#아이존중</span>
+              <span class="book-tag">#기다림</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+
+          <!-- Book Card 8 -->
+          <div class="book-card">
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/pWeg4KaQ" alt="문의 만남 마음의 연결 : 공간의 함께를 넘어"></div>
+            <div class="book-title">문의 만남 마음의 연결 : 공간의 함께를 넘어</div>
+            <div class="book-author">한솔어린이보육재단 도담도담이야기 IV</div>
+            <div class="book-description">
+              물리적 공간을 넘어 진정한 마음의 연결을 만드는 방법. 어린이집 공동체성과 관계 형성의 새로운 관점.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#공동체</span>
+              <span class="book-tag">#관계</span>
+              <span class="book-tag">#공간</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+
+          <!-- Book Card 9 -->
+          <div class="book-card">
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/uoRCvYUl" alt="박선과 나눔의 순환을 통한 배움 : 아틀리에 정신과 함께놀이"></div>
+            <div class="book-title">박선과 나눔의 순환을 통한 배움</div>
+            <div class="book-author">한솔어린이보육재단 도담도담이야기 II</div>
+            <div class="book-description">
+              레지오 에밀리아의 아틀리에 정신을 바탕으로 한 창의적 배움의 과정. 나눔과 순환을 통한 공동체 학습.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#아틀리에</span>
+              <span class="book-tag">#창의성</span>
+              <span class="book-tag">#협력학습</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+
+          <!-- Book Card 10 -->
+          <div class="book-card">
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/g1iM8fk0" alt="UTOPIE QUOTIDIANE 일상속 유토피아"></div>
+            <div class="book-title">UTOPIE QUOTIDIANE 일상속 유토피아</div>
+            <div class="book-author">레지오 칠드런</div>
+            <div class="book-description">
+              레지오 에밀리아 유아학교의 일상 속 작은 순간들이 어떻게 아름다운 배움으로 이어지는지 보여주는 영상 다큐멘터리 북.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#레지오에밀리아</span>
+              <span class="book-tag">#일상의배움</span>
+              <span class="book-tag">#다큐멘터리</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+
+          <!-- Book Card 11 -->
+          <div class="book-card">
+            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/DDvXMaZk" alt="한솔영유아교육과정 총론"></div>
+            <div class="book-title">한솔영유아교육과정 총론</div>
+            <div class="book-author">한솔어린이보육재단</div>
+            <div class="book-description">
+              한솔영유아교육과정의 철학과 실천 방향을 종합적으로 정리한 교육과정 가이드북. 영유아교육의 전체 그림을 그립니다.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#교육과정</span>
+              <span class="book-tag">#영유아교육</span>
+              <span class="book-tag">#교육철학</span>
             </div>
             <div class="book-actions">
               <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>

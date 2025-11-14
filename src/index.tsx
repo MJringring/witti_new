@@ -382,6 +382,175 @@ app.get('/api/auth/me', async (c) => {
   }
 })
 
+// ============================================
+// 결제 API
+// ============================================
+
+// 결제 생성
+app.post('/api/payment/create', async (c) => {
+  try {
+    const authHeader = c.req.header('Authorization')
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return c.json({ success: false, message: '인증 필요' }, 401)
+    }
+    
+    const token = authHeader.substring(7)
+    const payload = await verifyToken(token, JWT_SECRET)
+    if (!payload) {
+      return c.json({ success: false, message: '유효하지 않은 토큰' }, 401)
+    }
+    
+    const { order_id, amount, payment_method, items } = await c.req.json()
+    const { DB } = c.env
+    
+    // 결제 기록 생성
+    const paymentResult = await DB.prepare(`
+      INSERT INTO payments (user_id, order_id, amount, payment_method, payment_status, paid_at)
+      VALUES (?, ?, ?, ?, 'completed', datetime('now'))
+    `).bind(payload.userId, order_id, amount, payment_method).run()
+    
+    const paymentId = paymentResult.meta.last_row_id
+    
+    // 수강 내역 생성
+    for (const item of items) {
+      await DB.prepare(`
+        INSERT INTO enrollments (user_id, class_id, payment_id, status, enrolled_at)
+        VALUES (?, ?, ?, 'enrolled', datetime('now'))
+      `).bind(payload.userId, item.id, paymentId).run()
+    }
+    
+    return c.json({ 
+      success: true, 
+      message: '결제 완료',
+      payment_id: paymentId,
+      order_id 
+    })
+  } catch (error) {
+    console.error('Payment error:', error)
+    return c.json({ 
+      success: false, 
+      message: '결제 처리 실패',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, 500)
+  }
+})
+
+// 내 수강내역 조회
+app.get('/api/my/enrollments', async (c) => {
+  try {
+    const authHeader = c.req.header('Authorization')
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return c.json({ success: false, message: '인증 필요' }, 401)
+    }
+    
+    const token = authHeader.substring(7)
+    const payload = await verifyToken(token, JWT_SECRET)
+    if (!payload) {
+      return c.json({ success: false, message: '유효하지 않은 토큰' }, 401)
+    }
+    
+    const { DB } = c.env
+    const { results } = await DB.prepare(`
+      SELECT 
+        e.id, e.status, e.enrolled_at, e.completed_at,
+        c.id as class_id, c.title, c.instructor_name, c.duration, c.thumbnail_icon
+      FROM enrollments e
+      JOIN classes c ON e.class_id = c.id
+      WHERE e.user_id = ?
+      ORDER BY e.enrolled_at DESC
+    `).bind(payload.userId).all()
+    
+    return c.json({ success: true, enrollments: results })
+  } catch (error) {
+    return c.json({ success: false, error: error instanceof Error ? error.message : 'Unknown error' }, 500)
+  }
+})
+
+// 내 결제내역 조회
+app.get('/api/my/payments', async (c) => {
+  try {
+    const authHeader = c.req.header('Authorization')
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return c.json({ success: false, message: '인증 필요' }, 401)
+    }
+    
+    const token = authHeader.substring(7)
+    const payload = await verifyToken(token, JWT_SECRET)
+    if (!payload) {
+      return c.json({ success: false, message: '유효하지 않은 토큰' }, 401)
+    }
+    
+    const { DB } = c.env
+    const { results } = await DB.prepare(`
+      SELECT id, order_id, amount, payment_method, payment_status, paid_at, created_at
+      FROM payments
+      WHERE user_id = ?
+      ORDER BY created_at DESC
+    `).bind(payload.userId).all()
+    
+    return c.json({ success: true, payments: results })
+  } catch (error) {
+    return c.json({ success: false, error: error instanceof Error ? error.message : 'Unknown error' }, 500)
+  }
+})
+
+// ============================================
+// 클래스 API
+// ============================================
+
+// 모든 클래스 조회
+app.get('/api/classes', async (c) => {
+  try {
+    const { DB } = c.env
+    const { results } = await DB.prepare(`
+      SELECT id, title, description, instructor_name, instructor_role, 
+             price, duration, thumbnail_icon, rating, student_count, created_at
+      FROM classes
+      ORDER BY rating DESC, student_count DESC
+    `).all()
+    
+    return c.json({ 
+      success: true,
+      count: results.length,
+      classes: results 
+    })
+  } catch (error) {
+    return c.json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, 500)
+  }
+})
+
+// 특정 클래스 상세 조회
+app.get('/api/classes/:id', async (c) => {
+  try {
+    const { DB } = c.env
+    const id = c.req.param('id')
+    
+    const { results } = await DB.prepare(`
+      SELECT * FROM classes WHERE id = ?
+    `).bind(id).all()
+    
+    if (results.length === 0) {
+      return c.json({ 
+        success: false, 
+        error: 'Class not found' 
+      }, 404)
+    }
+    
+    return c.json({ 
+      success: true,
+      class: results[0]
+    })
+  } catch (error) {
+    return c.json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, 500)
+  }
+})
+
 // Main page route
 app.get('/', (c) => {
   return c.html(`
@@ -2672,7 +2841,7 @@ app.get('/tools', (c) => {
 })
 
 // MyWITTI page route - Personal dashboard with profile, stats, and growth tree
-app.get('/mywitti', (c) => {
+app.get('/mywitti', async (c) => {
   return c.html(`
     <!DOCTYPE html>
     <html lang="ko">
@@ -3550,6 +3719,354 @@ app.get('/login', (c) => {
             submitBtn.textContent = '로그인';
           }
         });
+      </script>
+    </body>
+    </html>
+  `)
+})
+
+// 클래스 상세 페이지
+app.get('/class/:id', async (c) => {
+  const classId = c.req.param('id')
+  
+  // 클래스 정보 조회
+  const { DB } = c.env
+  const { results } = await DB.prepare(`
+    SELECT * FROM classes WHERE id = ?
+  `).bind(classId).all()
+  
+  if (results.length === 0) {
+    return c.html('<h1>클래스를 찾을 수 없습니다</h1>')
+  }
+  
+  const classInfo = results[0] as any
+  
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>\${classInfo.title} - WITTI</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+      <style>
+        .class-detail { max-width: 1000px; margin: 2rem auto; padding: 0 2rem; }
+        .class-header { background: white; padding: 3rem; border-radius: 16px; margin-bottom: 2rem; }
+        .class-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .class-meta { display: flex; gap: 2rem; margin: 1.5rem 0; color: #666; }
+        .class-meta span { display: flex; align-items: center; gap: 0.5rem; }
+        .class-price { font-size: 2rem; font-weight: 700; color: #ff8566; margin: 1rem 0; }
+        .class-content { background: white; padding: 3rem; border-radius: 16px; margin-bottom: 2rem; }
+        .enroll-btn { 
+          width: 100%; padding: 18px; background: #ff8566; color: white; 
+          border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 700; 
+          cursor: pointer; transition: all 0.2s; margin-top: 2rem;
+        }
+        .enroll-btn:hover { background: #ff6b4a; transform: translateY(-2px); }
+      </style>
+    </head>
+    <body>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white;">
+        <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
+        <nav style="display: flex; gap: 2rem;">
+          <a href="/">홈</a>
+          <a href="/login">로그인</a>
+        </nav>
+      </header>
+
+      <div class="class-detail">
+        <div class="class-header">
+          <div class="class-icon">\${classInfo.thumbnail_icon}</div>
+          <h1>\${classInfo.title}</h1>
+          <div class="class-meta">
+            <span>⭐ \${classInfo.rating}</span>
+            <span>👥 \${classInfo.student_count}명 수강</span>
+            <span>⏱️ \${classInfo.duration}분</span>
+          </div>
+          <div class="class-price">\${classInfo.price.toLocaleString()}원</div>
+          <p style="color: #666; font-size: 1.1rem; line-height: 1.6; margin-top: 1rem;">
+            \${classInfo.description}
+          </p>
+          <button class="enroll-btn" onclick="enrollClass(\${classInfo.id}, '\${classInfo.title}', \${classInfo.price})">
+            수강 신청하기
+          </button>
+        </div>
+
+        <div class="class-content">
+          <h2>강사 소개</h2>
+          <p style="color: #ff8566; font-weight: 600; margin: 1rem 0;">
+            \${classInfo.instructor_name} (\${classInfo.instructor_role === 'teacher' ? '교사' : classInfo.instructor_role === 'counselor' ? '상담사' : '전문가'})
+          </p>
+          <p>교육 현장에서 \${classInfo.student_count}명 이상의 선생님들과 함께한 경험을 바탕으로 실용적인 노하우를 공유합니다.</p>
+        </div>
+      </div>
+
+      <script>
+        function enrollClass(classId, title, price) {
+          const token = localStorage.getItem('witti_token');
+          if (!token) {
+            if (confirm('로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?')) {
+              window.location.href = '/login';
+            }
+            return;
+          }
+          
+          // 장바구니에 추가 (localStorage)
+          const cart = JSON.parse(localStorage.getItem('witti_cart') || '[]');
+          
+          // 이미 장바구니에 있는지 확인
+          if (cart.find(item => item.id === classId)) {
+            alert('이미 장바구니에 담긴 클래스입니다.');
+            if (confirm('장바구니로 이동하시겠습니까?')) {
+              window.location.href = '/cart';
+            }
+            return;
+          }
+          
+          cart.push({ id: classId, title, price });
+          localStorage.setItem('witti_cart', JSON.stringify(cart));
+          
+          if (confirm('장바구니에 담았습니다. 결제 페이지로 이동하시겠습니까?')) {
+            window.location.href = '/checkout';
+          }
+        }
+      </script>
+    </body>
+    </html>
+  `)
+})
+
+// 장바구니 페이지
+app.get('/cart', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <title>장바구니 - WITTI</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+      <style>
+        .cart-container { max-width: 800px; margin: 2rem auto; padding: 0 2rem; }
+        .cart-item { background: white; padding: 2rem; border-radius: 12px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .cart-item h3 { margin: 0; color: #1a1a1a; }
+        .cart-item .price { font-size: 1.5rem; font-weight: 700; color: #ff8566; }
+        .remove-btn { background: #ff4444; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin-left: 1rem; }
+        .cart-summary { background: white; padding: 2rem; border-radius: 12px; margin-top: 2rem; }
+        .checkout-btn { width: 100%; padding: 16px; background: #ff8566; color: white; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 700; cursor: pointer; margin-top: 1rem; }
+        .empty-cart { text-align: center; padding: 4rem 2rem; color: #999; }
+      </style>
+    </head>
+    <body>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white;">
+        <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
+      </header>
+
+      <div class="cart-container">
+        <h1>장바구니</h1>
+        <div id="cartItems"></div>
+        <div id="cartSummary" style="display:none;" class="cart-summary">
+          <h2>결제 정보</h2>
+          <div style="display: flex; justify-content: space-between; margin: 1rem 0; font-size: 1.5rem; font-weight: 700;">
+            <span>총 금액</span>
+            <span id="totalPrice" style="color: #ff8566;">0원</span>
+          </div>
+          <button class="checkout-btn" onclick="goToCheckout()">결제하기</button>
+        </div>
+        <div id="emptyCart" style="display:none;" class="empty-cart">
+          <p>장바구니가 비어있습니다</p>
+          <button onclick="window.location.href='/'" style="padding: 12px 24px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer;">클래스 둘러보기</button>
+        </div>
+      </div>
+
+      <script>
+        function loadCart() {
+          const cart = JSON.parse(localStorage.getItem('witti_cart') || '[]');
+          const cartItemsEl = document.getElementById('cartItems');
+          const cartSummaryEl = document.getElementById('cartSummary');
+          const emptyCartEl = document.getElementById('emptyCart');
+          
+          if (cart.length === 0) {
+            emptyCartEl.style.display = 'block';
+            return;
+          }
+          
+          cartSummaryEl.style.display = 'block';
+          
+          let total = 0;
+          cartItemsEl.innerHTML = cart.map((item, index) => {
+            total += item.price;
+            return \`
+              <div class="cart-item">
+                <div>
+                  <h3>\${item.title}</h3>
+                </div>
+                <div style="display: flex; align-items: center;">
+                  <span class="price">\${item.price.toLocaleString()}원</span>
+                  <button class="remove-btn" onclick="removeFromCart(\${index})">삭제</button>
+                </div>
+              </div>
+            \`;
+          }).join('');
+          
+          document.getElementById('totalPrice').textContent = total.toLocaleString() + '원';
+        }
+        
+        function removeFromCart(index) {
+          const cart = JSON.parse(localStorage.getItem('witti_cart') || '[]');
+          cart.splice(index, 1);
+          localStorage.setItem('witti_cart', JSON.stringify(cart));
+          loadCart();
+        }
+        
+        function goToCheckout() {
+          window.location.href = '/checkout';
+        }
+        
+        loadCart();
+      </script>
+    </body>
+    </html>
+  `)
+})
+
+// 결제 페이지 (7-8단계 통합)
+app.get('/checkout', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <title>결제하기 - WITTI</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+      <style>
+        .checkout-container { max-width: 800px; margin: 2rem auto; padding: 0 2rem; }
+        .checkout-section { background: white; padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; }
+        .checkout-section h2 { margin-top: 0; color: #1a1a1a; }
+        .order-item { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid #eee; }
+        .payment-methods { display: grid; gap: 1rem; margin-top: 1rem; }
+        .payment-method { padding: 1rem; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .payment-method.selected { border-color: #ff8566; background: #fff5f3; }
+        .pay-btn { width: 100%; padding: 18px; background: #ff8566; color: white; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 700; cursor: pointer; }
+        .pay-btn:disabled { background: #ccc; cursor: not-allowed; }
+      </style>
+    </head>
+    <body>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white;">
+        <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
+      </header>
+
+      <div class="checkout-container">
+        <h1>결제하기</h1>
+        
+        <div class="checkout-section">
+          <h2>주문 상품</h2>
+          <div id="orderItems"></div>
+          <div style="display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid #eee; font-size: 1.3rem; font-weight: 700;">
+            <span>총 결제 금액</span>
+            <span id="totalAmount" style="color: #ff8566;">0원</span>
+          </div>
+        </div>
+
+        <div class="checkout-section">
+          <h2>결제 수단</h2>
+          <div class="payment-methods">
+            <div class="payment-method selected" onclick="selectPayment('card')" data-method="card">
+              💳 신용/체크카드
+            </div>
+            <div class="payment-method" onclick="selectPayment('transfer')" data-method="transfer">
+              🏦 계좌이체
+            </div>
+            <div class="payment-method" onclick="selectPayment('kakao')" data-method="kakao">
+              💬 카카오페이
+            </div>
+          </div>
+        </div>
+
+        <button class="pay-btn" onclick="processPayment()">결제하기</button>
+      </div>
+
+      <script>
+        let selectedMethod = 'card';
+        let totalPrice = 0;
+        
+        function loadOrderItems() {
+          const cart = JSON.parse(localStorage.getItem('witti_cart') || '[]');
+          if (cart.length === 0) {
+            alert('장바구니가 비어있습니다');
+            window.location.href = '/';
+            return;
+          }
+          
+          const orderItemsEl = document.getElementById('orderItems');
+          totalPrice = 0;
+          
+          orderItemsEl.innerHTML = cart.map(item => {
+            totalPrice += item.price;
+            return \`
+              <div class="order-item">
+                <span>\${item.title}</span>
+                <span style="font-weight: 600;">\${item.price.toLocaleString()}원</span>
+              </div>
+            \`;
+          }).join('');
+          
+          document.getElementById('totalAmount').textContent = totalPrice.toLocaleString() + '원';
+        }
+        
+        function selectPayment(method) {
+          selectedMethod = method;
+          document.querySelectorAll('.payment-method').forEach(el => {
+            el.classList.remove('selected');
+          });
+          document.querySelector(\`[data-method="\${method}"]\`).classList.add('selected');
+        }
+        
+        async function processPayment() {
+          const token = localStorage.getItem('witti_token');
+          if (!token) {
+            alert('로그인이 필요합니다');
+            window.location.href = '/login';
+            return;
+          }
+          
+          const cart = JSON.parse(localStorage.getItem('witti_cart') || '[]');
+          const orderId = 'ORDER-' + Date.now();
+          
+          try {
+            const response = await fetch('/api/payment/create', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': \`Bearer \${token}\`
+              },
+              body: JSON.stringify({
+                order_id: orderId,
+                amount: totalPrice,
+                payment_method: selectedMethod,
+                items: cart
+              })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+              // 장바구니 비우기
+              localStorage.removeItem('witti_cart');
+              alert('결제가 완료되었습니다!');
+              window.location.href = '/mywitti';
+            } else {
+              alert(data.message || '결제에 실패했습니다');
+            }
+          } catch (error) {
+            console.error('Payment error:', error);
+            alert('결제 처리 중 오류가 발생했습니다');
+          }
+        }
+        
+        loadOrderItems();
       </script>
     </body>
     </html>

@@ -884,6 +884,7 @@ app.get('/learn', (c) => {
       <title>WITTI Learn - 실전형 교사 강의</title>
       <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
       <link rel="stylesheet" href="/static/style.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     </head>
     <body>
 
@@ -1028,17 +1029,17 @@ app.get('/learn', (c) => {
       <section id="content">
         <h3>📄 실무 꿀팁 리포트</h3>
         <div class="cards">
-          <div class="card" onclick="alert('리포트 다운로드')">
+          <div class="card" onclick="downloadReport('checklist')">
             📊 <b>2025 부모면담 체크리스트</b><br>
             <small>PDF 다운로드 | 567회</small><br>
             <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
           </div>
-          <div class="card" onclick="alert('리포트 다운로드')">
+          <div class="card" onclick="downloadReport('playlog')">
             📝 <b>놀이일지 작성 가이드</b><br>
             <small>PDF 다운로드 | 892회</small><br>
             <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
           </div>
-          <div class="card" onclick="alert('리포트 다운로드')">
+          <div class="card" onclick="downloadReport('aitools')">
             💡 <b>AI 도구 활용 매뉴얼</b><br>
             <small>PDF 다운로드 | 1.2K회</small><br>
             <button style="margin-top: 0.5rem; padding: 6px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
@@ -1134,6 +1135,141 @@ app.get('/learn', (c) => {
       <footer>
         <p>© 2025 WITTI | Learn smarter, grow warmer.</p>
       </footer>
+
+      <script>
+        // PDF 다운로드 함수
+        function downloadReport(reportType) {
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF();
+          
+          // 한글 폰트 설정을 위한 기본 설정
+          doc.setFont("helvetica");
+          doc.setFontSize(16);
+          
+          // 리포트별 콘텐츠 정의
+          const reports = {
+            checklist: {
+              title: "2025 부모면담 체크리스트",
+              filename: "2025_부모면담_체크리스트.pdf",
+              content: [
+                { type: "title", text: "2025 부모면담 체크리스트", y: 20 },
+                { type: "line", y: 28 },
+                { type: "section", text: "면담 전 준비사항", y: 40 },
+                { type: "item", text: "- 아동 관찰 기록 정리", y: 50 },
+                { type: "item", text: "- 발달 평가 자료 준비", y: 58 },
+                { type: "item", text: "- 학부모 질문 사항 예상", y: 66 },
+                { type: "item", text: "- 면담 장소 및 시간 확인", y: 74 },
+                { type: "item", text: "- 개인정보 보호 서약서 준비", y: 82 },
+                { type: "section", text: "면담 중 체크리스트", y: 100 },
+                { type: "item", text: "- 긍정적인 첫인상 만들기", y: 110 },
+                { type: "item", text: "- 아동의 강점 먼저 이야기하기", y: 118 },
+                { type: "item", text: "- 구체적인 예시 들기", y: 126 },
+                { type: "item", text: "- 학부모 의견 경청하기", y: 134 },
+                { type: "item", text: "- 개선 방향 함께 논의하기", y: 142 },
+                { type: "item", text: "- 다음 면담 일정 안내", y: 150 },
+                { type: "section", text: "면담 후 정리사항", y: 168 },
+                { type: "item", text: "- 면담 내용 기록", y: 178 },
+                { type: "item", text: "- 합의된 사항 정리", y: 186 },
+                { type: "item", text: "- 후속 조치 계획 수립", y: 194 },
+                { type: "item", text: "- 학부모 감사 메시지 발송", y: 202 },
+                { type: "footer", text: "WITTI | 교사 성장 플랫폼", y: 280 }
+              ]
+            },
+            playlog: {
+              title: "놀이일지 작성 가이드",
+              filename: "놀이일지_작성_가이드.pdf",
+              content: [
+                { type: "title", text: "놀이일지 작성 가이드", y: 20 },
+                { type: "line", y: 28 },
+                { type: "section", text: "관찰 포인트", y: 40 },
+                { type: "item", text: "- 놀이 주제 및 활동 내용", y: 50 },
+                { type: "item", text: "- 아동의 언어적/비언어적 표현", y: 58 },
+                { type: "item", text: "- 또래와의 상호작용", y: 66 },
+                { type: "item", text: "- 문제 해결 과정", y: 74 },
+                { type: "item", text: "- 창의적 표현 방식", y: 82 },
+                { type: "section", text: "기록 작성 팁", y: 100 },
+                { type: "item", text: "- 객관적 사실 중심으로 기록", y: 110 },
+                { type: "item", text: "- 구체적인 상황과 대화 내용 포함", y: 118 },
+                { type: "item", text: "- 발달 영역 연계하여 분석", y: 126 },
+                { type: "item", text: "- 교사의 상호작용 방법 기록", y: 134 },
+                { type: "section", text: "활용 방법", y: 152 },
+                { type: "item", text: "- 개별 아동 발달 평가 자료", y: 162 },
+                { type: "item", text: "- 학부모 상담 자료", y: 170 },
+                { type: "item", text: "- 교육과정 계획 수립", y: 178 },
+                { type: "item", text: "- 교사 성찰 자료", y: 186 },
+                { type: "footer", text: "WITTI | 교사 성장 플랫폼", y: 280 }
+              ]
+            },
+            aitools: {
+              title: "AI 도구 활용 매뉴얼",
+              filename: "AI_도구_활용_매뉴얼.pdf",
+              content: [
+                { type: "title", text: "AI 도구 활용 매뉴얼", y: 20 },
+                { type: "line", y: 28 },
+                { type: "section", text: "AI 도구 종류", y: 40 },
+                { type: "item", text: "- 부모면담 요약기", y: 50 },
+                { type: "item", text: "- 일일일지 자동작성", y: 58 },
+                { type: "item", text: "- 성장 리포트 생성기", y: 66 },
+                { type: "item", text: "- 놀이관찰 분석기", y: 74 },
+                { type: "section", text: "활용 단계", y: 92 },
+                { type: "item", text: "1. 도구 선택 및 접속", y: 102 },
+                { type: "item", text: "2. 필요한 정보 입력", y: 110 },
+                { type: "item", text: "3. AI 분석 결과 확인", y: 118 },
+                { type: "item", text: "4. 내용 수정 및 보완", y: 126 },
+                { type: "item", text: "5. 저장 및 활용", y: 134 },
+                { type: "section", text: "효과적 활용 팁", y: 152 },
+                { type: "item", text: "- 구체적이고 명확한 정보 입력", y: 162 },
+                { type: "item", text: "- AI 결과는 참고자료로 활용", y: 170 },
+                { type: "item", text: "- 교사의 전문성과 결합", y: 178 },
+                { type: "item", text: "- 개인정보 보호 준수", y: 186 },
+                { type: "section", text: "시간 절약 효과", y: 204 },
+                { type: "item", text: "- 면담 기록: 90% 시간 단축", y: 214 },
+                { type: "item", text: "- 일지 작성: 80% 시간 단축", y: 222 },
+                { type: "item", text: "- 리포트 생성: 85% 시간 단축", y: 230 },
+                { type: "footer", text: "WITTI | 교사 성장 플랫폼", y: 280 }
+              ]
+            }
+          };
+          
+          const report = reports[reportType];
+          if (!report) {
+            alert('리포트를 찾을 수 없습니다.');
+            return;
+          }
+          
+          // 콘텐츠 렌더링
+          report.content.forEach(item => {
+            if (item.type === 'title') {
+              doc.setFontSize(20);
+              doc.setFont("helvetica", "bold");
+              doc.text(item.text, 105, item.y, { align: 'center' });
+            } else if (item.type === 'line') {
+              doc.setLineWidth(0.5);
+              doc.line(20, item.y, 190, item.y);
+            } else if (item.type === 'section') {
+              doc.setFontSize(14);
+              doc.setFont("helvetica", "bold");
+              doc.text(item.text, 20, item.y);
+            } else if (item.type === 'item') {
+              doc.setFontSize(11);
+              doc.setFont("helvetica", "normal");
+              doc.text(item.text, 25, item.y);
+            } else if (item.type === 'footer') {
+              doc.setFontSize(10);
+              doc.setFont("helvetica", "italic");
+              doc.text(item.text, 105, item.y, { align: 'center' });
+            }
+          });
+          
+          // PDF 다운로드
+          doc.save(report.filename);
+          
+          // 다운로드 횟수 증가 알림 (선택사항)
+          setTimeout(() => {
+            alert('PDF가 다운로드되었습니다! ✅\\n\\n다운로드한 리포트를 실무에 활용해보세요.');
+          }, 100);
+        }
+      </script>
 
     </body>
     </html>

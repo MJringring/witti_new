@@ -581,13 +581,125 @@ app.get('/', (c) => {
       <title>WITTI - 교사의 하루를 덜어주는 플랫폼</title>
       <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
       <link rel="stylesheet" href="/static/style.css">
+      <style>
+        /* 반응형 헤더 스타일 */
+        .mobile-menu-btn {
+          display: none;
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: 0.5rem;
+        }
+        
+        .mobile-nav {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 1000;
+        }
+        
+        .mobile-nav.active {
+          display: block;
+        }
+        
+        .mobile-nav-content {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 80%;
+          max-width: 300px;
+          height: 100%;
+          background: white;
+          padding: 2rem 1.5rem;
+          box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+          transform: translateX(100%);
+          transition: transform 0.3s ease;
+        }
+        
+        .mobile-nav.active .mobile-nav-content {
+          transform: translateX(0);
+        }
+        
+        .mobile-nav-close {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: 0.5rem;
+        }
+        
+        .mobile-nav-links {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          margin-top: 3rem;
+        }
+        
+        .mobile-nav-links a {
+          text-decoration: none;
+          color: #333;
+          font-size: 1.2rem;
+          font-weight: 600;
+          padding: 1rem;
+          border-radius: 8px;
+          transition: background 0.2s;
+        }
+        
+        .mobile-nav-links a:hover {
+          background: #f5f5f5;
+        }
+        
+        .mobile-nav-links a.active {
+          color: #ff8566;
+          background: #fff0e6;
+        }
+        
+        .mobile-nav-actions {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          margin-top: 2rem;
+          padding-top: 2rem;
+          border-top: 1px solid #f0f0f0;
+        }
+        
+        @media (max-width: 968px) {
+          .mobile-menu-btn {
+            display: block;
+          }
+          
+          .desktop-nav {
+            display: none !important;
+          }
+          
+          .header-actions {
+            gap: 0.5rem !important;
+          }
+          
+          .header-actions > button {
+            font-size: 1rem !important;
+          }
+          
+          .auth-buttons {
+            display: none !important;
+          }
+        }
+      </style>
     </head>
     <body>
 
-      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0;">
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0; position: relative;">
         <div style="display: flex; align-items: center; gap: 2.5rem;">
           <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
-          <nav style="display: flex; gap: 2rem; align-items: center;">
+          <nav class="desktop-nav" style="display: flex; gap: 2rem; align-items: center;">
             <a href="/" class="active" style="text-decoration: none; color: #ff8566; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #fff0e6; transition: all 0.3s;">New</a>
             <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
             <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
@@ -595,7 +707,8 @@ app.get('/', (c) => {
             <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
           </nav>
         </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
+        <div class="header-actions" style="display: flex; gap: 1rem; align-items: center;">
+          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
           <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
             🛒
             <span id="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
@@ -609,35 +722,78 @@ app.get('/', (c) => {
             <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
             <button id="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
-          <div id="authMenu" style="display: flex; gap: 0.5rem;">
+          <div id="authMenu" class="auth-buttons" style="display: flex; gap: 0.5rem;">
             <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
             <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
           </div>
         </div>
       </header>
       
+      <!-- 모바일 메뉴 -->
+      <div class="mobile-nav" id="mobileNav" onclick="if(event.target === this) toggleMobileMenu()">
+        <div class="mobile-nav-content">
+          <button class="mobile-nav-close" onclick="toggleMobileMenu()">✕</button>
+          <div class="mobile-nav-links">
+            <a href="/" class="active">New</a>
+            <a href="/learn">Learn</a>
+            <a href="/story">Story</a>
+            <a href="/talk">Talk</a>
+            <a href="/tools">Tools</a>
+          </div>
+          <div class="mobile-nav-actions">
+            <div id="mobileUserMenu" style="display: none; flex-direction: column; gap: 0.5rem;">
+              <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center;">내 강의실</a>
+              <button id="mobileLogoutBtn" style="background: #f5f5f5; border: none; padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%;">로그아웃</button>
+            </div>
+            <div id="mobileAuthMenu" style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center;">로그인</a>
+              <a href="/signup" style="background: #ff8566; color: white; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center;">회원가입</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <script>
+        // 모바일 메뉴 토글
+        function toggleMobileMenu() {
+          const mobileNav = document.getElementById('mobileNav');
+          mobileNav.classList.toggle('active');
+        }
+        
         // 로그인 상태 확인 및 메뉴 표시
         (function() {
           const token = localStorage.getItem('witti_token');
+          
+          // 데스크톱 메뉴
           const userMenu = document.getElementById('userMenu');
           const authMenu = document.getElementById('authMenu');
+          
+          // 모바일 메뉴
+          const mobileUserMenu = document.getElementById('mobileUserMenu');
+          const mobileAuthMenu = document.getElementById('mobileAuthMenu');
           
           if (token) {
             userMenu.style.display = 'flex';
             authMenu.style.display = 'none';
+            mobileUserMenu.style.display = 'flex';
+            mobileAuthMenu.style.display = 'none';
           } else {
             userMenu.style.display = 'none';
             authMenu.style.display = 'flex';
+            mobileUserMenu.style.display = 'none';
+            mobileAuthMenu.style.display = 'flex';
           }
           
-          // 로그아웃 버튼
-          document.getElementById('logoutBtn').addEventListener('click', function() {
+          // 로그아웃 버튼 (데스크톱 + 모바일)
+          const logoutHandler = function() {
             localStorage.removeItem('witti_token');
             localStorage.removeItem('witti_user');
             alert('로그아웃되었습니다.');
             window.location.href = '/';
-          });
+          };
+          
+          document.getElementById('logoutBtn').addEventListener('click', logoutHandler);
+          document.getElementById('mobileLogoutBtn').addEventListener('click', logoutHandler);
           
           // 장바구니 아이템 수 표시
           const cart = JSON.parse(localStorage.getItem('witti_cart') || '[]');

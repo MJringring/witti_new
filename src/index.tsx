@@ -6531,6 +6531,18 @@ app.get('/books', (c) => {
             gap: 1.5rem;
           }
           
+          .book-actions {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 0.5rem !important;
+          }
+          
+          .book-btn {
+            flex: 1 !important;
+            padding: 0.65rem !important;
+            font-size: 0.85rem !important;
+          }
+          
           .booktalk-grid {
             grid-template-columns: 1fr;
           }

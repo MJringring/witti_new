@@ -812,9 +812,12 @@ app.get('/', (c) => {
             
             const viewMode = localStorage.getItem('witti_view_mode') || 'auto';
             
-            // 모바일 기기 감지 (화면 크기 기준)
-            const isMobileDevice = window.innerWidth <= 968;
+            // 모바일 기기 감지 (실제 화면 크기 또는 User Agent)
+            const isMobileScreen = window.screen.width <= 968 || window.innerWidth <= 968;
+            const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isMobileDevice = isMobileScreen || isMobileUA;
             
+            // PC 모드로 전환한 경우에도 모바일 기기면 버튼 표시
             if (isMobileDevice) {
               viewModeToggle.style.display = 'block';
               

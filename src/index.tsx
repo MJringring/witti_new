@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { serveStatic } from 'hono/cloudflare-workers'
 import type { Env } from './types'
+import { hashPassword, isValidEmail, validatePassword, validateName, validatePhone } from './utils/crypto'
 
 const app = new Hono<{ Bindings: Env }>()
 
@@ -122,6 +123,128 @@ app.get('/api/insights', (c) => {
   ]
   
   return c.json({ insights })
+})
+
+// ============================================
+// 회원 인증 API
+// ============================================
+
+// 이메일 중복 체크
+app.post('/api/auth/check-email', async (c) => {
+  try {
+    const { email } = await c.req.json()
+    
+    if (!email || !isValidEmail(email)) {
+      return c.json({ 
+        success: false, 
+        available: false,
+        message: '유효하지 않은 이메일 형식입니다' 
+      }, 400)
+    }
+    
+    const { DB } = c.env
+    const { results } = await DB.prepare(`
+      SELECT id FROM users WHERE email = ? LIMIT 1
+    `).bind(email).all()
+    
+    const available = results.length === 0
+    
+    return c.json({ 
+      success: true,
+      available,
+      message: available ? '사용 가능한 이메일입니다' : '이미 사용 중인 이메일입니다'
+    })
+  } catch (error) {
+    return c.json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, 500)
+  }
+})
+
+// 회원가입
+app.post('/api/auth/signup', async (c) => {
+  try {
+    const { email, password, name, phone } = await c.req.json()
+    
+    // 입력값 검증
+    if (!email || !isValidEmail(email)) {
+      return c.json({ 
+        success: false, 
+        message: '유효하지 않은 이메일 형식입니다' 
+      }, 400)
+    }
+    
+    const passwordValidation = validatePassword(password)
+    if (!passwordValidation.valid) {
+      return c.json({ 
+        success: false, 
+        message: passwordValidation.message 
+      }, 400)
+    }
+    
+    const nameValidation = validateName(name)
+    if (!nameValidation.valid) {
+      return c.json({ 
+        success: false, 
+        message: nameValidation.message 
+      }, 400)
+    }
+    
+    if (phone) {
+      const phoneValidation = validatePhone(phone)
+      if (!phoneValidation.valid) {
+        return c.json({ 
+          success: false, 
+          message: phoneValidation.message 
+        }, 400)
+      }
+    }
+    
+    const { DB } = c.env
+    
+    // 이메일 중복 체크
+    const { results: existingUsers } = await DB.prepare(`
+      SELECT id FROM users WHERE email = ? LIMIT 1
+    `).bind(email).all()
+    
+    if (existingUsers.length > 0) {
+      return c.json({ 
+        success: false, 
+        message: '이미 사용 중인 이메일입니다' 
+      }, 409)
+    }
+    
+    // 비밀번호 해싱
+    const passwordHash = await hashPassword(password)
+    
+    // 사용자 생성
+    const result = await DB.prepare(`
+      INSERT INTO users (email, password_hash, name, phone)
+      VALUES (?, ?, ?, ?)
+    `).bind(email, passwordHash, name, phone || null).run()
+    
+    if (!result.success) {
+      throw new Error('Failed to create user')
+    }
+    
+    return c.json({ 
+      success: true,
+      message: '회원가입이 완료되었습니다',
+      user: {
+        id: result.meta.last_row_id,
+        email,
+        name
+      }
+    }, 201)
+  } catch (error) {
+    console.error('Signup error:', error)
+    return c.json({ 
+      success: false, 
+      message: '회원가입 처리 중 오류가 발생했습니다',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, 500)
+  }
 })
 
 // Main page route
@@ -3283,6 +3406,495 @@ app.get('/onboarding', (c) => {
         <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
       </footer>
 
+    </body>
+    </html>
+  `)
+})
+
+// 회원가입 페이지
+app.get('/signup', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>회원가입 - WITTI</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+      <style>
+        .signup-container {
+          max-width: 480px;
+          margin: 4rem auto;
+          padding: 2rem;
+          background: white;
+          border-radius: 16px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .signup-header {
+          text-align: center;
+          margin-bottom: 2rem;
+        }
+        .signup-header h1 {
+          font-size: 1.8rem;
+          color: #1a1a1a;
+          margin-bottom: 0.5rem;
+        }
+        .signup-header p {
+          color: #666;
+          font-size: 0.95rem;
+        }
+        .form-group {
+          margin-bottom: 1.5rem;
+        }
+        .form-group label {
+          display: block;
+          margin-bottom: 0.5rem;
+          color: #333;
+          font-weight: 600;
+          font-size: 0.95rem;
+        }
+        .form-group label .required {
+          color: #ff8566;
+        }
+        .form-group label .optional {
+          color: #999;
+          font-weight: 400;
+          font-size: 0.85rem;
+        }
+        .form-group input {
+          width: 100%;
+          padding: 12px 16px;
+          border: 2px solid #e0e0e0;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-family: 'Pretendard', sans-serif;
+          transition: all 0.2s;
+        }
+        .form-group input:focus {
+          outline: none;
+          border-color: #ff8566;
+          box-shadow: 0 0 0 3px rgba(255, 133, 102, 0.1);
+        }
+        .form-group input.error {
+          border-color: #ff4444;
+        }
+        .form-group input.success {
+          border-color: #00c087;
+        }
+        .form-message {
+          margin-top: 0.5rem;
+          font-size: 0.85rem;
+          min-height: 1.2rem;
+        }
+        .form-message.error {
+          color: #ff4444;
+        }
+        .form-message.success {
+          color: #00c087;
+        }
+        .password-strength {
+          margin-top: 0.5rem;
+          display: flex;
+          gap: 4px;
+        }
+        .strength-bar {
+          flex: 1;
+          height: 4px;
+          background: #e0e0e0;
+          border-radius: 2px;
+          transition: all 0.3s;
+        }
+        .strength-bar.active {
+          background: #ff8566;
+        }
+        .submit-btn {
+          width: 100%;
+          padding: 14px;
+          background: #ff8566;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+          font-family: 'Pretendard', sans-serif;
+        }
+        .submit-btn:hover:not(:disabled) {
+          background: #ff6b4a;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
+        }
+        .submit-btn:disabled {
+          background: #ccc;
+          cursor: not-allowed;
+        }
+        .login-link {
+          text-align: center;
+          margin-top: 1.5rem;
+          color: #666;
+          font-size: 0.95rem;
+        }
+        .login-link a {
+          color: #ff8566;
+          text-decoration: none;
+          font-weight: 600;
+        }
+        .login-link a:hover {
+          text-decoration: underline;
+        }
+        .loading {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          border: 2px solid #fff;
+          border-top-color: transparent;
+          border-radius: 50%;
+          animation: spin 0.6s linear infinite;
+          margin-right: 8px;
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      </style>
+    </head>
+    <body>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
+        <nav>
+          <a href="/login" style="color: #666; text-decoration: none;">로그인</a>
+        </nav>
+      </header>
+
+      <div class="signup-container">
+        <div class="signup-header">
+          <h1>회원가입</h1>
+          <p>WITTI와 함께 교사의 하루를 더 가볍게</p>
+        </div>
+
+        <form id="signupForm">
+          <div class="form-group">
+            <label>이메일 <span class="required">*</span></label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="example@email.com"
+              autocomplete="email"
+              required
+            >
+            <div class="form-message" id="emailMessage"></div>
+          </div>
+
+          <div class="form-group">
+            <label>비밀번호 <span class="required">*</span></label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="8자 이상, 영문/숫자/특수문자 중 2가지 이상"
+              autocomplete="new-password"
+              required
+            >
+            <div class="password-strength">
+              <div class="strength-bar" id="strength1"></div>
+              <div class="strength-bar" id="strength2"></div>
+              <div class="strength-bar" id="strength3"></div>
+              <div class="strength-bar" id="strength4"></div>
+            </div>
+            <div class="form-message" id="passwordMessage"></div>
+          </div>
+
+          <div class="form-group">
+            <label>비밀번호 확인 <span class="required">*</span></label>
+            <input 
+              type="password" 
+              id="passwordConfirm" 
+              name="passwordConfirm" 
+              placeholder="비밀번호를 다시 입력해주세요"
+              autocomplete="new-password"
+              required
+            >
+            <div class="form-message" id="passwordConfirmMessage"></div>
+          </div>
+
+          <div class="form-group">
+            <label>이름 <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              placeholder="홍길동"
+              autocomplete="name"
+              required
+            >
+            <div class="form-message" id="nameMessage"></div>
+          </div>
+
+          <div class="form-group">
+            <label>전화번호 <span class="optional">(선택)</span></label>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone" 
+              placeholder="010-1234-5678"
+              autocomplete="tel"
+            >
+            <div class="form-message" id="phoneMessage"></div>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">
+            회원가입
+          </button>
+        </form>
+
+        <div class="login-link">
+          이미 계정이 있으신가요? <a href="/login">로그인</a>
+        </div>
+      </div>
+
+      <script>
+        const form = document.getElementById('signupForm');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // 이메일 중복 체크 (디바운스)
+        let emailCheckTimeout;
+        document.getElementById('email').addEventListener('input', function(e) {
+          const email = e.target.value;
+          const messageEl = document.getElementById('emailMessage');
+          
+          clearTimeout(emailCheckTimeout);
+          
+          if (!email) {
+            messageEl.textContent = '';
+            e.target.classList.remove('error', 'success');
+            return;
+          }
+          
+          // 이메일 형식 검증
+          const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+          if (!emailRegex.test(email)) {
+            messageEl.textContent = '올바른 이메일 형식이 아닙니다';
+            messageEl.className = 'form-message error';
+            e.target.classList.add('error');
+            e.target.classList.remove('success');
+            return;
+          }
+          
+          emailCheckTimeout = setTimeout(async () => {
+            try {
+              const response = await fetch('/api/auth/check-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+              });
+              
+              const data = await response.json();
+              
+              if (data.success && data.available) {
+                messageEl.textContent = '✓ 사용 가능한 이메일입니다';
+                messageEl.className = 'form-message success';
+                e.target.classList.remove('error');
+                e.target.classList.add('success');
+              } else {
+                messageEl.textContent = data.message || '이미 사용 중인 이메일입니다';
+                messageEl.className = 'form-message error';
+                e.target.classList.add('error');
+                e.target.classList.remove('success');
+              }
+            } catch (error) {
+              console.error('Email check error:', error);
+            }
+          }, 500);
+        });
+        
+        // 비밀번호 강도 체크
+        document.getElementById('password').addEventListener('input', function(e) {
+          const password = e.target.value;
+          const messageEl = document.getElementById('passwordMessage');
+          
+          if (!password) {
+            messageEl.textContent = '';
+            for (let i = 1; i <= 4; i++) {
+              document.getElementById(\`strength\${i}\`).classList.remove('active');
+            }
+            return;
+          }
+          
+          let strength = 0;
+          if (password.length >= 8) strength++;
+          if (/[a-zA-Z]/.test(password)) strength++;
+          if (/[0-9]/.test(password)) strength++;
+          if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength++;
+          
+          // 강도 표시 업데이트
+          for (let i = 1; i <= 4; i++) {
+            if (i <= strength) {
+              document.getElementById(\`strength\${i}\`).classList.add('active');
+            } else {
+              document.getElementById(\`strength\${i}\`).classList.remove('active');
+            }
+          }
+          
+          // 검증 메시지
+          if (password.length < 8) {
+            messageEl.textContent = '비밀번호는 최소 8자 이상이어야 합니다';
+            messageEl.className = 'form-message error';
+            e.target.classList.add('error');
+          } else {
+            const hasLetter = /[a-zA-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            const complexityCount = [hasLetter, hasNumber, hasSpecial].filter(Boolean).length;
+            
+            if (complexityCount < 2) {
+              messageEl.textContent = '영문, 숫자, 특수문자 중 2가지 이상 포함해주세요';
+              messageEl.className = 'form-message error';
+              e.target.classList.add('error');
+            } else {
+              messageEl.textContent = '✓ 사용 가능한 비밀번호입니다';
+              messageEl.className = 'form-message success';
+              e.target.classList.remove('error');
+              e.target.classList.add('success');
+            }
+          }
+        });
+        
+        // 비밀번호 확인
+        document.getElementById('passwordConfirm').addEventListener('input', function(e) {
+          const password = document.getElementById('password').value;
+          const passwordConfirm = e.target.value;
+          const messageEl = document.getElementById('passwordConfirmMessage');
+          
+          if (!passwordConfirm) {
+            messageEl.textContent = '';
+            e.target.classList.remove('error', 'success');
+            return;
+          }
+          
+          if (password !== passwordConfirm) {
+            messageEl.textContent = '비밀번호가 일치하지 않습니다';
+            messageEl.className = 'form-message error';
+            e.target.classList.add('error');
+            e.target.classList.remove('success');
+          } else {
+            messageEl.textContent = '✓ 비밀번호가 일치합니다';
+            messageEl.className = 'form-message success';
+            e.target.classList.remove('error');
+            e.target.classList.add('success');
+          }
+        });
+        
+        // 이름 검증
+        document.getElementById('name').addEventListener('input', function(e) {
+          const name = e.target.value;
+          const messageEl = document.getElementById('nameMessage');
+          
+          if (!name) {
+            messageEl.textContent = '';
+            e.target.classList.remove('error', 'success');
+            return;
+          }
+          
+          if (name.length < 2) {
+            messageEl.textContent = '이름은 최소 2자 이상이어야 합니다';
+            messageEl.className = 'form-message error';
+            e.target.classList.add('error');
+          } else if (name.length > 50) {
+            messageEl.textContent = '이름은 최대 50자까지 가능합니다';
+            messageEl.className = 'form-message error';
+            e.target.classList.add('error');
+          } else {
+            messageEl.textContent = '✓ 사용 가능한 이름입니다';
+            messageEl.className = 'form-message success';
+            e.target.classList.remove('error');
+            e.target.classList.add('success');
+          }
+        });
+        
+        // 전화번호 검증
+        document.getElementById('phone').addEventListener('input', function(e) {
+          const phone = e.target.value;
+          const messageEl = document.getElementById('phoneMessage');
+          
+          if (!phone) {
+            messageEl.textContent = '';
+            e.target.classList.remove('error', 'success');
+            return;
+          }
+          
+          const phoneRegex = /^[0-9-]+$/;
+          if (!phoneRegex.test(phone)) {
+            messageEl.textContent = '숫자와 하이픈(-)만 입력 가능합니다';
+            messageEl.className = 'form-message error';
+            e.target.classList.add('error');
+            return;
+          }
+          
+          const digitsOnly = phone.replace(/-/g, '');
+          if (digitsOnly.length < 10 || digitsOnly.length > 11) {
+            messageEl.textContent = '올바른 전화번호 형식이 아닙니다';
+            messageEl.className = 'form-message error';
+            e.target.classList.add('error');
+          } else {
+            messageEl.textContent = '✓ 올바른 전화번호 형식입니다';
+            messageEl.className = 'form-message success';
+            e.target.classList.remove('error');
+            e.target.classList.add('success');
+          }
+        });
+        
+        // 폼 제출
+        form.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          const passwordConfirm = document.getElementById('passwordConfirm').value;
+          const name = document.getElementById('name').value;
+          const phone = document.getElementById('phone').value;
+          
+          // 기본 검증
+          if (!email || !password || !name) {
+            alert('필수 항목을 모두 입력해주세요');
+            return;
+          }
+          
+          if (password !== passwordConfirm) {
+            alert('비밀번호가 일치하지 않습니다');
+            return;
+          }
+          
+          // 제출 버튼 비활성화
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span class="loading"></span>처리 중...';
+          
+          try {
+            const response = await fetch('/api/auth/signup', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password, name, phone: phone || undefined })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+              alert('회원가입이 완료되었습니다!\\n로그인 페이지로 이동합니다.');
+              window.location.href = '/login';
+            } else {
+              alert(data.message || '회원가입에 실패했습니다');
+              submitBtn.disabled = false;
+              submitBtn.textContent = '회원가입';
+            }
+          } catch (error) {
+            console.error('Signup error:', error);
+            alert('회원가입 처리 중 오류가 발생했습니다');
+            submitBtn.disabled = false;
+            submitBtn.textContent = '회원가입';
+          }
+        });
+      </script>
     </body>
     </html>
   `)

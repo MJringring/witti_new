@@ -802,7 +802,64 @@ app.get('/', (c) => {
             cartBadge.textContent = cart.length;
             cartBadge.style.display = 'flex';
           }
+          
+          // 뷰 모드 전환 버튼 표시 (모바일에서만)
+          function checkViewMode() {
+            const viewModeToggle = document.getElementById('viewModeToggle');
+            const toggleBtn = document.getElementById('toggleViewMode');
+            const viewMode = localStorage.getItem('witti_view_mode') || 'auto';
+            
+            // 모바일 기기 감지 (화면 크기 기준)
+            const isMobileDevice = window.innerWidth <= 968;
+            
+            if (isMobileDevice) {
+              viewModeToggle.style.display = 'block';
+              
+              // 현재 모드에 따라 버튼 텍스트 변경
+              if (viewMode === 'desktop') {
+                toggleBtn.innerHTML = '📱 모바일 모드로 보기';
+              } else {
+                toggleBtn.innerHTML = '💻 PC 모드로 보기';
+              }
+            } else {
+              viewModeToggle.style.display = 'none';
+            }
+          }
+          
+          // 초기 체크
+          checkViewMode();
+          
+          // 창 크기 변경 시 체크
+          window.addEventListener('resize', checkViewMode);
+          
+          // 저장된 뷰 모드 적용
+          const savedViewMode = localStorage.getItem('witti_view_mode');
+          if (savedViewMode === 'desktop') {
+            const viewport = document.querySelector('meta[name="viewport"]');
+            viewport.setAttribute('content', 'width=1200');
+          }
         })();
+        
+        // 뷰 모드 전환 함수
+        function toggleViewMode() {
+          const viewMode = localStorage.getItem('witti_view_mode') || 'auto';
+          const viewport = document.querySelector('meta[name="viewport"]');
+          
+          if (viewMode === 'desktop') {
+            // 모바일 모드로 전환
+            localStorage.setItem('witti_view_mode', 'auto');
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
+            alert('모바일 모드로 전환되었습니다.');
+          } else {
+            // PC 모드로 전환
+            localStorage.setItem('witti_view_mode', 'desktop');
+            viewport.setAttribute('content', 'width=1200');
+            alert('PC 모드로 전환되었습니다.\\n화면을 확대/축소하여 조절할 수 있습니다.');
+          }
+          
+          // 페이지 새로고침하여 적용
+          window.location.reload();
+        }
       </script>
 
       <section id="hero">
@@ -1013,6 +1070,13 @@ app.get('/', (c) => {
           </div>
         </div>
       </section>
+
+      <!-- 뷰 모드 전환 버튼 (모바일 전용) -->
+      <div id="viewModeToggle" style="display: none; background: #f5f5f5; padding: 1rem; text-align: center; border-top: 1px solid #e0e0e0;">
+        <button id="toggleViewMode" onclick="toggleViewMode()" style="background: #ff8566; color: white; border: none; padding: 0.75rem 2rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+          📱 PC 모드로 보기
+        </button>
+      </div>
 
       <footer style="background: #2e2e2e; color: white; text-align: center; padding: 2rem;">
         <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>

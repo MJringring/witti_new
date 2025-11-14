@@ -1139,6 +1139,18 @@ app.get('/learn', (c) => {
       <script>
         // PDF 다운로드 함수
         function downloadReport(reportType) {
+          // 로그인 체크
+          const token = localStorage.getItem('witti_token');
+          const user = JSON.parse(localStorage.getItem('witti_user') || '{}');
+          
+          if (!token || !user.email) {
+            // 로그인되지 않은 경우
+            if (confirm('리포트 다운로드는 회원 전용 서비스입니다.\\n\\n지금 로그인하시겠습니까?')) {
+              window.location.href = '/login';
+            }
+            return;
+          }
+          
           const { jsPDF } = window.jspdf;
           const doc = new jsPDF();
           

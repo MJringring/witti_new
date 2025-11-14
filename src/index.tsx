@@ -6279,12 +6279,15 @@ app.get('/books', (c) => {
           margin-bottom: 1rem;
           overflow: hidden;
           background: #f5f5f5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         
         .book-cover img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain;
         }
         
         .book-title {

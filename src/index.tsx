@@ -2950,7 +2950,7 @@ app.get('/tools', (c) => {
   `)
 })
 
-// MyWITTI page route - 수강내역 및 결제내역 조회
+// MyWITTI page route - 4개 탭 (대시보드, 내 강의실, 성장 트리, 멘토 매칭)
 app.get('/mywitti', async (c) => {
   return c.html(`
 <!DOCTYPE html>
@@ -2958,7 +2958,7 @@ app.get('/mywitti', async (c) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyWITTI - 내 강의실</title>
+  <title>MyWITTI - 나의 성장 공간</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="stylesheet" href="/static/style.css">
   <style>
@@ -2968,36 +2968,222 @@ app.get('/mywitti', async (c) => {
       padding: 0 2rem;
     }
     
-    .welcome-section {
+    /* 탭 네비게이션 */
+    .tab-navigation {
+      background: white;
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+    }
+    
+    .tab-button {
+      padding: 12px 24px;
+      border: none;
+      background: transparent;
+      color: #666;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    
+    .tab-button:hover {
+      background: #fff0e6;
+      color: #ff8566;
+    }
+    
+    .tab-button.active {
+      background: #ff8566;
+      color: white;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* 프로필 섹션 */
+    .profile-section {
       background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
       border-radius: 20px;
       padding: 2.5rem;
       margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     
-    .welcome-title {
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    
+    .profile-info {
+      flex: 1;
+    }
+    
+    .profile-name {
       font-size: 2rem;
       font-weight: 700;
       color: #333;
       margin-bottom: 0.5rem;
     }
     
-    .welcome-subtitle {
+    .profile-role {
       font-size: 1.1rem;
       color: #666;
+      margin-bottom: 1rem;
+    }
+    
+    .profile-level {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 700;
+      color: #ff8566;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    /* 통계 카드 */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #ff8566;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      font-size: 1.1rem;
+      color: #666;
+      font-weight: 600;
+    }
+    
+    /* 성장 트리 */
+    .growth-tree {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     
     .section-title {
       font-size: 1.8rem;
       font-weight: 700;
       color: #333;
-      margin: 3rem 0 1.5rem 0;
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
     
+    .tree-branches {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      min-height: 300px;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    
+    .tree-branch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .tree-branch:hover {
+      transform: translateY(-8px);
+    }
+    
+    .branch-nodes {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    
+    .tree-node {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .tree-node:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    
+    .tree-node.locked {
+      background: #f0f0f0;
+      opacity: 0.5;
+    }
+    
+    .tree-node.locked::before {
+      content: '🔒';
+      font-size: 1.5rem;
+    }
+    
+    .branch-label {
+      font-weight: 700;
+      color: #333;
+      font-size: 1rem;
+      text-align: center;
+    }
+    
+    /* 내 강의실 스타일 */
     .enrollment-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -3083,6 +3269,7 @@ app.get('/mywitti', async (c) => {
       margin-bottom: 1rem;
       font-size: 0.9rem;
       color: #666;
+      flex-wrap: wrap;
     }
     
     .payment-classes {
@@ -3118,6 +3305,82 @@ app.get('/mywitti', async (c) => {
       color: #999;
     }
     
+    /* 멘토 매칭 */
+    .mentor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .mentor-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+    
+    .mentor-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    
+    .mentor-avatar {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .mentor-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .mentor-role {
+      color: #666;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    
+    .mentor-match {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #4caf50;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .mentor-btn {
+      background: #ff8566;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    
+    .mentor-btn:hover {
+      background: #ff6b47;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
+    }
+    
     .empty-state {
       text-align: center;
       padding: 4rem 2rem;
@@ -3150,6 +3413,22 @@ app.get('/mywitti', async (c) => {
       background: #ff6b47;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
+    }
+    
+    @media (max-width: 968px) {
+      .profile-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .tree-branches {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
@@ -3219,38 +3498,300 @@ app.get('/mywitti', async (c) => {
   </script>
 
   <section id="hero">
-    <h2>내 강의실</h2>
-    <p>수강중인 강의와 결제 내역을 확인하세요</p>
+    <h2>나만의 성장 공간</h2>
+    <p>배움의 기록부터 성취까지, 당신의 성장을 응원합니다</p>
   </section>
 
   <div class="dashboard-container">
-    <!-- Welcome Section -->
-    <div class="welcome-section">
-      <div class="welcome-title" id="userName">환영합니다!</div>
-      <div class="welcome-subtitle">당신의 성장을 응원합니다 🌱</div>
-    </div>
-
-    <!-- 수강중인 강의 섹션 -->
-    <div class="section-title">
-      <span>📚</span>
-      <span>수강중인 강의</span>
-    </div>
-    <div class="enrollment-grid" id="enrollmentList">
-      <div class="empty-state">
-        <div class="empty-state-icon">📭</div>
-        <div class="empty-state-text">로딩 중...</div>
+    <!-- 프로필 섹션 -->
+    <div class="profile-section">
+      <div class="profile-avatar">👩‍🏫</div>
+      <div class="profile-info">
+        <div class="profile-name" id="userName">선생님</div>
+        <div class="profile-role">유치원 교사 · 3년차</div>
+        <div class="profile-level">
+          <span style="font-size: 1.5rem;">⭐</span>
+          <span>Lv.3 주임교사</span>
+        </div>
       </div>
     </div>
 
-    <!-- 결제 내역 섹션 -->
-    <div class="section-title">
-      <span>💳</span>
-      <span>결제 내역</span>
+    <!-- 탭 네비게이션 -->
+    <div class="tab-navigation">
+      <button class="tab-button active" onclick="switchTab('dashboard')">
+        🏠 대시보드
+      </button>
+      <button class="tab-button" onclick="switchTab('classes')">
+        📚 내 강의실
+      </button>
+      <button class="tab-button" onclick="switchTab('growth')">
+        🌳 성장 트리
+      </button>
+      <button class="tab-button" onclick="switchTab('mentor')">
+        💬 멘토 매칭
+      </button>
     </div>
-    <div class="payment-list" id="paymentList">
-      <div class="empty-state">
-        <div class="empty-state-icon">📭</div>
-        <div class="empty-state-text">로딩 중...</div>
+
+    <!-- 탭 1: 대시보드 -->
+    <div id="tab-dashboard" class="tab-content active">
+      <!-- 통계 카드 -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="enrollmentCount">0</div>
+          <div class="stat-label">수강한 강의</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">37</div>
+          <div class="stat-label">공감한 이야기</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">획득한 뱃지</div>
+        </div>
+      </div>
+
+      <!-- 간단한 성장 트리 미리보기 -->
+      <div class="growth-tree">
+        <div class="section-title">
+          <span>🌳</span>
+          <span>나의 성장 트리</span>
+        </div>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+          영역별 학습 진도를 확인하세요. 상세 보기는 "성장 트리" 탭에서!
+        </p>
+        <div class="tree-branches">
+          <div class="tree-branch" onclick="switchTab('growth')">
+            <div class="branch-nodes">
+              <div class="tree-node">🤝</div>
+              <div class="tree-node">💬</div>
+              <div class="tree-node locked"></div>
+            </div>
+            <div class="branch-label">부모상담</div>
+          </div>
+
+          <div class="tree-branch" onclick="switchTab('growth')">
+            <div class="branch-nodes">
+              <div class="tree-node">🎨</div>
+              <div class="tree-node">🎭</div>
+              <div class="tree-node">🎪</div>
+            </div>
+            <div class="branch-label">놀이지도</div>
+          </div>
+
+          <div class="tree-branch" onclick="switchTab('growth')">
+            <div class="branch-nodes">
+              <div class="tree-node">🤖</div>
+              <div class="tree-node locked"></div>
+              <div class="tree-node locked"></div>
+            </div>
+            <div class="branch-label">AI 활용</div>
+          </div>
+
+          <div class="tree-branch" onclick="switchTab('growth')">
+            <div class="branch-nodes">
+              <div class="tree-node">💗</div>
+              <div class="tree-node">🧘</div>
+              <div class="tree-node locked"></div>
+            </div>
+            <div class="branch-label">감정케어</div>
+          </div>
+
+          <div class="tree-branch" onclick="switchTab('growth')">
+            <div class="branch-nodes">
+              <div class="tree-node">👑</div>
+              <div class="tree-node locked"></div>
+              <div class="tree-node locked"></div>
+            </div>
+            <div class="branch-label">리더십</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 탭 2: 내 강의실 -->
+    <div id="tab-classes" class="tab-content">
+      <div class="section-title">
+        <span>📚</span>
+        <span>수강중인 강의</span>
+      </div>
+      <div class="enrollment-grid" id="enrollmentList">
+        <div class="empty-state">
+          <div class="empty-state-icon">📭</div>
+          <div class="empty-state-text">로딩 중...</div>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top: 3rem;">
+        <span>💳</span>
+        <span>결제 내역</span>
+      </div>
+      <div class="payment-list" id="paymentList">
+        <div class="empty-state">
+          <div class="empty-state-icon">📭</div>
+          <div class="empty-state-text">로딩 중...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 탭 3: 성장 트리 (상세) -->
+    <div id="tab-growth" class="tab-content">
+      <div class="section-title">
+        <span>🌳</span>
+        <span>성장 트리 상세</span>
+      </div>
+      <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">
+        각 영역별 강의를 완료하면 노드가 활성화됩니다. 모든 노드를 완성하면 뱃지를 획득할 수 있어요!
+      </p>
+
+      <div class="growth-tree">
+        <h3 style="color: #ff8566; margin-bottom: 2rem;">🤝 부모상담 전문가 트리</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
+          <div style="text-align: center;">
+            <div class="tree-node" style="margin: 0 auto 1rem;">🤝</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">첫 만남 준비</div>
+            <div style="font-size: 0.9rem; color: #4caf50;">✓ 완료</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="tree-node" style="margin: 0 auto 1rem;">💬</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">효과적인 대화법</div>
+            <div style="font-size: 0.9rem; color: #4caf50;">✓ 완료</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="tree-node locked" style="margin: 0 auto 1rem;"></div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">어려운 상황 대처</div>
+            <div style="font-size: 0.9rem; color: #999;">🔒 잠김</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="growth-tree">
+        <h3 style="color: #ff8566; margin-bottom: 2rem;">🎨 놀이지도 전문가 트리</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
+          <div style="text-align: center;">
+            <div class="tree-node" style="margin: 0 auto 1rem;">🎨</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">미술 놀이</div>
+            <div style="font-size: 0.9rem; color: #4caf50;">✓ 완료</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="tree-node" style="margin: 0 auto 1rem;">🎭</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">역할 놀이</div>
+            <div style="font-size: 0.9rem; color: #4caf50;">✓ 완료</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="tree-node" style="margin: 0 auto 1rem;">🎪</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">신체 놀이</div>
+            <div style="font-size: 0.9rem; color: #4caf50;">✓ 완료</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="growth-tree">
+        <h3 style="color: #ff8566; margin-bottom: 2rem;">🤖 AI 활용 전문가 트리</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
+          <div style="text-align: center;">
+            <div class="tree-node" style="margin: 0 auto 1rem;">🤖</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">AI 기초</div>
+            <div style="font-size: 0.9rem; color: #4caf50;">✓ 완료</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="tree-node locked" style="margin: 0 auto 1rem;"></div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">업무 자동화</div>
+            <div style="font-size: 0.9rem; color: #999;">🔒 잠김</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="tree-node locked" style="margin: 0 auto 1rem;"></div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">수업 활용</div>
+            <div style="font-size: 0.9rem; color: #999;">🔒 잠김</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="growth-tree">
+        <h3 style="color: #ff8566; margin-bottom: 2rem;">💗 감정케어 전문가 트리</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
+          <div style="text-align: center;">
+            <div class="tree-node" style="margin: 0 auto 1rem;">💗</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">자기 돌봄</div>
+            <div style="font-size: 0.9rem; color: #4caf50;">✓ 완료</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="tree-node" style="margin: 0 auto 1rem;">🧘</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">스트레스 관리</div>
+            <div style="font-size: 0.9rem; color: #4caf50;">✓ 완료</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="tree-node locked" style="margin: 0 auto 1rem;"></div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">번아웃 극복</div>
+            <div style="font-size: 0.9rem; color: #999;">🔒 잠김</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="growth-tree">
+        <h3 style="color: #ff8566; margin-bottom: 2rem;">👑 리더십 전문가 트리</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+          <div style="text-align: center;">
+            <div class="tree-node" style="margin: 0 auto 1rem;">👑</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">리더십 기초</div>
+            <div style="font-size: 0.9rem; color: #4caf50;">✓ 완료</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="tree-node locked" style="margin: 0 auto 1rem;"></div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">학급 운영</div>
+            <div style="font-size: 0.9rem; color: #999;">🔒 잠김</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="tree-node locked" style="margin: 0 auto 1rem;"></div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">팀 협업</div>
+            <div style="font-size: 0.9rem; color: #999;">🔒 잠김</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 탭 4: 멘토 매칭 -->
+    <div id="tab-mentor" class="tab-content">
+      <div class="section-title">
+        <span>💬</span>
+        <span>추천 멘토</span>
+      </div>
+      <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">
+        당신의 성장 트리를 기반으로 AI가 매칭한 멘토를 만나보세요
+      </p>
+
+      <div class="mentor-grid">
+        <div class="mentor-card">
+          <div class="mentor-avatar">👨‍🏫</div>
+          <div class="mentor-name">이준호 선생님</div>
+          <div class="mentor-role">초등학교 교사 · 7년차</div>
+          <div class="mentor-match">매칭도 92%</div>
+          <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
+            부모상담 · AI활용 전문
+          </div>
+          <button class="mentor-btn" onclick="alert('멘토 신청 기능 준비 중입니다')">멘토 신청하기</button>
+        </div>
+
+        <div class="mentor-card">
+          <div class="mentor-avatar">👩‍🏫</div>
+          <div class="mentor-name">박수진 선생님</div>
+          <div class="mentor-role">중학교 교사 · 10년차</div>
+          <div class="mentor-match">매칭도 88%</div>
+          <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
+            감정케어 · 리더십 전문
+          </div>
+          <button class="mentor-btn" onclick="alert('멘토 신청 기능 준비 중입니다')">멘토 신청하기</button>
+        </div>
+
+        <div class="mentor-card">
+          <div class="mentor-avatar">👨‍🏫</div>
+          <div class="mentor-name">최민수 선생님</div>
+          <div class="mentor-role">유치원 원장 · 15년차</div>
+          <div class="mentor-match">매칭도 85%</div>
+          <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
+            놀이지도 · 학급운영 전문
+          </div>
+          <button class="mentor-btn" onclick="alert('멘토 신청 기능 준비 중입니다')">멘토 신청하기</button>
+        </div>
       </div>
     </div>
   </div>
@@ -3271,7 +3812,28 @@ app.get('/mywitti', async (c) => {
 
     // 사용자 이름 표시
     if (user.name) {
-      document.getElementById('userName').textContent = user.name + ' 선생님, 환영합니다!';
+      document.getElementById('userName').textContent = user.name + ' 선생님';
+    }
+
+    // 탭 전환 함수
+    function switchTab(tabName) {
+      // 모든 탭 버튼과 콘텐츠 비활성화
+      document.querySelectorAll('.tab-button').forEach(function(btn) {
+        btn.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-content').forEach(function(content) {
+        content.classList.remove('active');
+      });
+
+      // 선택된 탭 활성화
+      event.target.classList.add('active');
+      document.getElementById('tab-' + tabName).classList.add('active');
+
+      // 내 강의실 탭 선택 시 데이터 로드
+      if (tabName === 'classes') {
+        loadEnrollments();
+        loadPayments();
+      }
     }
 
     // 수강 내역 로드
@@ -3286,6 +3848,10 @@ app.get('/mywitti', async (c) => {
         const data = await response.json();
         
         if (data.success && data.enrollments.length > 0) {
+          // 대시보드 통계 업데이트
+          document.getElementById('enrollmentCount').textContent = data.enrollments.length;
+
+          // 수강 목록 표시
           const enrollmentList = document.getElementById('enrollmentList');
           enrollmentList.innerHTML = data.enrollments.map(function(enrollment) {
             const enrolledDate = new Date(enrollment.enrolled_at).toLocaleDateString('ko-KR');
@@ -3297,6 +3863,7 @@ app.get('/mywitti', async (c) => {
             '</div>';
           }).join('');
         } else {
+          document.getElementById('enrollmentCount').textContent = '0';
           document.getElementById('enrollmentList').innerHTML = 
             '<div class="empty-state">' +
             '<div class="empty-state-icon">📭</div>' +
@@ -3374,9 +3941,8 @@ app.get('/mywitti', async (c) => {
       }
     }
 
-    // 페이지 로드 시 데이터 로드
+    // 페이지 로드 시 수강 내역 로드 (통계용)
     loadEnrollments();
-    loadPayments();
   </script>
 
 </body>

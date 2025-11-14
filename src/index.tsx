@@ -2,9 +2,12 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { serveStatic } from 'hono/cloudflare-workers'
 import type { Env } from './types'
-import { hashPassword, isValidEmail, validatePassword, validateName, validatePhone } from './utils/crypto'
+import { hashPassword, isValidEmail, validatePassword, validateName, validatePhone, verifyPassword, createToken, verifyToken } from './utils/crypto'
 
 const app = new Hono<{ Bindings: Env }>()
+
+// JWT 비밀키 (실제 프로덕션에서는 환경변수로 관리)
+const JWT_SECRET = 'witti-secret-key-2025'
 
 // Enable CORS for API routes
 app.use('/api/*', cors())
@@ -242,6 +245,138 @@ app.post('/api/auth/signup', async (c) => {
     return c.json({ 
       success: false, 
       message: '회원가입 처리 중 오류가 발생했습니다',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, 500)
+  }
+})
+
+// 로그인
+app.post('/api/auth/login', async (c) => {
+  try {
+    const { email, password } = await c.req.json()
+    
+    // 입력값 검증
+    if (!email || !password) {
+      return c.json({ 
+        success: false, 
+        message: '이메일과 비밀번호를 입력해주세요' 
+      }, 400)
+    }
+    
+    if (!isValidEmail(email)) {
+      return c.json({ 
+        success: false, 
+        message: '유효하지 않은 이메일 형식입니다' 
+      }, 400)
+    }
+    
+    const { DB } = c.env
+    
+    // 사용자 조회
+    const { results } = await DB.prepare(`
+      SELECT id, email, password_hash, name, phone, created_at
+      FROM users
+      WHERE email = ?
+      LIMIT 1
+    `).bind(email).all()
+    
+    if (results.length === 0) {
+      return c.json({ 
+        success: false, 
+        message: '이메일 또는 비밀번호가 올바르지 않습니다' 
+      }, 401)
+    }
+    
+    const user = results[0] as any
+    
+    // 비밀번호 검증
+    const isPasswordValid = await verifyPassword(password, user.password_hash)
+    
+    if (!isPasswordValid) {
+      return c.json({ 
+        success: false, 
+        message: '이메일 또는 비밀번호가 올바르지 않습니다' 
+      }, 401)
+    }
+    
+    // JWT 토큰 생성 (7일 만료)
+    const token = await createToken({
+      userId: user.id,
+      email: user.email,
+      name: user.name,
+      exp: Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60) // 7일
+    }, JWT_SECRET)
+    
+    return c.json({ 
+      success: true,
+      message: '로그인 성공',
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        phone: user.phone,
+        created_at: user.created_at
+      }
+    })
+  } catch (error) {
+    console.error('Login error:', error)
+    return c.json({ 
+      success: false, 
+      message: '로그인 처리 중 오류가 발생했습니다',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, 500)
+  }
+})
+
+// 토큰 검증 (현재 로그인 사용자 정보 조회)
+app.get('/api/auth/me', async (c) => {
+  try {
+    const authHeader = c.req.header('Authorization')
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return c.json({ 
+        success: false, 
+        message: '인증 토큰이 필요합니다' 
+      }, 401)
+    }
+    
+    const token = authHeader.substring(7)
+    const payload = await verifyToken(token, JWT_SECRET)
+    
+    if (!payload) {
+      return c.json({ 
+        success: false, 
+        message: '유효하지 않거나 만료된 토큰입니다' 
+      }, 401)
+    }
+    
+    const { DB } = c.env
+    
+    // 최신 사용자 정보 조회
+    const { results } = await DB.prepare(`
+      SELECT id, email, name, phone, created_at
+      FROM users
+      WHERE id = ?
+      LIMIT 1
+    `).bind(payload.userId).all()
+    
+    if (results.length === 0) {
+      return c.json({ 
+        success: false, 
+        message: '사용자를 찾을 수 없습니다' 
+      }, 404)
+    }
+    
+    return c.json({ 
+      success: true,
+      user: results[0]
+    })
+  } catch (error) {
+    console.error('Auth verification error:', error)
+    return c.json({ 
+      success: false, 
+      message: '인증 확인 중 오류가 발생했습니다',
       error: error instanceof Error ? error.message : 'Unknown error'
     }, 500)
   }
@@ -3113,6 +3248,309 @@ app.get('/mywitti', (c) => {
         <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
       </footer>
 
+    </body>
+    </html>
+  `)
+})
+
+// 로그인 페이지
+app.get('/login', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>로그인 - WITTI</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+      <style>
+        .login-container {
+          max-width: 420px;
+          margin: 6rem auto;
+          padding: 2rem;
+          background: white;
+          border-radius: 16px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .login-header {
+          text-align: center;
+          margin-bottom: 2rem;
+        }
+        .login-header h1 {
+          font-size: 1.8rem;
+          color: #1a1a1a;
+          margin-bottom: 0.5rem;
+        }
+        .login-header p {
+          color: #666;
+          font-size: 0.95rem;
+        }
+        .form-group {
+          margin-bottom: 1.5rem;
+        }
+        .form-group label {
+          display: block;
+          margin-bottom: 0.5rem;
+          color: #333;
+          font-weight: 600;
+          font-size: 0.95rem;
+        }
+        .form-group input {
+          width: 100%;
+          padding: 12px 16px;
+          border: 2px solid #e0e0e0;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-family: 'Pretendard', sans-serif;
+          transition: all 0.2s;
+        }
+        .form-group input:focus {
+          outline: none;
+          border-color: #ff8566;
+          box-shadow: 0 0 0 3px rgba(255, 133, 102, 0.1);
+        }
+        .form-message {
+          margin-top: 0.5rem;
+          font-size: 0.85rem;
+          color: #ff4444;
+          min-height: 1.2rem;
+        }
+        .remember-forgot {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          font-size: 0.9rem;
+        }
+        .remember-forgot label {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #666;
+          cursor: pointer;
+        }
+        .remember-forgot a {
+          color: #ff8566;
+          text-decoration: none;
+        }
+        .remember-forgot a:hover {
+          text-decoration: underline;
+        }
+        .submit-btn {
+          width: 100%;
+          padding: 14px;
+          background: #ff8566;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+          font-family: 'Pretendard', sans-serif;
+        }
+        .submit-btn:hover:not(:disabled) {
+          background: #ff6b4a;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
+        }
+        .submit-btn:disabled {
+          background: #ccc;
+          cursor: not-allowed;
+        }
+        .signup-link {
+          text-align: center;
+          margin-top: 1.5rem;
+          color: #666;
+          font-size: 0.95rem;
+        }
+        .signup-link a {
+          color: #ff8566;
+          text-decoration: none;
+          font-weight: 600;
+        }
+        .signup-link a:hover {
+          text-decoration: underline;
+        }
+        .loading {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          border: 2px solid #fff;
+          border-top-color: transparent;
+          border-radius: 50%;
+          animation: spin 0.6s linear infinite;
+          margin-right: 8px;
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        .divider {
+          text-align: center;
+          margin: 2rem 0;
+          position: relative;
+        }
+        .divider::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: #e0e0e0;
+        }
+        .divider span {
+          background: white;
+          padding: 0 1rem;
+          position: relative;
+          color: #999;
+          font-size: 0.9rem;
+        }
+      </style>
+    </head>
+    <body>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
+        <nav>
+          <a href="/signup" style="color: #666; text-decoration: none;">회원가입</a>
+        </nav>
+      </header>
+
+      <div class="login-container">
+        <div class="login-header">
+          <h1>로그인</h1>
+          <p>WITTI에 오신 것을 환영합니다</p>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label>이메일</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="example@email.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>비밀번호</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="비밀번호를 입력하세요"
+              autocomplete="current-password"
+              required
+            >
+            <div class="form-message" id="errorMessage"></div>
+          </div>
+
+          <div class="remember-forgot">
+            <label>
+              <input type="checkbox" id="remember">
+              로그인 상태 유지
+            </label>
+            <a href="#" onclick="alert('비밀번호 찾기 기능은 준비 중입니다'); return false;">
+              비밀번호 찾기
+            </a>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">
+            로그인
+          </button>
+        </form>
+
+        <div class="divider">
+          <span>또는</span>
+        </div>
+
+        <div class="signup-link">
+          아직 계정이 없으신가요? <a href="/signup">회원가입</a>
+        </div>
+      </div>
+
+      <script>
+        const form = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // 페이지 로드 시 저장된 토큰 확인
+        window.addEventListener('DOMContentLoaded', () => {
+          const token = localStorage.getItem('witti_token');
+          if (token) {
+            // 토큰이 있으면 유효성 검증
+            fetch('/api/auth/me', {
+              headers: { 'Authorization': \`Bearer \${token}\` }
+            }).then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  // 이미 로그인된 상태
+                  window.location.href = '/';
+                } else {
+                  // 토큰이 만료되었거나 유효하지 않음
+                  localStorage.removeItem('witti_token');
+                  localStorage.removeItem('witti_user');
+                }
+              }).catch(() => {
+                localStorage.removeItem('witti_token');
+                localStorage.removeItem('witti_user');
+              });
+          }
+        });
+        
+        // 폼 제출
+        form.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          const remember = document.getElementById('remember').checked;
+          
+          errorMessage.textContent = '';
+          
+          if (!email || !password) {
+            errorMessage.textContent = '이메일과 비밀번호를 입력해주세요';
+            return;
+          }
+          
+          // 제출 버튼 비활성화
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span class="loading"></span>로그인 중...';
+          
+          try {
+            const response = await fetch('/api/auth/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+              // 토큰 저장
+              localStorage.setItem('witti_token', data.token);
+              localStorage.setItem('witti_user', JSON.stringify(data.user));
+              
+              // 로그인 성공
+              alert('로그인 되었습니다!');
+              window.location.href = '/';
+            } else {
+              errorMessage.textContent = data.message || '로그인에 실패했습니다';
+              submitBtn.disabled = false;
+              submitBtn.textContent = '로그인';
+            }
+          } catch (error) {
+            console.error('Login error:', error);
+            errorMessage.textContent = '로그인 처리 중 오류가 발생했습니다';
+            submitBtn.disabled = false;
+            submitBtn.textContent = '로그인';
+          }
+        });
+      </script>
     </body>
     </html>
   `)

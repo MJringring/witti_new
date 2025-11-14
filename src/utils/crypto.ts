@@ -112,3 +112,113 @@ export function validatePhone(phone: string): { valid: boolean; message: string 
   
   return { valid: true, message: '사용 가능한 전화번호입니다' }
 }
+
+/**
+ * 간단한 JWT 토큰 생성 (Cloudflare Workers 환경)
+ * @param payload - 토큰에 포함할 데이터
+ * @param secret - 비밀키
+ * @returns JWT 토큰
+ */
+export async function createToken(payload: Record<string, any>, secret: string): Promise<string> {
+  const header = { alg: 'HS256', typ: 'JWT' }
+  
+  // Base64 URL 인코딩 (UTF-8 안전)
+  const base64UrlEncode = (obj: any) => {
+    const str = JSON.stringify(obj)
+    const encoder = new TextEncoder()
+    const data = encoder.encode(str)
+    const base64 = btoa(String.fromCharCode(...Array.from(data)))
+    return base64
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=/g, '')
+  }
+  
+  const encodedHeader = base64UrlEncode(header)
+  const encodedPayload = base64UrlEncode(payload)
+  
+  // 서명 생성
+  const data = `${encodedHeader}.${encodedPayload}`
+  const encoder = new TextEncoder()
+  const key = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  )
+  
+  const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(data))
+  const signatureArray = Array.from(new Uint8Array(signature))
+  const encodedSignature = btoa(String.fromCharCode(...signatureArray))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '')
+  
+  return `${data}.${encodedSignature}`
+}
+
+/**
+ * JWT 토큰 검증
+ * @param token - JWT 토큰
+ * @param secret - 비밀키
+ * @returns 검증 성공 시 payload, 실패 시 null
+ */
+export async function verifyToken(token: string, secret: string): Promise<Record<string, any> | null> {
+  try {
+    const parts = token.split('.')
+    if (parts.length !== 3) {
+      return null
+    }
+    
+    const [encodedHeader, encodedPayload, encodedSignature] = parts
+    
+    // 서명 검증
+    const data = `${encodedHeader}.${encodedPayload}`
+    const encoder = new TextEncoder()
+    const key = await crypto.subtle.importKey(
+      'raw',
+      encoder.encode(secret),
+      { name: 'HMAC', hash: 'SHA-256' },
+      false,
+      ['verify']
+    )
+    
+    // Base64 URL 디코딩
+    const base64UrlDecode = (str: string) => {
+      str = str.replace(/-/g, '+').replace(/_/g, '/')
+      while (str.length % 4) {
+        str += '='
+      }
+      return atob(str)
+    }
+    
+    const signatureBytes = Uint8Array.from(
+      base64UrlDecode(encodedSignature),
+      c => c.charCodeAt(0)
+    )
+    
+    const valid = await crypto.subtle.verify(
+      'HMAC',
+      key,
+      signatureBytes,
+      encoder.encode(data)
+    )
+    
+    if (!valid) {
+      return null
+    }
+    
+    // Payload 파싱
+    const payload = JSON.parse(base64UrlDecode(encodedPayload))
+    
+    // 만료 시간 체크
+    if (payload.exp && Date.now() >= payload.exp * 1000) {
+      return null
+    }
+    
+    return payload
+  } catch (error) {
+    return null
+  }
+}

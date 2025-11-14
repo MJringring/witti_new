@@ -584,33 +584,36 @@ app.get('/', (c) => {
     </head>
     <body>
 
-      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;">
-        <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
-        <nav style="display: flex; gap: 2rem; align-items: center;">
-          <a href="/learn">Learn</a>
-          <a href="/story">Story</a>
-          <a href="/talk">Talk</a>
-          <a href="/tools">Tools</a>
-          <div style="display: flex; gap: 1rem; margin-left: 1rem; align-items: center;">
-            <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
-              🛒
-              <span id="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
-            </button>
-            <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
-            <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
-              🔔
-              <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
-            </button>
-            <div id="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-              <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
-              <button id="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
-            </div>
-            <div id="authMenu" style="display: flex; gap: 0.5rem;">
-              <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-              <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
-            </div>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0;">
+        <div style="display: flex; align-items: center; gap: 2.5rem;">
+          <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
+          <nav style="display: flex; gap: 2rem; align-items: center;">
+            <a href="/" class="active" style="text-decoration: none; color: #ff8566; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #fff0e6; transition: all 0.3s;">New</a>
+            <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
+            <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
+            <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
+            <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
+          </nav>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+            🛒
+            <span id="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+          </button>
+          <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+          <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
+            🔔
+            <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+          </button>
+          <div id="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+            <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <button id="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
-        </nav>
+          <div id="authMenu" style="display: flex; gap: 0.5rem;">
+            <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+            <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+          </div>
+        </div>
       </header>
       
       <script>
@@ -884,34 +887,36 @@ app.get('/learn', (c) => {
     </head>
     <body>
 
-      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;">
-        <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
-        <nav style="display: flex; gap: 2rem; align-items: center;">
-          <a href="/">Home</a>
-          <a href="/learn" class="active">Learn</a>
-          <a href="/story">Story</a>
-          <a href="/talk">Talk</a>
-          <a href="/tools">Tools</a>
-          <div style="display: flex; gap: 1rem; margin-left: 1rem; align-items: center;">
-            <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
-              🛒
-              <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
-            </button>
-            <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
-            <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
-              🔔
-              <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
-            </button>
-            <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-              <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
-              <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
-            </div>
-            <div class="authMenu" style="display: flex; gap: 0.5rem;">
-              <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-              <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
-            </div>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0;">
+        <div style="display: flex; align-items: center; gap: 2.5rem;">
+          <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
+          <nav style="display: flex; gap: 2rem; align-items: center;">
+            <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
+            <a href="/learn" class="active" style="text-decoration: none; color: #ff8566; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #fff0e6; transition: all 0.3s;">Learn</a>
+            <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
+            <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
+            <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
+          </nav>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+            🛒
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+          </button>
+          <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+          <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
+            🔔
+            <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+          </button>
+          <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+            <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
-        </nav>
+          <div class="authMenu" style="display: flex; gap: 0.5rem;">
+            <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+            <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+          </div>
+        </div>
       </header>
       
       <script>
@@ -1294,16 +1299,36 @@ app.get('/story', (c) => {
     </head>
     <body>
 
-      <header>
-        <h1>🌿 WITTI</h1>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/learn">Learn</a>
-          <a href="/story" class="active">Story</a>
-          <a href="/talk">Talk</a>
-          <a href="/tools">Tools</a>
-          <a href="/mywitti">MyWITTI</a>
-        </nav>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0;">
+        <div style="display: flex; align-items: center; gap: 2.5rem;">
+          <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
+          <nav style="display: flex; gap: 2rem; align-items: center;">
+            <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
+            <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
+            <a href="/story" style="text-decoration: none; color: #ff8566; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #fff0e6; transition: all 0.3s;">Story</a>
+            <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
+            <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
+          </nav>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+            🛒
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+          </button>
+          <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+          <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
+            🔔
+            <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+          </button>
+          <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+            <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
+          </div>
+          <div class="authMenu" style="display: flex; gap: 0.5rem;">
+            <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+            <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+          </div>
+        </div>
       </header>
 
       <section id="hero">
@@ -1913,16 +1938,36 @@ app.get('/talk', (c) => {
     </head>
     <body>
 
-      <header>
-        <h1>🌿 WITTI</h1>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/learn">Learn</a>
-          <a href="/story">Story</a>
-          <a href="/talk" class="active">Talk</a>
-          <a href="/tools">Tools</a>
-          <a href="/mywitti">MyWITTI</a>
-        </nav>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0;">
+        <div style="display: flex; align-items: center; gap: 2.5rem;">
+          <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
+          <nav style="display: flex; gap: 2rem; align-items: center;">
+            <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
+            <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
+            <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
+            <a href="/talk" style="text-decoration: none; color: #ff8566; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #fff0e6; transition: all 0.3s;">Talk</a>
+            <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
+          </nav>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+            🛒
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+          </button>
+          <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+          <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
+            🔔
+            <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+          </button>
+          <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+            <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
+          </div>
+          <div class="authMenu" style="display: flex; gap: 0.5rem;">
+            <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+            <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+          </div>
+        </div>
       </header>
 
       <section id="hero">
@@ -2681,16 +2726,36 @@ app.get('/tools', (c) => {
     </head>
     <body>
 
-      <header>
-        <h1>🌿 WITTI</h1>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/learn">Learn</a>
-          <a href="/story">Story</a>
-          <a href="/talk">Talk</a>
-          <a href="/tools" class="active">Tools</a>
-          <a href="/mywitti">MyWITTI</a>
-        </nav>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0;">
+        <div style="display: flex; align-items: center; gap: 2.5rem;">
+          <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
+          <nav style="display: flex; gap: 2rem; align-items: center;">
+            <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
+            <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
+            <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
+            <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
+            <a href="/tools" style="text-decoration: none; color: #ff8566; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #fff0e6; transition: all 0.3s;">Tools</a>
+          </nav>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+            🛒
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+          </button>
+          <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+          <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
+            🔔
+            <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+          </button>
+          <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+            <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
+          </div>
+          <div class="authMenu" style="display: flex; gap: 0.5rem;">
+            <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+            <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+          </div>
+        </div>
       </header>
 
       <section id="hero">
@@ -3434,34 +3499,37 @@ app.get('/mywitti', async (c) => {
 </head>
 <body>
 
-  <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;">
-    <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
-    <nav style="display: flex; gap: 2rem; align-items: center;">
-      <a href="/">Home</a>
-      <a href="/learn">Learn</a>
-      <a href="/story">Story</a>
-      <a href="/talk">Talk</a>
-      <a href="/tools">Tools</a>
-      <div style="display: flex; gap: 1rem; margin-left: 1rem; align-items: center;">
-        <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
-          🛒
-          <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
-        </button>
-        <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
-        <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
-          🔔
-          <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
-        </button>
-        <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-          <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
-          <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0;">
+        <div style="display: flex; align-items: center; gap: 2.5rem;">
+          <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
+          <nav style="display: flex; gap: 2rem; align-items: center;">
+            <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
+            <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
+            <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
+            <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
+            <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
+          </nav>
         </div>
-        <div class="authMenu" style="display: flex; gap: 0.5rem;">
-          <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-          <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+            🛒
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+          </button>
+          <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+          <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
+            🔔
+            <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+          </button>
+          <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+            <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
+          </div>
+          <div class="authMenu" style="display: flex; gap: 0.5rem;">
+            <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+            <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+          </div>
         </div>
-      </div>
-    </nav>
+      </header>
   </header>
   
   <script>
@@ -4730,16 +4798,36 @@ app.get('/signup', (c) => {
     </head>
     <body>
 
-      <header>
-        <h1>🌿 WITTI</h1>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/learn">Learn</a>
-          <a href="/story">Story</a>
-          <a href="/talk">Talk</a>
-          <a href="/tools">Tools</a>
-          <a href="/mywitti">MyWITTI</a>
-        </nav>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0;">
+        <div style="display: flex; align-items: center; gap: 2.5rem;">
+          <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
+          <nav style="display: flex; gap: 2rem; align-items: center;">
+            <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
+            <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
+            <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
+            <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
+            <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
+          </nav>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+            🛒
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+          </button>
+          <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+          <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
+            🔔
+            <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+          </button>
+          <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+            <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
+          </div>
+          <div class="authMenu" style="display: flex; gap: 0.5rem;">
+            <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+            <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+          </div>
+        </div>
       </header>
 
       <section id="hero" style="padding: 60px 20px;">
@@ -4867,16 +4955,36 @@ app.get('/login', (c) => {
     </head>
     <body>
 
-      <header>
-        <h1>🌿 WITTI</h1>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/learn">Learn</a>
-          <a href="/story">Story</a>
-          <a href="/talk">Talk</a>
-          <a href="/tools">Tools</a>
-          <a href="/mywitti">MyWITTI</a>
-        </nav>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0;">
+        <div style="display: flex; align-items: center; gap: 2.5rem;">
+          <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
+          <nav style="display: flex; gap: 2rem; align-items: center;">
+            <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
+            <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
+            <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
+            <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
+            <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
+          </nav>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+            🛒
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+          </button>
+          <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+          <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
+            🔔
+            <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+          </button>
+          <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+            <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
+          </div>
+          <div class="authMenu" style="display: flex; gap: 0.5rem;">
+            <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+            <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+          </div>
+        </div>
       </header>
 
       <section id="hero" style="padding: 60px 20px;">

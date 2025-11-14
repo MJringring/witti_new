@@ -3653,7 +3653,7 @@ app.get('/login', (c) => {
           if (token) {
             // 토큰이 있으면 유효성 검증
             fetch('/api/auth/me', {
-              headers: { 'Authorization': \`Bearer ${token}\` }
+              headers: { 'Authorization': 'Bearer ' + token }
             }).then(response => response.json())
               .then(data => {
                 if (data.success) {
@@ -4040,7 +4040,7 @@ app.get('/checkout', (c) => {
               method: 'POST',
               headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': \`Bearer ${token}\`
+                'Authorization': 'Bearer ' + token
               },
               body: JSON.stringify({
                 order_id: orderId,

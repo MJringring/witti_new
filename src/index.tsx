@@ -582,6 +582,34 @@ app.get('/', (c) => {
       <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
       <link rel="stylesheet" href="/static/style.css">
       <style>
+        * {
+          font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+        }
+        
+        body {
+          font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* 모바일 반응형 타이포그래피 */
+        @media (max-width: 968px) {
+          #hero h2 {
+            font-size: 2.5rem !important;
+            line-height: 1.15 !important;
+            letter-spacing: -0.03em !important;
+          }
+          
+          #hero p {
+            font-size: 1rem !important;
+          }
+          
+          #hero button {
+            font-size: 0.95rem !important;
+            padding: 1rem 2rem !important;
+          }
+        }
+        
         /* 반응형 헤더 스타일 */
         .mobile-menu-btn {
           display: none;
@@ -873,7 +901,7 @@ app.get('/', (c) => {
       </script>
 
       <section id="hero" style="background: #FFFFFF; padding: 8rem 2rem 6rem; text-align: center; border-bottom: 1px solid #F0F0F0;">
-        <h2 style="font-size: 4rem; font-weight: 800; color: #000000; margin-bottom: 1.5rem; line-height: 1.1; letter-spacing: -0.03em;">선생님의<br>성장을 위한<br>플랫폼</h2>
+        <h2 style="font-size: 4rem; font-weight: 900; color: #000000; margin-bottom: 1.5rem; line-height: 1.05; letter-spacing: -0.04em;">선생님의<br>성장을 위한<br>플랫폼</h2>
         <p style="font-size: 1.1rem; color: #666666; margin-bottom: 3rem; font-weight: 400; letter-spacing: 0.02em;">교육 전문가를 위한 큐레이션</p>
         <button id="viewInsight" style="background: #000000; color: white; padding: 1.2rem 3rem; border: none; border-radius: 0; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; letter-spacing: 0.05em;">
           시작하기
@@ -882,7 +910,7 @@ app.get('/', (c) => {
 
       <!-- AI 추천 카드 영역 -->
       <section id="content">
-        <h3 style="text-align: center; margin-bottom: 0.5rem; font-size: 2.5rem; font-weight: 800; color: #000000;">오늘의 추천 콘텐츠</h3>
+        <h3 style="text-align: center; margin-bottom: 0.5rem; font-size: 2.5rem; font-weight: 900; color: #000000;">오늘의 추천 콘텐츠</h3>
         <p style="text-align: center; color: #666; margin-bottom: 2rem; font-size: 0.9rem;">AI가 김민지님을 위해 큐레이션한 콘텐츠</p>
         <div class="cards horizontal-scroll">
           <div class="card" onclick="window.location.href='/learn'">
@@ -922,7 +950,7 @@ app.get('/', (c) => {
       <section id="content" style="background-color: #FAFAFA; padding: 3rem 2rem; margin-top: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
           <div>
-            <h3 style="margin: 0; font-size: 2.5rem; font-weight: 800; color: #000000;">인기 클래스</h3>
+            <h3 style="margin: 0; font-size: 2.5rem; font-weight: 900; color: #000000;">인기 클래스</h3>
             <p style="margin: 0.5rem 0 0 0; color: #8E8E8E; font-size: 0.9rem;">많은 선생님들이 선택한 베스트 강의</p>
           </div>
           <a href="/learn" style="color: #000000; text-decoration: none; font-weight: 600; font-size: 0.9rem;">전체보기 →</a>
@@ -967,7 +995,7 @@ app.get('/', (c) => {
       <section id="content" style="background: #FAFAFA; padding: 3rem 2rem; margin-top: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
           <div>
-            <h3 style="margin: 0; font-size: 2.5rem; font-weight: 800; color: #000000;">주목받는 인터뷰</h3>
+            <h3 style="margin: 0; font-size: 2.5rem; font-weight: 900; color: #000000;">주목받는 인터뷰</h3>
             <p style="margin: 0.5rem 0 0 0; color: #8E8E8E; font-size: 0.9rem;">교육 현장의 생생한 이야기</p>
           </div>
           <a href="/story" style="color: #000000; text-decoration: none; font-weight: 600; font-size: 0.9rem;">전체보기 →</a>
@@ -1004,7 +1032,7 @@ app.get('/', (c) => {
       <section id="content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
           <div>
-            <h3 style="margin: 0; font-size: 2.5rem; font-weight: 800; color: #000000;">공감 받은 이야기</h3>
+            <h3 style="margin: 0; font-size: 2.5rem; font-weight: 900; color: #000000;">공감 받은 이야기</h3>
             <p style="margin: 0.5rem 0 0 0; color: #8E8E8E; font-size: 0.9rem;">선생님들의 진솔한 고민과 해결책</p>
           </div>
           <a href="/talk" style="color: #000000; text-decoration: none; font-weight: 600; font-size: 0.9rem;">더보기 →</a>

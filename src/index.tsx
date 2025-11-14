@@ -466,7 +466,7 @@ app.get('/api/my/enrollments', async (c) => {
   }
 })
 
-// 내 결제내역 조회
+// 내 결제내역 조회 (강의 정보 포함)
 app.get('/api/my/payments', async (c) => {
   try {
     const authHeader = c.req.header('Authorization')
@@ -481,14 +481,33 @@ app.get('/api/my/payments', async (c) => {
     }
     
     const { DB } = c.env
-    const { results } = await DB.prepare(`
+    
+    // 결제 내역 조회
+    const { results: payments } = await DB.prepare(`
       SELECT id, order_id, amount, payment_method, payment_status, paid_at, created_at
       FROM payments
       WHERE user_id = ?
       ORDER BY created_at DESC
     `).bind(payload.userId).all()
     
-    return c.json({ success: true, payments: results })
+    // 각 결제에 포함된 강의 목록 조회
+    const paymentsWithClasses = await Promise.all(
+      payments.map(async (payment: any) => {
+        const { results: classes } = await DB.prepare(`
+          SELECT c.id, c.title, c.instructor_name, c.price, c.thumbnail_icon
+          FROM enrollments e
+          JOIN classes c ON e.class_id = c.id
+          WHERE e.payment_id = ?
+        `).bind(payment.id).all()
+        
+        return {
+          ...payment,
+          classes: classes
+        }
+      })
+    )
+    
+    return c.json({ success: true, payments: paymentsWithClasses })
   } catch (error) {
     return c.json({ success: false, error: error instanceof Error ? error.message : 'Unknown error' }, 500)
   }
@@ -2931,585 +2950,438 @@ app.get('/tools', (c) => {
   `)
 })
 
-// MyWITTI page route - Personal dashboard with profile, stats, and growth tree
+// MyWITTI page route - 수강내역 및 결제내역 조회
 app.get('/mywitti', async (c) => {
   return c.html(`
-    <!DOCTYPE html>
-    <html lang="ko">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>MyWITTI - 나의 성장 공간</title>
-      <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-      <link rel="stylesheet" href="/static/style.css">
-      <style>
-        .dashboard-container {
-          max-width: 1200px;
-          margin: 2rem auto;
-          padding: 0 2rem;
-        }
-        
-        .profile-section {
-          background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
-          border-radius: 20px;
-          padding: 2.5rem;
-          margin-bottom: 2rem;
-          display: flex;
-          align-items: center;
-          gap: 2rem;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        
-        .profile-avatar {
-          width: 120px;
-          height: 120px;
-          background: white;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 4rem;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          flex-shrink: 0;
-        }
-        
-        .profile-info {
-          flex: 1;
-        }
-        
-        .profile-name {
-          font-size: 2rem;
-          font-weight: 700;
-          color: #333;
-          margin-bottom: 0.5rem;
-        }
-        
-        .profile-role {
-          font-size: 1.1rem;
-          color: #666;
-          margin-bottom: 1rem;
-        }
-        
-        .profile-level {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          background: white;
-          padding: 10px 20px;
-          border-radius: 25px;
-          font-weight: 700;
-          color: #ff8566;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .profile-level-icon {
-          font-size: 1.5rem;
-        }
-        
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1.5rem;
-          margin-bottom: 3rem;
-        }
-        
-        @media (max-width: 968px) {
-          .profile-section {
-            flex-direction: column;
-            text-align: center;
-          }
-          
-          .stats-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-        
-        .stat-card {
-          background: white;
-          border-radius: 16px;
-          padding: 2rem;
-          text-align: center;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-          cursor: pointer;
-          transition: all 0.3s ease;
-          border: 3px solid transparent;
-        }
-        
-        .stat-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-          border-color: #ff8566;
-        }
-        
-        .stat-number {
-          font-size: 3rem;
-          font-weight: 700;
-          color: #ff8566;
-          margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-          font-size: 1.1rem;
-          color: #666;
-          font-weight: 600;
-        }
-        
-        .section-title {
-          font-size: 1.8rem;
-          font-weight: 700;
-          color: #333;
-          margin-bottom: 1.5rem;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-        
-        .growth-tree {
-          background: white;
-          border-radius: 20px;
-          padding: 3rem;
-          margin-bottom: 3rem;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        
-        .tree-branches {
-          display: flex;
-          justify-content: space-around;
-          align-items: flex-end;
-          height: 300px;
-          position: relative;
-        }
-        
-        .tree-branch {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        
-        .tree-branch:hover {
-          transform: scale(1.05);
-        }
-        
-        .branch-nodes {
-          display: flex;
-          flex-direction: column-reverse;
-          gap: 1rem;
-          align-items: center;
-        }
-        
-        .tree-node {
-          width: 60px;
-          height: 60px;
-          background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.8rem;
-          position: relative;
-          border: 3px solid #ff8566;
-          box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
-        }
-        
-        .tree-node.locked {
-          background: #f0f0f0;
-          border-color: #ccc;
-          opacity: 0.5;
-        }
-        
-        .tree-node.locked::after {
-          content: '🔒';
-          position: absolute;
-          font-size: 1.2rem;
-        }
-        
-        .branch-label {
-          margin-top: 1rem;
-          font-weight: 700;
-          color: #333;
-          text-align: center;
-        }
-        
-        .class-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1.5rem;
-          margin-bottom: 3rem;
-        }
-        
-        @media (max-width: 768px) {
-          .class-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-        
-        .class-card {
-          background: white;
-          border-radius: 16px;
-          padding: 2rem;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-          transition: all 0.3s ease;
-        }
-        
-        .class-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-        }
-        
-        .class-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: 1rem;
-        }
-        
-        .class-title {
-          font-size: 1.3rem;
-          font-weight: 700;
-          color: #333;
-          margin-bottom: 0.5rem;
-        }
-        
-        .class-status {
-          padding: 6px 12px;
-          border-radius: 12px;
-          font-size: 0.85rem;
-          font-weight: 600;
-        }
-        
-        .class-status.active {
-          background: #fff0e6;
-          color: #ff8566;
-        }
-        
-        .class-status.completed {
-          background: #e8f5e9;
-          color: #4caf50;
-        }
-        
-        .class-progress {
-          margin-top: 1rem;
-        }
-        
-        .progress-bar {
-          width: 100%;
-          height: 8px;
-          background: #f0f0f0;
-          border-radius: 4px;
-          overflow: hidden;
-        }
-        
-        .progress-fill {
-          height: 100%;
-          background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%);
-          transition: width 0.3s ease;
-        }
-        
-        .progress-text {
-          margin-top: 0.5rem;
-          font-size: 0.9rem;
-          color: #999;
-        }
-        
-        .mentor-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1.5rem;
-        }
-        
-        @media (max-width: 968px) {
-          .mentor-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-        
-        .mentor-card {
-          background: white;
-          border-radius: 16px;
-          padding: 2rem;
-          text-align: center;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-          transition: all 0.3s ease;
-        }
-        
-        .mentor-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-        }
-        
-        .mentor-avatar {
-          width: 80px;
-          height: 80px;
-          background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 2.5rem;
-          margin: 0 auto 1rem;
-        }
-        
-        .mentor-name {
-          font-size: 1.2rem;
-          font-weight: 700;
-          color: #333;
-          margin-bottom: 0.5rem;
-        }
-        
-        .mentor-role {
-          font-size: 0.9rem;
-          color: #666;
-          margin-bottom: 1rem;
-        }
-        
-        .mentor-match {
-          background: #fff0e6;
-          color: #ff8566;
-          padding: 6px 12px;
-          border-radius: 12px;
-          font-size: 0.85rem;
-          font-weight: 600;
-          margin-bottom: 1rem;
-          display: inline-block;
-        }
-        
-        .mentor-btn {
-          width: 100%;
-          padding: 12px;
-          background: #ff8566;
-          color: white;
-          border: none;
-          border-radius: 10px;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.3s;
-        }
-        
-        .mentor-btn:hover {
-          background: #ff9f80;
-          transform: translateY(-2px);
-        }
-      </style>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyWITTI - 내 강의실</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    
+    .welcome-section {
+      background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    .welcome-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .welcome-subtitle {
+      font-size: 1.1rem;
+      color: #666;
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #333;
+      margin: 3rem 0 1.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .enrollment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    .enrollment-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .enrollment-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    
+    .enrollment-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .enrollment-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .enrollment-instructor {
+      font-size: 0.95rem;
+      color: #ff8566;
+      margin-bottom: 0.75rem;
+    }
+    
+    .enrollment-date {
+      font-size: 0.85rem;
+      color: #999;
+    }
+    
+    .payment-list {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    .payment-item {
+      border-bottom: 1px solid #f0f0f0;
+      padding: 1.5rem 0;
+    }
+    
+    .payment-item:last-child {
+      border-bottom: none;
+    }
+    
+    .payment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .payment-order-id {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #333;
+    }
+    
+    .payment-amount {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ff8566;
+    }
+    
+    .payment-info {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .payment-classes {
+      background: #f8f8f8;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .payment-class-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+    }
+    
+    .payment-class-icon {
+      font-size: 1.5rem;
+    }
+    
+    .payment-class-info {
+      flex: 1;
+    }
+    
+    .payment-class-title {
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+    
+    .payment-class-instructor {
+      font-size: 0.85rem;
+      color: #999;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #999;
+    }
+    
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+    
+    .empty-state-text {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .btn-primary {
+      background: #ff8566;
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      background: #ff6b47;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
+    }
+  </style>
+</head>
+<body>
 
-      <header>
-        <h1>🌿 WITTI</h1>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/learn">Learn</a>
-          <a href="/story">Story</a>
-          <a href="/talk">Talk</a>
-          <a href="/tools">Tools</a>
-          <a href="/mywitti" class="active">MyWITTI</a>
-        </nav>
-      </header>
-
-      <section id="hero">
-        <h2>나만의 성장 공간</h2>
-        <p>배움의 기록부터 성취까지, 당신의 성장을 응원합니다</p>
-      </section>
-
-      <div class="dashboard-container">
-        <!-- Profile Section -->
-        <div class="profile-section">
-          <div class="profile-avatar">👩‍🏫</div>
-          <div class="profile-info">
-            <div class="profile-name">김민지 선생님</div>
-            <div class="profile-role">유치원 교사 · 3년차</div>
-            <div class="profile-level">
-              <span class="profile-level-icon">⭐</span>
-              <span>Lv.3 주임교사</span>
-            </div>
-          </div>
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;">
+    <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI</h1>
+    <nav style="display: flex; gap: 2rem; align-items: center;">
+      <a href="/">Home</a>
+      <a href="/learn">Learn</a>
+      <a href="/story">Story</a>
+      <a href="/talk">Talk</a>
+      <a href="/tools">Tools</a>
+      <div style="display: flex; gap: 1rem; margin-left: 1rem; align-items: center;">
+        <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
+          🛒
+          <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+        </button>
+        <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
+        <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
+          🔔
+          <span style="position: absolute; top: -5px; right: -5px; background: #ff8566; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+        </button>
+        <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
+          <a href="/mywitti" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+          <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
         </div>
-
-        <!-- Activity Summary Stats -->
-        <div class="stats-grid">
-          <div class="stat-card" onclick="alert('수강 강의 목록')">
-            <div class="stat-number">12</div>
-            <div class="stat-label">수강한 강의</div>
-          </div>
-
-          <div class="stat-card" onclick="alert('공감한 이야기')">
-            <div class="stat-number">37</div>
-            <div class="stat-label">공감한 이야기</div>
-          </div>
-
-          <div class="stat-card" onclick="alert('획득한 뱃지')">
-            <div class="stat-number">5</div>
-            <div class="stat-label">획득한 뱃지</div>
-          </div>
-        </div>
-
-        <!-- Growth Tree -->
-        <div class="growth-tree">
-          <div class="section-title">
-            <span>🌳</span>
-            <span>나의 성장 트리</span>
-          </div>
-          <div class="tree-branches">
-            <div class="tree-branch" onclick="alert('부모상담 브랜치')">
-              <div class="branch-nodes">
-                <div class="tree-node">🤝</div>
-                <div class="tree-node">💬</div>
-                <div class="tree-node locked"></div>
-              </div>
-              <div class="branch-label">부모상담</div>
-            </div>
-
-            <div class="tree-branch" onclick="alert('놀이지도 브랜치')">
-              <div class="branch-nodes">
-                <div class="tree-node">🎨</div>
-                <div class="tree-node">🎭</div>
-                <div class="tree-node">🎪</div>
-              </div>
-              <div class="branch-label">놀이지도</div>
-            </div>
-
-            <div class="tree-branch" onclick="alert('AI 활용 브랜치')">
-              <div class="branch-nodes">
-                <div class="tree-node">🤖</div>
-                <div class="tree-node locked"></div>
-                <div class="tree-node locked"></div>
-              </div>
-              <div class="branch-label">AI 활용</div>
-            </div>
-
-            <div class="tree-branch" onclick="alert('감정케어 브랜치')">
-              <div class="branch-nodes">
-                <div class="tree-node">💗</div>
-                <div class="tree-node">🧘</div>
-                <div class="tree-node locked"></div>
-              </div>
-              <div class="branch-label">감정케어</div>
-            </div>
-
-            <div class="tree-branch" onclick="alert('리더십 브랜치')">
-              <div class="branch-nodes">
-                <div class="tree-node">👑</div>
-                <div class="tree-node locked"></div>
-                <div class="tree-node locked"></div>
-              </div>
-              <div class="branch-label">리더십</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- My Classes Management -->
-        <div class="section-title">
-          <span>🎓</span>
-          <span>나의 클래스 관리</span>
-        </div>
-        <div class="class-grid">
-          <div class="class-card">
-            <div class="class-header">
-              <div>
-                <div class="class-title">AI로 부모면담 정리하기</div>
-                <div style="color: #999; font-size: 0.9rem;">수강 중</div>
-              </div>
-              <div class="class-status active">진행중</div>
-            </div>
-            <div class="class-progress">
-              <div class="progress-bar">
-                <div class="progress-fill" style="width: 65%;"></div>
-              </div>
-              <div class="progress-text">65% 완료 (13/20 강의)</div>
-            </div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-header">
-              <div>
-                <div class="class-title">놀이일지 쉽게 작성하기</div>
-                <div style="color: #999; font-size: 0.9rem;">수강 완료</div>
-              </div>
-              <div class="class-status completed">완료</div>
-            </div>
-            <div class="class-progress">
-              <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%;"></div>
-              </div>
-              <div class="progress-text">100% 완료 (15/15 강의)</div>
-            </div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-header">
-              <div>
-                <div class="class-title">부모상담 개선 실험</div>
-                <div style="color: #999; font-size: 0.9rem;">참여 프로젝트</div>
-              </div>
-              <div class="class-status active">참여중</div>
-            </div>
-            <div style="margin-top: 1rem; color: #666; font-size: 0.95rem;">
-              👥 4명과 함께 · 4주 프로젝트 2주차
-            </div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-header">
-              <div>
-                <div class="class-title">감정케어 & 회복 클래스</div>
-                <div style="color: #999; font-size: 0.9rem;">수강 예정</div>
-              </div>
-              <div class="class-status" style="background: #f0f0f0; color: #999;">예정</div>
-            </div>
-            <div style="margin-top: 1rem; color: #666; font-size: 0.95rem;">
-              📅 2025년 2월 1일 시작
-            </div>
-          </div>
-        </div>
-
-        <!-- Mentoring Section -->
-        <div class="section-title">
-          <span>🤝</span>
-          <span>AI 추천 멘토</span>
-        </div>
-        <div class="mentor-grid">
-          <div class="mentor-card">
-            <div class="mentor-avatar">👨‍🏫</div>
-            <div class="mentor-name">이준호 선생님</div>
-            <div class="mentor-role">초등학교 교사 · 7년차</div>
-            <div class="mentor-match">매칭도 92%</div>
-            <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
-              부모상담 · AI활용 전문
-            </div>
-            <button class="mentor-btn" onclick="alert('멘토 신청')">멘토 신청하기</button>
-          </div>
-
-          <div class="mentor-card">
-            <div class="mentor-avatar">👩‍🏫</div>
-            <div class="mentor-name">박수진 선생님</div>
-            <div class="mentor-role">중학교 교사 · 10년차</div>
-            <div class="mentor-match">매칭도 88%</div>
-            <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
-              감정케어 · 리더십 전문
-            </div>
-            <button class="mentor-btn" onclick="alert('멘토 신청')">멘토 신청하기</button>
-          </div>
-
-          <div class="mentor-card">
-            <div class="mentor-avatar">👨‍🏫</div>
-            <div class="mentor-name">최민수 선생님</div>
-            <div class="mentor-role">유치원 원장 · 15년차</div>
-            <div class="mentor-match">매칭도 85%</div>
-            <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
-              놀이지도 · 학급운영 전문
-            </div>
-            <button class="mentor-btn" onclick="alert('멘토 신청')">멘토 신청하기</button>
-          </div>
+        <div class="authMenu" style="display: flex; gap: 0.5rem;">
+          <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
+          <a href="/signup" style="background: #ff8566; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
         </div>
       </div>
+    </nav>
+  </header>
+  
+  <script>
+    // 로그인 상태 확인 및 메뉴 표시
+    (function() {
+      const token = localStorage.getItem('witti_token');
+      const userMenu = document.querySelector('.userMenu');
+      const authMenu = document.querySelector('.authMenu');
+      
+      if (token) {
+        userMenu.style.display = 'flex';
+        authMenu.style.display = 'none';
+      } else {
+        userMenu.style.display = 'none';
+        authMenu.style.display = 'flex';
+      }
+      
+      // 로그아웃 버튼
+      document.querySelector('.logoutBtn').addEventListener('click', function() {
+        localStorage.removeItem('witti_token');
+        localStorage.removeItem('witti_user');
+        alert('로그아웃되었습니다.');
+        window.location.href = '/';
+      });
+      
+      // 장바구니 아이템 수 표시
+      const cart = JSON.parse(localStorage.getItem('witti_cart') || '[]');
+      const cartBadge = document.querySelector('.cartBadge');
+      if (cart.length > 0) {
+        cartBadge.textContent = cart.length;
+        cartBadge.style.display = 'flex';
+      }
+    })();
+  </script>
 
-      <footer style="margin-top: 4rem;">
-        <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
-      </footer>
+  <section id="hero">
+    <h2>내 강의실</h2>
+    <p>수강중인 강의와 결제 내역을 확인하세요</p>
+  </section>
 
-    </body>
-    </html>
+  <div class="dashboard-container">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+      <div class="welcome-title" id="userName">환영합니다!</div>
+      <div class="welcome-subtitle">당신의 성장을 응원합니다 🌱</div>
+    </div>
+
+    <!-- 수강중인 강의 섹션 -->
+    <div class="section-title">
+      <span>📚</span>
+      <span>수강중인 강의</span>
+    </div>
+    <div class="enrollment-grid" id="enrollmentList">
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <div class="empty-state-text">로딩 중...</div>
+      </div>
+    </div>
+
+    <!-- 결제 내역 섹션 -->
+    <div class="section-title">
+      <span>💳</span>
+      <span>결제 내역</span>
+    </div>
+    <div class="payment-list" id="paymentList">
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <div class="empty-state-text">로딩 중...</div>
+      </div>
+    </div>
+  </div>
+
+  <footer style="margin-top: 4rem;">
+    <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
+  </footer>
+
+  <script>
+    // 로그인 확인
+    const token = localStorage.getItem('witti_token');
+    const user = JSON.parse(localStorage.getItem('witti_user') || '{}');
+
+    if (!token) {
+      alert('로그인이 필요합니다.');
+      window.location.href = '/login';
+    }
+
+    // 사용자 이름 표시
+    if (user.name) {
+      document.getElementById('userName').textContent = user.name + ' 선생님, 환영합니다!';
+    }
+
+    // 수강 내역 로드
+    async function loadEnrollments() {
+      try {
+        const response = await fetch('/api/my/enrollments', {
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        });
+
+        const data = await response.json();
+        
+        if (data.success && data.enrollments.length > 0) {
+          const enrollmentList = document.getElementById('enrollmentList');
+          enrollmentList.innerHTML = data.enrollments.map(function(enrollment) {
+            const enrolledDate = new Date(enrollment.enrolled_at).toLocaleDateString('ko-KR');
+            return '<div class="enrollment-card" onclick="window.location.href=' + "'/class/" + enrollment.class_id + "'" + '">' +
+              '<div class="enrollment-icon">' + enrollment.thumbnail_icon + '</div>' +
+              '<div class="enrollment-title">' + enrollment.title + '</div>' +
+              '<div class="enrollment-instructor">👩‍🏫 ' + enrollment.instructor_name + '</div>' +
+              '<div class="enrollment-date">수강 시작: ' + enrolledDate + '</div>' +
+            '</div>';
+          }).join('');
+        } else {
+          document.getElementById('enrollmentList').innerHTML = 
+            '<div class="empty-state">' +
+            '<div class="empty-state-icon">📭</div>' +
+            '<div class="empty-state-text">아직 수강중인 강의가 없습니다</div>' +
+            '<button class="btn-primary" onclick="window.location.href=' + "'/learn'" + '">강의 둘러보기</button>' +
+            '</div>';
+        }
+      } catch (error) {
+        console.error('수강 내역 로드 실패:', error);
+        document.getElementById('enrollmentList').innerHTML = 
+          '<div class="empty-state">' +
+          '<div class="empty-state-text">수강 내역을 불러올 수 없습니다</div>' +
+          '</div>';
+      }
+    }
+
+    // 결제 내역 로드
+    async function loadPayments() {
+      try {
+        const response = await fetch('/api/my/payments', {
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        });
+
+        const data = await response.json();
+        
+        if (data.success && data.payments.length > 0) {
+          const paymentList = document.getElementById('paymentList');
+          paymentList.innerHTML = data.payments.map(function(payment) {
+            const paidDate = new Date(payment.paid_at).toLocaleDateString('ko-KR');
+            const paidTime = new Date(payment.paid_at).toLocaleTimeString('ko-KR');
+            
+            let classesHTML = '';
+            if (payment.classes && payment.classes.length > 0) {
+              classesHTML = '<div class="payment-classes">' +
+                payment.classes.map(function(cls) {
+                  return '<div class="payment-class-item">' +
+                    '<div class="payment-class-icon">' + cls.thumbnail_icon + '</div>' +
+                    '<div class="payment-class-info">' +
+                      '<div class="payment-class-title">' + cls.title + '</div>' +
+                      '<div class="payment-class-instructor">' + cls.instructor_name + '</div>' +
+                    '</div>' +
+                  '</div>';
+                }).join('') +
+              '</div>';
+            }
+            
+            return '<div class="payment-item">' +
+              '<div class="payment-header">' +
+                '<div class="payment-order-id">주문번호: ' + payment.order_id + '</div>' +
+                '<div class="payment-amount">' + payment.amount.toLocaleString() + '원</div>' +
+              '</div>' +
+              '<div class="payment-info">' +
+                '<span>💳 ' + payment.payment_method + '</span>' +
+                '<span>📅 ' + paidDate + ' ' + paidTime + '</span>' +
+                '<span style="color: #4CAF50; font-weight: 600;">✓ ' + payment.payment_status + '</span>' +
+              '</div>' +
+              classesHTML +
+            '</div>';
+          }).join('');
+        } else {
+          document.getElementById('paymentList').innerHTML = 
+            '<div class="empty-state">' +
+            '<div class="empty-state-icon">💳</div>' +
+            '<div class="empty-state-text">결제 내역이 없습니다</div>' +
+            '</div>';
+        }
+      } catch (error) {
+        console.error('결제 내역 로드 실패:', error);
+        document.getElementById('paymentList').innerHTML = 
+          '<div class="empty-state">' +
+          '<div class="empty-state-text">결제 내역을 불러올 수 없습니다</div>' +
+          '</div>';
+      }
+    }
+
+    // 페이지 로드 시 데이터 로드
+    loadEnrollments();
+    loadPayments();
+  </script>
+
+</body>
+</html>
+
   `)
 })
 

@@ -884,7 +884,7 @@ app.get('/', (c) => {
       <section id="content">
         <h3 style="text-align: center; margin-bottom: 1rem;">🎯 오늘의 추천 콘텐츠</h3>
         <p style="text-align: center; color: #666; margin-bottom: 2rem; font-size: 0.95rem;">AI가 김민지님을 위해 큐레이션한 콘텐츠</p>
-        <div class="cards">
+        <div class="cards horizontal-scroll">
           <div class="card" onclick="window.location.href='/learn'">
             <div class="card-icon">🎓</div>
             <div class="card-title">AI로 부모면담 정리하기</div>
@@ -958,7 +958,7 @@ app.get('/', (c) => {
           <h3 style="margin: 0;">🎤 지금 주목받는 인터뷰</h3>
           <a href="/story" style="color: #ff8566; text-decoration: none; font-weight: 600; font-size: 0.95rem;">전체보기 →</a>
         </div>
-        <div class="cards">
+        <div class="cards horizontal-scroll">
           <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
             <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #ffe9d6 0%, #fff0e6 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; position: relative;">
               <div style="font-size: 3rem;">🎬</div>
@@ -992,7 +992,7 @@ app.get('/', (c) => {
           <h3 style="margin: 0;">❤️ 공감 많이 받은 이야기</h3>
           <a href="/talk" style="color: #ff8566; text-decoration: none; font-weight: 600; font-size: 0.95rem;">더보기 →</a>
         </div>
-        <div class="cards">
+        <div class="cards horizontal-scroll">
           <div class="card" onclick="window.location.href='/talk'" style="cursor: pointer;">
             <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
               <span style="background: #ff8566; color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">1위</span>

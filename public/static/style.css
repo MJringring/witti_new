@@ -499,4 +499,39 @@ footer {
   header h1 {
     font-size: 1.3rem !important;
   }
+  
+  /* 모바일에서 가로 스크롤 활성화 */
+  .cards.horizontal-scroll {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 1.5rem !important;
+    overflow-x: auto !important;
+    scroll-behavior: smooth !important;
+    padding-bottom: 1rem !important;
+    -webkit-overflow-scrolling: touch !important; /* iOS 부드러운 스크롤 */
+  }
+  
+  .cards.horizontal-scroll .card {
+    min-width: 280px !important;
+    flex-shrink: 0 !important;
+  }
+  
+  /* 스크롤바 스타일링 (선택사항) */
+  .cards.horizontal-scroll::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .cards.horizontal-scroll::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+  }
+  
+  .cards.horizontal-scroll::-webkit-scrollbar-thumb {
+    background: #ff8566;
+    border-radius: 10px;
+  }
+  
+  .cards.horizontal-scroll::-webkit-scrollbar-thumb:hover {
+    background: #ff6b47;
+  }
 }

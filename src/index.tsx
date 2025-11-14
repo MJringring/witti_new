@@ -6605,7 +6605,7 @@ app.get('/books', (c) => {
         <div class="book-grid">
           <!-- Book Card 1 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/ABt6yubT" alt="혼적 MARKS 말 WORDS MATERIAL 재료와 모자이크 MOSAIC"></div>
+            <div class="book-cover"><img src="/static/books/book1.jpg" alt="혼적 MARKS 말 WORDS MATERIAL 재료와 모자이크 MOSAIC"></div>
             <div class="book-title">혼적 MARKS 말 WORDS MATERIAL 재료와 모자이크 MOSAIC</div>
             <div class="book-author">한솔어린이보육재단 도담도담이야기</div>
             <div class="book-description">
@@ -6624,7 +6624,7 @@ app.get('/books', (c) => {
 
           <!-- Book Card 2 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/HtRjDDe0" alt="기록작업을 통해 다시 만난 어린이"></div>
+            <div class="book-cover"><img src="/static/books/book2.jpg" alt="기록작업을 통해 다시 만난 어린이"></div>
             <div class="book-title">기록작업을 통해 다시 만난 어린이</div>
             <div class="book-author">한솔어린이보육재단 도담도담이야기</div>
             <div class="book-description">
@@ -6643,7 +6643,7 @@ app.get('/books', (c) => {
 
           <!-- Book Card 3 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/AwbGvuYe" alt="레지오 에밀리아 시립 유아학교와 영유아센터 지침"></div>
+            <div class="book-cover"><img src="/static/books/book3.jpg" alt="레지오 에밀리아 시립 유아학교와 영유아센터 지침"></div>
             <div class="book-title">레지오 에밀리아 시립 유아학교와 영유아센터 지침</div>
             <div class="book-author">레지오 에밀리아</div>
             <div class="book-description">
@@ -6662,7 +6662,7 @@ app.get('/books', (c) => {
 
           <!-- Book Card 4 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/KCllkQiC" alt="모든 것에 그림자가 있었어요 개미만 빼고"></div>
+            <div class="book-cover"><img src="/static/books/book4.jpg" alt="모든 것에 그림자가 있었어요 개미만 빼고"></div>
             <div class="book-title">모든 것에 그림자가 있었어요 개미만 빼고</div>
             <div class="book-author">레지오 칠드런</div>
             <div class="book-description">
@@ -6681,7 +6681,7 @@ app.get('/books', (c) => {
 
           <!-- Book Card 5 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/vNykUMeD" alt="어린이와 자연 사이의 벽을 허물다 : 만나고 놀아하며"></div>
+            <div class="book-cover"><img src="/static/books/book5.jpg" alt="어린이와 자연 사이의 벽을 허물다 : 만나고 놀아하며"></div>
             <div class="book-title">어린이와 자연 사이의 벽을 허물다</div>
             <div class="book-author">한솔어린이보육재단 도담도담이야기 III</div>
             <div class="book-description">
@@ -6700,7 +6700,7 @@ app.get('/books', (c) => {
 
           <!-- Book Card 6 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/C4LRsUUI" alt="지켜보는 육아 예주는 육아에서 지켜보는 육아로"></div>
+            <div class="book-cover"><img src="/static/books/book6.jpg" alt="지켜보는 육아 예주는 육아에서 지켜보는 육아로"></div>
             <div class="book-title">지켜보는 육아 : 예주는 육아에서 지켜보는 육아로</div>
             <div class="book-author">호지모리 해이지</div>
             <div class="book-description">
@@ -6719,7 +6719,7 @@ app.get('/books', (c) => {
 
           <!-- Book Card 7 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/5ComJgPM" alt="MIMAMORU 지켜보는 보육"></div>
+            <div class="book-cover"><img src="/static/books/book7.jpg" alt="MIMAMORU 지켜보는 보육"></div>
             <div class="book-title">MIMAMORU 지켜보는 보육</div>
             <div class="book-author">호지모리 해이지</div>
             <div class="book-description">
@@ -6738,7 +6738,7 @@ app.get('/books', (c) => {
 
           <!-- Book Card 8 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/pWeg4KaQ" alt="문의 만남 마음의 연결 : 공간의 함께를 넘어"></div>
+            <div class="book-cover"><img src="/static/books/book8.jpg" alt="문의 만남 마음의 연결 : 공간의 함께를 넘어"></div>
             <div class="book-title">문의 만남 마음의 연결 : 공간의 함께를 넘어</div>
             <div class="book-author">한솔어린이보육재단 도담도담이야기 IV</div>
             <div class="book-description">
@@ -6757,7 +6757,7 @@ app.get('/books', (c) => {
 
           <!-- Book Card 9 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/uoRCvYUl" alt="박선과 나눔의 순환을 통한 배움 : 아틀리에 정신과 함께놀이"></div>
+            <div class="book-cover"><img src="/static/books/book9.jpg" alt="박선과 나눔의 순환을 통한 배움 : 아틀리에 정신과 함께놀이"></div>
             <div class="book-title">박선과 나눔의 순환을 통한 배움</div>
             <div class="book-author">한솔어린이보육재단 도담도담이야기 II</div>
             <div class="book-description">
@@ -6776,7 +6776,7 @@ app.get('/books', (c) => {
 
           <!-- Book Card 10 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/g1iM8fk0" alt="UTOPIE QUOTIDIANE 일상속 유토피아"></div>
+            <div class="book-cover"><img src="/static/books/book10.jpg" alt="UTOPIE QUOTIDIANE 일상속 유토피아"></div>
             <div class="book-title">UTOPIE QUOTIDIANE 일상속 유토피아</div>
             <div class="book-author">레지오 칠드런</div>
             <div class="book-description">
@@ -6795,7 +6795,7 @@ app.get('/books', (c) => {
 
           <!-- Book Card 11 -->
           <div class="book-card">
-            <div class="book-cover"><img src="https://www.genspark.ai/api/files/s/DDvXMaZk" alt="한솔영유아교육과정 총론"></div>
+            <div class="book-cover"><img src="/static/books/book11.jpg" alt="한솔영유아교육과정 총론"></div>
             <div class="book-title">한솔영유아교육과정 총론</div>
             <div class="book-author">한솔어린이보육재단</div>
             <div class="book-description">

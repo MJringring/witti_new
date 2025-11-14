@@ -512,13 +512,13 @@ footer {
     flex-direction: row !important;
     flex-wrap: nowrap !important;
     gap: 1rem !important;
-    overflow-x: scroll !important;
+    overflow-x: auto !important;
     overflow-y: hidden !important;
     scroll-behavior: smooth !important;
-    padding-bottom: 1rem !important;
     -webkit-overflow-scrolling: touch !important;
     max-width: 100% !important;
     width: 100% !important;
+    padding-right: 1rem !important;
   }
   
   .cards.horizontal-scroll .card {
@@ -572,26 +572,14 @@ footer {
     height: 90px !important;
   }
   
-  /* 스크롤바 스타일링 - 항상 표시 */
+  /* 스크롤바 숨기기 */
   .cards.horizontal-scroll::-webkit-scrollbar {
-    height: 6px !important;
-    -webkit-appearance: none !important;
+    display: none !important;
   }
   
-  .cards.horizontal-scroll::-webkit-scrollbar-track {
-    background: #e8e8e8 !important;
-    border-radius: 10px !important;
-    margin: 0 1rem !important;
-  }
-  
-  .cards.horizontal-scroll::-webkit-scrollbar-thumb {
-    background: #ff8566 !important;
-    border-radius: 10px !important;
-    min-width: 50px !important;
-  }
-  
-  .cards.horizontal-scroll::-webkit-scrollbar-thumb:hover {
-    background: #ff6b47 !important;
+  .cards.horizontal-scroll {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE and Edge */
   }
   
   /* 모든 카드가 보이도록 충분한 너비 확보 */

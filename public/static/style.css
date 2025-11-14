@@ -371,6 +371,12 @@ footer {
   .cards {
     grid-template-columns: 1fr;
   }
+  
+  /* horizontal-scroll 클래스가 없는 경우만 세로 정렬 */
+  .cards:not(.horizontal-scroll) {
+    display: flex;
+    flex-direction: column;
+  }
 
   .modal-content {
     width: 95%;
@@ -504,15 +510,19 @@ footer {
   .cards.horizontal-scroll {
     display: flex !important;
     flex-direction: row !important;
+    flex-wrap: nowrap !important;
     gap: 1.5rem !important;
     overflow-x: auto !important;
+    overflow-y: hidden !important;
     scroll-behavior: smooth !important;
     padding-bottom: 1rem !important;
     -webkit-overflow-scrolling: touch !important; /* iOS 부드러운 스크롤 */
+    max-width: 100% !important;
   }
   
   .cards.horizontal-scroll .card {
     min-width: 280px !important;
+    max-width: 280px !important;
     flex-shrink: 0 !important;
   }
   

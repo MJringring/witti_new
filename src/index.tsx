@@ -3897,17 +3897,13 @@ app.get('/cart', (c) => {
           let total = 0;
           cartItemsEl.innerHTML = cart.map((item, index) => {
             total += item.price;
-            return \`
-              <div class="cart-item">
-                <div>
-                  <h3>${item.title}</h3>
-                </div>
-                <div style="display: flex; align-items: center;">
-                  <span class="price">${item.price.toLocaleString()}원</span>
-                  <button class="remove-btn" onclick="removeFromCart(${index})">삭제</button>
-                </div>
-              </div>
-            \`;
+            return '<div class="cart-item">' +
+              '<div><h3>' + item.title + '</h3></div>' +
+              '<div style="display: flex; align-items: center;">' +
+                '<span class="price">' + item.price.toLocaleString() + '원</span>' +
+                '<button class="remove-btn" onclick="removeFromCart(' + index + ')">삭제</button>' +
+              '</div>' +
+            '</div>';
           }).join('');
           
           document.getElementById('totalPrice').textContent = total.toLocaleString() + '원';
@@ -4005,12 +4001,10 @@ app.get('/checkout', (c) => {
           
           orderItemsEl.innerHTML = cart.map(item => {
             totalPrice += item.price;
-            return \`
-              <div class="order-item">
-                <span>${item.title}</span>
-                <span style="font-weight: 600;">${item.price.toLocaleString()}원</span>
-              </div>
-            \`;
+            return '<div class="order-item">' +
+              '<span>' + item.title + '</span>' +
+              '<span style="font-weight: 600;">' + item.price.toLocaleString() + '원</span>' +
+            '</div>';
           }).join('');
           
           document.getElementById('totalAmount').textContent = totalPrice.toLocaleString() + '원';
@@ -4021,7 +4015,7 @@ app.get('/checkout', (c) => {
           document.querySelectorAll('.payment-method').forEach(el => {
             el.classList.remove('selected');
           });
-          document.querySelector(\`[data-method="${method}"]\`).classList.add('selected');
+          document.querySelector('[data-method="' + method + '"]').classList.add('selected');
         }
         
         async function processPayment() {
@@ -4172,14 +4166,14 @@ app.get('/admin', async (c) => {
             // 회원 목록
             if (usersData.users) {
               const tbody = document.querySelector('#usersTable tbody');
-              tbody.innerHTML = usersData.users.slice(0, 10).map(user => \`
-                <tr>
-                  <td>${user.id}</td>
-                  <td>${user.email}</td>
-                  <td>${user.name}</td>
-                  <td>${new Date(user.created_at).toLocaleDateString('ko-KR')}</td>
-                </tr>
-              \`).join('');
+              tbody.innerHTML = usersData.users.slice(0, 10).map(user => 
+                '<tr>' +
+                  '<td>' + user.id + '</td>' +
+                  '<td>' + user.email + '</td>' +
+                  '<td>' + user.name + '</td>' +
+                  '<td>' + new Date(user.created_at).toLocaleDateString('ko-KR') + '</td>' +
+                '</tr>'
+              ).join('');
             }
           } catch (error) {
             console.error('Failed to load stats:', error);

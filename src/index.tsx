@@ -658,8 +658,8 @@ app.get('/', (c) => {
         }
         
         .mobile-nav-links a.active {
-          color: #8B5CF6;
-          background: #F3F0FF;
+          color: #FF6B9D;
+          background: #FFF5F7;
         }
         
         .mobile-nav-actions {
@@ -700,7 +700,7 @@ app.get('/', (c) => {
         <div style="display: flex; align-items: center; gap: 2.5rem;">
           <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
           <nav class="desktop-nav" style="display: flex; gap: 2rem; align-items: center;">
-            <a href="/" class="active" style="text-decoration: none; color: #8B5CF6; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #F3F0FF; transition: all 0.3s;">New</a>
+            <a href="/" class="active" style="text-decoration: none; color: #FF6B9D; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #FFF5F7; transition: all 0.3s;">New</a>
             <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
             <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
             <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
@@ -711,20 +711,20 @@ app.get('/', (c) => {
           <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
           <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
             🛒
-            <span id="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+            <span id="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
           </button>
           <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
           <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
             🔔
-            <span style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+            <span style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
           </button>
           <div id="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-            <a href="/mywitti" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <a href="/mywitti" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
             <button id="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
           <div id="authMenu" class="auth-buttons" style="display: flex; gap: 0.5rem;">
             <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-            <a href="/signup" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+            <a href="/signup" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
           </div>
         </div>
       </header>
@@ -742,12 +742,12 @@ app.get('/', (c) => {
           </div>
           <div class="mobile-nav-actions">
             <div id="mobileUserMenu" style="display: none; flex-direction: column; gap: 0.5rem;">
-              <a href="/mywitti" style="background: #8B5CF6; color: white; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center;">내 강의실</a>
+              <a href="/mywitti" style="background: #FF6B9D; color: white; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center;">내 강의실</a>
               <button id="mobileLogoutBtn" style="background: #f5f5f5; border: none; padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%;">로그아웃</button>
             </div>
             <div id="mobileAuthMenu" style="display: flex; flex-direction: column; gap: 0.5rem;">
               <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center;">로그인</a>
-              <a href="/signup" style="background: #8B5CF6; color: white; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center;">회원가입</a>
+              <a href="/signup" style="background: #FF6B9D; color: white; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center;">회원가입</a>
             </div>
           </div>
         </div>
@@ -919,10 +919,10 @@ app.get('/', (c) => {
       </section>
 
       <!-- 지금 인기 클래스 (가로 스크롤) -->
-      <section id="content" style="background-color: #F3F0FF; padding: 3rem 2rem; margin-top: 2rem;">
+      <section id="content" style="background-color: #FFF5F7; padding: 3rem 2rem; margin-top: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
           <h3 style="margin: 0;">🔥 지금 인기 클래스</h3>
-          <a href="/learn" style="color: #8B5CF6; text-decoration: none; font-weight: 600; font-size: 0.95rem;">전체보기 →</a>
+          <a href="/learn" style="color: #FF6B9D; text-decoration: none; font-weight: 600; font-size: 0.95rem;">전체보기 →</a>
         </div>
         <div style="display: flex; gap: 1.5rem; overflow-x: auto; padding-bottom: 1rem; scroll-behavior: smooth;">
           <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
@@ -931,7 +931,7 @@ app.get('/', (c) => {
             </div>
             <b>AI로 부모면담 정리하기</b><br>
             <small>⭐ 4.9 | 1,234명 수강</small><br>
-            <span style="color: #8B5CF6; font-size: 0.85rem; font-weight: 600;">👩‍🏫 김민지 선생님</span>
+            <span style="color: #FF6B9D; font-size: 0.85rem; font-weight: 600;">👩‍🏫 김민지 선생님</span>
           </div>
           <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
             <div style="width: 100%; height: 140px; background: #f5f5f5; border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden;">
@@ -939,28 +939,32 @@ app.get('/', (c) => {
             </div>
             <b>놀이일지 10분 완성법</b><br>
             <small>⭐ 4.8 | 892명 수강</small><br>
-            <span style="color: #8B5CF6; font-size: 0.85rem; font-weight: 600;">👩‍🏫 박수진 선생님</span>
+            <span style="color: #FF6B9D; font-size: 0.85rem; font-weight: 600;">👩‍🏫 박수진 선생님</span>
           </div>
           <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
-            <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">💬</div>
+            <div style="width: 100%; height: 140px; background: #f5f5f5; border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+              <img src="/static/illustrations/kids_study.jpg" alt="Emotional Care Class" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <b>감정케어 & 회복 클래스</b><br>
             <small>⭐ 5.0 | 567명 수강</small><br>
-            <span style="color: #8B5CF6; font-size: 0.85rem; font-weight: 600;">💼 이지은 상담사</span>
+            <span style="color: #FF6B9D; font-size: 0.85rem; font-weight: 600;">💼 이지은 상담사</span>
           </div>
           <div class="card" onclick="window.location.href='/learn'" style="min-width: 280px; cursor: pointer;">
-            <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🎯</div>
+            <div style="width: 100%; height: 140px; background: #f5f5f5; border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+              <img src="/static/illustrations/teacher_student.jpg" alt="Parent Communication" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <b>효과적인 부모 소통 전략</b><br>
             <small>⭐ 4.9 | 432명 수강</small><br>
-            <span style="color: #8B5CF6; font-size: 0.85rem; font-weight: 600;">🎓 정미영 전문가</span>
+            <span style="color: #FF6B9D; font-size: 0.85rem; font-weight: 600;">🎓 정미영 전문가</span>
           </div>
         </div>
       </section>
 
       <!-- 교사 인터뷰 (짧은 영상형 썸네일) -->
-      <section id="content" style="background: #F3F0FF; padding: 3rem 2rem; margin-top: 2rem;">
+      <section id="content" style="background: #FFF5F7; padding: 3rem 2rem; margin-top: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-          <h3 style="margin: 0;">🎤 지금 주목받는 인터뷰</h3>
-          <a href="/story" style="color: #8B5CF6; text-decoration: none; font-weight: 600; font-size: 0.95rem;">전체보기 →</a>
+          <h3 style="margin: 0;">🎤 주목받는 인터뷰</h3>
+          <a href="/story" style="color: #FF6B9D; text-decoration: none; font-weight: 600; font-size: 0.95rem;">전체보기 →</a>
         </div>
         <div class="cards horizontal-scroll">
           <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
@@ -980,8 +984,8 @@ app.get('/', (c) => {
             <small style="color: #666;">교육학과 정민수 교수님 | 조회수 8.3K</small>
           </div>
           <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
-            <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%); border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; position: relative;">
-              <div style="font-size: 3rem;">🎬</div>
+            <div style="width: 100%; height: 160px; background: #f5f5f5; border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <img src="/static/illustrations/kids_learning.jpg" alt="Pre-service Teacher" style="width: 100%; height: 100%; object-fit: cover;">
               <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">06:12</div>
             </div>
             <b>"예비교사가 꼭 알아야 할 것"</b><br>
@@ -993,14 +997,14 @@ app.get('/', (c) => {
       <!-- 공감 많이 받은 이야기 (커뮤니티 Top3) -->
       <section id="content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-          <h3 style="margin: 0;">❤️ 공감 많이 받은 이야기</h3>
-          <a href="/talk" style="color: #8B5CF6; text-decoration: none; font-weight: 600; font-size: 0.95rem;">더보기 →</a>
+          <h3 style="margin: 0;">❤️ 공감 받은 이야기</h3>
+          <a href="/talk" style="color: #FF6B9D; text-decoration: none; font-weight: 600; font-size: 0.95rem;">더보기 →</a>
         </div>
         <div class="cards horizontal-scroll">
           <div class="card" onclick="window.location.href='/talk'" style="cursor: pointer;">
             <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
-              <span style="background: #8B5CF6; color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">1위</span>
-              <span style="color: #8B5CF6; font-size: 1.2rem;">❤️ 234</span>
+              <span style="background: #FF6B9D; color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">1위</span>
+              <span style="color: #FF6B9D; font-size: 1.2rem;">❤️ 234</span>
             </div>
             <b>"신규교사인데 부모님과 대화가 너무 어려워요"</b><br>
             <small style="color: #666;">김민지 | 댓글 45개</small><br>
@@ -1008,8 +1012,8 @@ app.get('/', (c) => {
           </div>
           <div class="card" onclick="window.location.href='/talk'" style="cursor: pointer;">
             <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
-              <span style="background: #A78BFA; color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">2위</span>
-              <span style="color: #8B5CF6; font-size: 1.2rem;">❤️ 189</span>
+              <span style="background: #FFB4D0; color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">2위</span>
+              <span style="color: #FF6B9D; font-size: 1.2rem;">❤️ 189</span>
             </div>
             <b>"요즘 번아웃이 심한데 어떻게 극복하셨나요?"</b><br>
             <small style="color: #666;">박수진 | 댓글 67개</small><br>
@@ -1017,8 +1021,8 @@ app.get('/', (c) => {
           </div>
           <div class="card" onclick="window.location.href='/talk'" style="cursor: pointer;">
             <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
-              <span style="background: #C4B5FD; color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">3위</span>
-              <span style="color: #8B5CF6; font-size: 1.2rem;">❤️ 156</span>
+              <span style="background: #FFC9DD; color: white; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">3위</span>
+              <span style="color: #FF6B9D; font-size: 1.2rem;">❤️ 156</span>
             </div>
             <b>"작은 칭찬 하나가 아이를 변화시켰어요"</b><br>
             <small style="color: #666;">이지은 | 댓글 34개</small><br>
@@ -1028,13 +1032,13 @@ app.get('/', (c) => {
       </section>
 
       <!-- 오늘의 질문 (공감 참여형 CTA) -->
-      <section id="content" style="background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%); padding: 3rem 2rem; margin-top: 2rem; text-align: center;">
+      <section id="content" style="background: linear-gradient(135deg, #FFF5F7 0%, #E6FFFC 100%); padding: 3rem 2rem; margin-top: 2rem; text-align: center;">
         <h3 style="margin-bottom: 1rem;">💭 오늘의 질문</h3>
         <p style="font-size: 1.3rem; color: #333; margin-bottom: 2rem;">
           "요즘 가장 힘든 순간은 언제인가요?"
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-          <button onclick="window.location.href='/talk'" style="background-color: #8B5CF6; border: none; color: white; padding: 12px 30px; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600;">
+          <button onclick="window.location.href='/talk'" style="background-color: #FF6B9D; border: none; color: white; padding: 12px 30px; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600;">
             공감하기 & 이야기 나누기
           </button>
         </div>
@@ -1054,29 +1058,29 @@ app.get('/', (c) => {
       </div>
 
       <!-- 푸터 특별 섹션 -->
-      <section id="content" style="background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%); padding: 3rem 2rem; margin-top: 3rem;">
+      <section id="content" style="background: linear-gradient(135deg, #FFF5F7 0%, #E6FFFC 100%); padding: 3rem 2rem; margin-top: 3rem;">
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto;">
           <!-- 도담서가 큐레이션 -->
           <div style="text-align: center;">
-            <h4 style="color: #8B5CF6; margin-bottom: 1rem;">📚 도담서가 큐레이션</h4>
+            <h4 style="color: #FF6B9D; margin-bottom: 1rem;">📚 도담서가 큐레이션</h4>
             <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">교사를 위한 추천 도서</p>
-            <button onclick="window.location.href='/books'" style="background: white; color: #8B5CF6; border: 2px solid #8B5CF6; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+            <button onclick="window.location.href='/books'" style="background: white; color: #FF6B9D; border: 2px solid #FF6B9D; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
               책 추천 보기
             </button>
           </div>
 
           <!-- 뉴스레터 구독 -->
           <div style="text-align: center;">
-            <h4 style="color: #8B5CF6; margin-bottom: 1rem;">📬 뉴스레터 구독</h4>
+            <h4 style="color: #FF6B9D; margin-bottom: 1rem;">📬 뉴스레터 구독</h4>
             <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">매주 화요일 인사이트 받기</p>
-            <button onclick="alert('뉴스레터 구독 페이지로 이동합니다')" style="background: #8B5CF6; color: white; border: none; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+            <button onclick="alert('뉴스레터 구독 페이지로 이동합니다')" style="background: #FF6B9D; color: white; border: none; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
               무료 구독하기
             </button>
           </div>
 
           <!-- 카카오 채널 -->
           <div style="text-align: center;">
-            <h4 style="color: #8B5CF6; margin-bottom: 1rem;">💬 카카오 채널</h4>
+            <h4 style="color: #FF6B9D; margin-bottom: 1rem;">💬 카카오 채널</h4>
             <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">실시간 알림 받기</p>
             <button onclick="alert('카카오 채널 추가 페이지로 이동합니다')" style="background: #FEE500; color: #000; border: none; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
               채널 추가하기
@@ -1087,7 +1091,7 @@ app.get('/', (c) => {
 
       <!-- 뷰 모드 전환 버튼 (모바일 전용) -->
       <div id="viewModeToggle" style="display: none; background: #f5f5f5; padding: 1rem; text-align: center; border-top: 1px solid #e0e0e0;">
-        <button id="toggleViewMode" onclick="toggleViewMode()" style="background: #8B5CF6; color: white; border: none; padding: 0.75rem 2rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+        <button id="toggleViewMode" onclick="toggleViewMode()" style="background: #FF6B9D; color: white; border: none; padding: 0.75rem 2rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
           📱 PC 모드로 보기
         </button>
       </div>
@@ -1127,7 +1131,7 @@ app.get('/learn', (c) => {
           <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
           <nav style="display: flex; gap: 2rem; align-items: center;">
             <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
-            <a href="/learn" class="active" style="text-decoration: none; color: #8B5CF6; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #F3F0FF; transition: all 0.3s;">Learn</a>
+            <a href="/learn" class="active" style="text-decoration: none; color: #FF6B9D; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #FFF5F7; transition: all 0.3s;">Learn</a>
             <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
             <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
             <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
@@ -1136,20 +1140,20 @@ app.get('/learn', (c) => {
         <div style="display: flex; gap: 1rem; align-items: center;">
           <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
             🛒
-            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
           </button>
           <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
           <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
             🔔
-            <span style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+            <span style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
           </button>
           <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-            <a href="/mywitti" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <a href="/mywitti" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
             <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
           <div class="authMenu" style="display: flex; gap: 0.5rem;">
             <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-            <a href="/signup" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+            <a href="/signup" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
           </div>
         </div>
       </header>
@@ -1191,20 +1195,20 @@ app.get('/learn', (c) => {
         <h2>실전에서 바로 쓰는 교사 강의</h2>
         <p>5분만에 배우고, 내일 바로 써먹는 실전 콘텐츠</p>
         <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
-          <button onclick="window.location.href='/learn#all'" style="background-color: #8B5CF6; border: none; color: white; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">전체 강좌 보기</button>
-          <button onclick="alert('나의 성장트리 리더십 뱃지 보유시, 업로드 가능해요!')" style="background-color: white; color: #8B5CF6; border: 2px solid #8B5CF6; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">내 클래스 개설하기</button>
+          <button onclick="window.location.href='/learn#all'" style="background-color: #FF6B9D; border: none; color: white; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">전체 강좌 보기</button>
+          <button onclick="alert('나의 성장트리 리더십 뱃지 보유시, 업로드 가능해요!')" style="background-color: white; color: #FF6B9D; border: 2px solid #FF6B9D; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">내 클래스 개설하기</button>
         </div>
       </section>
 
       <!-- 상단 카테고리 탭 -->
       <section style="background: white; padding: 1.5rem 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50;">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-          <button onclick="alert('전체 콘텐츠')" style="padding: 10px 20px; background: #8B5CF6; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600;">🔹 All</button>
-          <button onclick="alert('부모상담')" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500;">부모상담</button>
-          <button onclick="alert('놀이기록')" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500;">놀이기록</button>
-          <button onclick="alert('AI활용')" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500;">AI활용</button>
-          <button onclick="alert('감정관리')" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500;">감정관리</button>
-          <button onclick="alert('커리어')" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500;">커리어</button>
+          <button onclick="alert('전체 콘텐츠')" style="padding: 10px 20px; background: #FF6B9D; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600;">🔹 All</button>
+          <button onclick="alert('부모상담')" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500;">부모상담</button>
+          <button onclick="alert('놀이기록')" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500;">놀이기록</button>
+          <button onclick="alert('AI활용')" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500;">AI활용</button>
+          <button onclick="alert('감정관리')" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500;">감정관리</button>
+          <button onclick="alert('커리어')" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500;">커리어</button>
         </div>
       </section>
 
@@ -1215,42 +1219,42 @@ app.get('/learn', (c) => {
           <div class="card" onclick="alert('강좌 상세 페이지로 이동')">
             🎓 <b>AI로 부모면담 정리하기</b><br>
             <small>⭐ 4.9 | 1,234명 수강 | 15분</small><br>
-            <span style="color: #8B5CF6; font-size: 0.85rem;">김민지 선생님</span>
+            <span style="color: #FF6B9D; font-size: 0.85rem;">김민지 선생님</span>
           </div>
           <div class="card" onclick="alert('강좌 상세 페이지로 이동')">
             📋 <b>놀이일지 10분 완성법</b><br>
             <small>⭐ 4.8 | 892명 수강 | 12분</small><br>
-            <span style="color: #8B5CF6; font-size: 0.85rem;">박수진 선생님</span>
+            <span style="color: #FF6B9D; font-size: 0.85rem;">박수진 선생님</span>
           </div>
           <div class="card" onclick="alert('강좌 상세 페이지로 이동')">
             💬 <b>감정케어 & 회복 클래스</b><br>
             <small>⭐ 5.0 | 567명 수강 | 20분</small><br>
-            <span style="color: #8B5CF6; font-size: 0.85rem;">이지은 상담사</span>
+            <span style="color: #FF6B9D; font-size: 0.85rem;">이지은 상담사</span>
           </div>
         </div>
       </section>
 
       <!-- 5분 강의 모음 (썸네일+재생버튼) -->
-      <section id="content" style="background: #F3F0FF; padding: 3rem 2rem; margin-top: 2rem;">
+      <section id="content" style="background: #FFF5F7; padding: 3rem 2rem; margin-top: 2rem;">
         <h3>⚡ 5분 강의 모음</h3>
         <p style="text-align: center; color: #666; margin-bottom: 2rem;">출퇴근 시간에 가볍게 듣는 미니 강좌</p>
         <div class="cards">
           <div class="card" onclick="alert('영상 재생')" style="position: relative; cursor: pointer;">
-            <div style="background: #E0F7FA; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; position: relative;">
+            <div style="background: #E6FFFC; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; position: relative;">
               <span style="font-size: 3rem;">▶️</span>
             </div>
             <b>부모님과의 첫 만남 준비</b><br>
             <small>5분 | 조회수 2.3K | 김민지 선생님</small>
           </div>
           <div class="card" onclick="alert('영상 재생')" style="position: relative; cursor: pointer;">
-            <div style="background: #E0F7FA; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+            <div style="background: #E6FFFC; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
               <span style="font-size: 3rem;">▶️</span>
             </div>
             <b>아이 칭찬하는 효과적인 방법</b><br>
             <small>5분 | 조회수 1.8K | 박수진 선생님</small>
           </div>
           <div class="card" onclick="alert('영상 재생')" style="position: relative; cursor: pointer;">
-            <div style="background: #E0F7FA; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+            <div style="background: #E6FFFC; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
               <span style="font-size: 3rem;">▶️</span>
             </div>
             <b>스트레스 해소 3가지 팁</b><br>
@@ -1266,49 +1270,49 @@ app.get('/learn', (c) => {
           <div class="card" onclick="downloadReport('checklist')">
             📊 <b>2025 부모면담 체크리스트</b><br>
             <small>PDF 다운로드 | 567회</small><br>
-            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
+            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
           </div>
           <div class="card" onclick="downloadReport('playlog')">
             📝 <b>놀이일지 작성 가이드</b><br>
             <small>PDF 다운로드 | 892회</small><br>
-            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
+            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
           </div>
           <div class="card" onclick="downloadReport('aitools')">
             💡 <b>AI 도구 활용 매뉴얼</b><br>
             <small>PDF 다운로드 | 1.2K회</small><br>
-            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
+            <button style="margin-top: 0.5rem; padding: 6px 16px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">무료 다운로드</button>
           </div>
         </div>
       </section>
 
       <!-- 세미나/웨비나 일정 (캘린더형 블록) -->
-      <section id="content" style="background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%); padding: 3rem 2rem; margin-top: 2rem;">
+      <section id="content" style="background: linear-gradient(135deg, #FFF5F7 0%, #E6FFFC 100%); padding: 3rem 2rem; margin-top: 2rem;">
         <h3>📅 세미나/웨비나 일정</h3>
         <p style="text-align: center; color: #666; margin-bottom: 2rem;">실시간으로 소통하는 교육 프로그램</p>
         <div class="cards">
           <div class="card" style="background: white;">
-            <div style="background: #8B5CF6; color: white; padding: 8px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px; text-align: center; font-weight: 600;">
+            <div style="background: #FF6B9D; color: white; padding: 8px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px; text-align: center; font-weight: 600;">
               2월 15일 (토) 14:00
             </div>
             <b>AI 활용 교사 워크샵</b><br>
             <small>온라인 LIVE | 선착순 50명 | 무료</small><br>
-            <button style="margin-top: 0.5rem; padding: 8px 20px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; width: 100%;">신청하기</button>
+            <button style="margin-top: 0.5rem; padding: 8px 20px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; width: 100%;">신청하기</button>
           </div>
           <div class="card" style="background: white;">
-            <div style="background: #8B5CF6; color: white; padding: 8px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px; text-align: center; font-weight: 600;">
+            <div style="background: #FF6B9D; color: white; padding: 8px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px; text-align: center; font-weight: 600;">
               2월 22일 (토) 10:00
             </div>
             <b>부모상담 실전 세미나</b><br>
             <small>오프라인 | 잠실 WITTI 센터 | 3만원</small><br>
-            <button style="margin-top: 0.5rem; padding: 8px 20px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; width: 100%;">신청하기</button>
+            <button style="margin-top: 0.5rem; padding: 8px 20px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; width: 100%;">신청하기</button>
           </div>
           <div class="card" style="background: white;">
-            <div style="background: #8B5CF6; color: white; padding: 8px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px; text-align: center; font-weight: 600;">
+            <div style="background: #FF6B9D; color: white; padding: 8px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px; text-align: center; font-weight: 600;">
               3월 1일 (토) 15:00
             </div>
             <b>신규교사 오리엔테이션</b><br>
             <small>온라인 | 신규교사 대상 | 무료</small><br>
-            <button style="margin-top: 0.5rem; padding: 8px 20px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; width: 100%;">신청하기</button>
+            <button style="margin-top: 0.5rem; padding: 8px 20px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; width: 100%;">신청하기</button>
           </div>
         </div>
       </section>
@@ -1320,7 +1324,7 @@ app.get('/learn', (c) => {
         <div class="cards">
           <div class="card" onclick="alert('클래스 상세보기')">
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-              <div style="width: 50px; height: 50px; background: #E0F7FA; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👩</div>
+              <div style="width: 50px; height: 50px; background: #E6FFFC; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👩</div>
               <div style="text-align: left;">
                 <b>김민지 선생님</b><br>
                 <small style="color: #999;">10년차 | 주임교사</small>
@@ -1329,13 +1333,13 @@ app.get('/learn', (c) => {
             <b>AI로 부모면담 100% 활용하기</b><br>
             <small>⭐ 4.9 (234개 리뷰) | 1,234명 수강</small><br>
             <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 1.2rem; color: #8B5CF6; font-weight: 600;">₩29,000</span>
-              <button style="padding: 6px 16px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer;">수강하기</button>
+              <span style="font-size: 1.2rem; color: #FF6B9D; font-weight: 600;">₩29,000</span>
+              <button style="padding: 6px 16px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer;">수강하기</button>
             </div>
           </div>
           <div class="card" onclick="alert('클래스 상세보기')">
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-              <div style="width: 50px; height: 50px; background: #E0F7FA; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👨</div>
+              <div style="width: 50px; height: 50px; background: #E6FFFC; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👨</div>
               <div style="text-align: left;">
                 <b>박수진 선생님</b><br>
                 <small style="color: #999;">15년차 | 선임교사</small>
@@ -1344,13 +1348,13 @@ app.get('/learn', (c) => {
             <b>놀이관찰 & 기록의 모든 것</b><br>
             <small>⭐ 5.0 (189개 리뷰) | 892명 수강</small><br>
             <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 1.2rem; color: #8B5CF6; font-weight: 600;">₩35,000</span>
-              <button style="padding: 6px 16px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer;">수강하기</button>
+              <span style="font-size: 1.2rem; color: #FF6B9D; font-weight: 600;">₩35,000</span>
+              <button style="padding: 6px 16px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer;">수강하기</button>
             </div>
           </div>
           <div class="card" onclick="alert('클래스 상세보기')">
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-              <div style="width: 50px; height: 50px; background: #E0F7FA; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👩</div>
+              <div style="width: 50px; height: 50px; background: #E6FFFC; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👩</div>
               <div style="text-align: left;">
                 <b>이지은 상담사</b><br>
                 <small style="color: #999;">20년차 | 전문상담사</small>
@@ -1359,8 +1363,8 @@ app.get('/learn', (c) => {
             <b>교사 마음케어 프로그램</b><br>
             <small>⭐ 5.0 (312개 리뷰) | 567명 수강</small><br>
             <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 1.2rem; color: #8B5CF6; font-weight: 600;">₩25,000</span>
-              <button style="padding: 6px 16px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer;">수강하기</button>
+              <span style="font-size: 1.2rem; color: #FF6B9D; font-weight: 600;">₩25,000</span>
+              <button style="padding: 6px 16px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer;">수강하기</button>
             </div>
           </div>
         </div>
@@ -1573,7 +1577,7 @@ app.get('/story', (c) => {
         .story-thumbnail {
           width: 100%;
           height: 200px;
-          background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%);
+          background: linear-gradient(135deg, #FFF5F7 0%, #E6FFFC 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1585,7 +1589,7 @@ app.get('/story', (c) => {
           position: absolute;
           top: 12px;
           right: 12px;
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
           padding: 4px 12px;
           border-radius: 12px;
@@ -1626,7 +1630,7 @@ app.get('/story', (c) => {
         }
         
         .newsletter-section {
-          background: linear-gradient(135deg, #E0F7FA 0%, #F3F0FF 100%);
+          background: linear-gradient(135deg, #E6FFFC 0%, #FFF5F7 100%);
           padding: 4rem 2rem;
           margin-top: 3rem;
           text-align: center;
@@ -1687,7 +1691,7 @@ app.get('/story', (c) => {
           <nav style="display: flex; gap: 2rem; align-items: center;">
             <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
             <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
-            <a href="/story" style="text-decoration: none; color: #8B5CF6; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #F3F0FF; transition: all 0.3s;">Story</a>
+            <a href="/story" style="text-decoration: none; color: #FF6B9D; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #FFF5F7; transition: all 0.3s;">Story</a>
             <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
             <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
           </nav>
@@ -1695,20 +1699,20 @@ app.get('/story', (c) => {
         <div style="display: flex; gap: 1rem; align-items: center;">
           <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
             🛒
-            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
           </button>
           <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
           <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
             🔔
-            <span style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+            <span style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
           </button>
           <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-            <a href="/mywitti" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <a href="/mywitti" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
             <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
           <div class="authMenu" style="display: flex; gap: 0.5rem;">
             <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-            <a href="/signup" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+            <a href="/signup" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
           </div>
         </div>
       </header>
@@ -1721,11 +1725,11 @@ app.get('/story', (c) => {
       <!-- Sticky Filter Navigation -->
       <section style="background: white; padding: 1.5rem 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50;">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-          <button onclick="filterStories('all')" id="filter-all" style="padding: 10px 20px; background: #8B5CF6; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.2s;">🔹 전체</button>
-          <button onclick="filterStories('interview')" id="filter-interview" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">인터뷰</button>
-          <button onclick="filterStories('column')" id="filter-column" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">칼럼</button>
-          <button onclick="filterStories('video')" id="filter-video" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">영상</button>
-          <button onclick="filterStories('newsletter')" id="filter-newsletter" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">뉴스레터</button>
+          <button onclick="filterStories('all')" id="filter-all" style="padding: 10px 20px; background: #FF6B9D; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.2s;">🔹 전체</button>
+          <button onclick="filterStories('interview')" id="filter-interview" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">인터뷰</button>
+          <button onclick="filterStories('column')" id="filter-column" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">칼럼</button>
+          <button onclick="filterStories('video')" id="filter-video" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">영상</button>
+          <button onclick="filterStories('newsletter')" id="filter-newsletter" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">뉴스레터</button>
         </div>
       </section>
 
@@ -1822,7 +1826,7 @@ app.get('/story', (c) => {
 
         <!-- Video Stories -->
         <div class="story-card" data-category="video" onclick="alert('영상 재생 예정')">
-          <div class="story-thumbnail" style="background: linear-gradient(135deg, #10B981 0%, #8B5CF6 100%);">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #00D9C0 0%, #FF6B9D 100%);">
             ▶️
             <span class="ai-badge">AI 추천</span>
           </div>
@@ -1837,7 +1841,7 @@ app.get('/story', (c) => {
         </div>
 
         <div class="story-card" data-category="video" onclick="alert('영상 재생 예정')">
-          <div class="story-thumbnail" style="background: linear-gradient(135deg, #10B981 0%, #8B5CF6 100%);">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #00D9C0 0%, #FF6B9D 100%);">
             ▶️
           </div>
           <div class="story-content">
@@ -1851,7 +1855,7 @@ app.get('/story', (c) => {
         </div>
 
         <div class="story-card" data-category="video" onclick="alert('영상 재생 예정')">
-          <div class="story-thumbnail" style="background: linear-gradient(135deg, #10B981 0%, #8B5CF6 100%);">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #00D9C0 0%, #FF6B9D 100%);">
             ▶️
           </div>
           <div class="story-content">
@@ -1866,7 +1870,7 @@ app.get('/story', (c) => {
 
         <!-- Newsletter Stories -->
         <div class="story-card" data-category="newsletter" onclick="alert('뉴스레터 보기 예정')">
-          <div class="story-thumbnail" style="background: linear-gradient(135deg, #E0F7FA 0%, #F3F0FF 100%);">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #E6FFFC 0%, #FFF5F7 100%);">
             📧
           </div>
           <div class="story-content">
@@ -1880,7 +1884,7 @@ app.get('/story', (c) => {
         </div>
 
         <div class="story-card" data-category="newsletter" onclick="alert('뉴스레터 보기 예정')">
-          <div class="story-thumbnail" style="background: linear-gradient(135deg, #E0F7FA 0%, #F3F0FF 100%);">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #E6FFFC 0%, #FFF5F7 100%);">
             📧
           </div>
           <div class="story-content">
@@ -1894,7 +1898,7 @@ app.get('/story', (c) => {
         </div>
 
         <div class="story-card" data-category="newsletter" onclick="alert('뉴스레터 보기 예정')">
-          <div class="story-thumbnail" style="background: linear-gradient(135deg, #E0F7FA 0%, #F3F0FF 100%);">
+          <div class="story-thumbnail" style="background: linear-gradient(135deg, #E6FFFC 0%, #FFF5F7 100%);">
             📧
           </div>
           <div class="story-content">
@@ -1921,7 +1925,7 @@ app.get('/story', (c) => {
             <span>카카오로 3초만에 구독하기</span>
           </button>
           <div class="subscriber-count">
-            이미 <strong style="color: #8B5CF6;">12,847명</strong>의 선생님이 구독 중입니다
+            이미 <strong style="color: #FF6B9D;">12,847명</strong>의 선생님이 구독 중입니다
           </div>
         </div>
       </div>
@@ -1944,7 +1948,7 @@ app.get('/story', (c) => {
           
           // Highlight active button
           const activeBtn = document.getElementById('filter-' + category);
-          activeBtn.style.background = '#8B5CF6';
+          activeBtn.style.background = '#FF6B9D';
           activeBtn.style.color = 'white';
           activeBtn.style.border = 'none';
           
@@ -2014,7 +2018,7 @@ app.get('/talk', (c) => {
         .feed-avatar {
           width: 50px;
           height: 50px;
-          background: #E0F7FA;
+          background: #E6FFFC;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -2061,11 +2065,11 @@ app.get('/talk', (c) => {
         }
         
         .feed-action-btn:hover {
-          color: #8B5CF6;
+          color: #FF6B9D;
         }
         
         .feed-action-btn.active {
-          color: #8B5CF6;
+          color: #FF6B9D;
           font-weight: 600;
         }
         
@@ -2075,7 +2079,7 @@ app.get('/talk', (c) => {
           padding: 1.5rem;
           margin-bottom: 1.5rem;
           box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-          border-left: 4px solid #8B5CF6;
+          border-left: 4px solid #FF6B9D;
         }
         
         .project-header {
@@ -2093,8 +2097,8 @@ app.get('/talk', (c) => {
         }
         
         .project-badge {
-          background: #F3F0FF;
-          color: #8B5CF6;
+          background: #FFF5F7;
+          color: #FF6B9D;
           padding: 4px 12px;
           border-radius: 12px;
           font-size: 0.8rem;
@@ -2122,7 +2126,7 @@ app.get('/talk', (c) => {
         }
         
         .project-join-btn {
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
           border: none;
           padding: 10px 24px;
@@ -2150,14 +2154,14 @@ app.get('/talk', (c) => {
         .meetup-date {
           min-width: 80px;
           text-align: center;
-          background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%);
+          background: linear-gradient(135deg, #FFF5F7 0%, #E6FFFC 100%);
           border-radius: 8px;
           padding: 1rem;
         }
         
         .meetup-month {
           font-size: 0.85rem;
-          color: #8B5CF6;
+          color: #FF6B9D;
           font-weight: 600;
         }
         
@@ -2207,7 +2211,7 @@ app.get('/talk', (c) => {
         }
         
         .meetup-btn.primary {
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
         }
         
@@ -2217,12 +2221,12 @@ app.get('/talk', (c) => {
         
         .meetup-btn.secondary {
           background: white;
-          color: #8B5CF6;
-          border: 2px solid #8B5CF6;
+          color: #FF6B9D;
+          border: 2px solid #FF6B9D;
         }
         
         .meetup-btn.secondary:hover {
-          background: #F3F0FF;
+          background: #FFF5F7;
         }
         
         .suggestion-card {
@@ -2250,7 +2254,7 @@ app.get('/talk', (c) => {
         
         .vote-btn {
           background: white;
-          border: 2px solid #E0F7FA;
+          border: 2px solid #E6FFFC;
           border-radius: 8px;
           padding: 8px 16px;
           cursor: pointer;
@@ -2259,14 +2263,14 @@ app.get('/talk', (c) => {
         }
         
         .vote-btn:hover {
-          background: #F3F0FF;
-          border-color: #8B5CF6;
+          background: #FFF5F7;
+          border-color: #FF6B9D;
         }
         
         .vote-count {
           font-size: 1.2rem;
           font-weight: 700;
-          color: #8B5CF6;
+          color: #FF6B9D;
         }
         
         .suggestion-content {
@@ -2291,7 +2295,7 @@ app.get('/talk', (c) => {
           bottom: 2rem;
           width: 60px;
           height: 60px;
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
           border: none;
           border-radius: 50%;
@@ -2327,27 +2331,27 @@ app.get('/talk', (c) => {
             <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
             <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
             <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
-            <a href="/talk" style="text-decoration: none; color: #8B5CF6; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #F3F0FF; transition: all 0.3s;">Talk</a>
+            <a href="/talk" style="text-decoration: none; color: #FF6B9D; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #FFF5F7; transition: all 0.3s;">Talk</a>
             <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
           </nav>
         </div>
         <div style="display: flex; gap: 1rem; align-items: center;">
           <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
             🛒
-            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
           </button>
           <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
           <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
             🔔
-            <span style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+            <span style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
           </button>
           <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-            <a href="/mywitti" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <a href="/mywitti" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
             <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
           <div class="authMenu" style="display: flex; gap: 0.5rem;">
             <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-            <a href="/signup" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+            <a href="/signup" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
           </div>
         </div>
       </header>
@@ -2360,10 +2364,10 @@ app.get('/talk', (c) => {
       <!-- Tab Navigation -->
       <section style="background: white; padding: 1.5rem 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50;">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-          <button onclick="switchTab('feed')" id="tab-feed" style="padding: 10px 20px; background: #8B5CF6; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.2s;">🔹 공감 피드</button>
-          <button onclick="switchTab('projects')" id="tab-projects" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">실천 프로젝트</button>
-          <button onclick="switchTab('meetups')" id="tab-meetups" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">밋업</button>
-          <button onclick="switchTab('suggestions')" id="tab-suggestions" style="padding: 10px 20px; background: white; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">제안</button>
+          <button onclick="switchTab('feed')" id="tab-feed" style="padding: 10px 20px; background: #FF6B9D; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.2s;">🔹 공감 피드</button>
+          <button onclick="switchTab('projects')" id="tab-projects" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">실천 프로젝트</button>
+          <button onclick="switchTab('meetups')" id="tab-meetups" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">밋업</button>
+          <button onclick="switchTab('suggestions')" id="tab-suggestions" style="padding: 10px 20px; background: white; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s;">제안</button>
         </div>
       </section>
 
@@ -2725,7 +2729,7 @@ app.get('/talk', (c) => {
           
           // Highlight active tab button
           const activeBtn = document.getElementById('tab-' + tabName);
-          activeBtn.style.background = '#8B5CF6';
+          activeBtn.style.background = '#FF6B9D';
           activeBtn.style.color = 'white';
           activeBtn.style.border = 'none';
         }
@@ -2780,18 +2784,18 @@ app.get('/tools', (c) => {
         .tool-card:hover {
           transform: translateY(-4px);
           box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-          border-color: #8B5CF6;
+          border-color: #FF6B9D;
         }
         
         .tool-card.active {
-          border-color: #8B5CF6;
-          background: linear-gradient(135deg, #F3F0FF 0%, #ffffff 100%);
+          border-color: #FF6B9D;
+          background: linear-gradient(135deg, #FFF5F7 0%, #ffffff 100%);
         }
         
         .tool-icon {
           width: 80px;
           height: 80px;
-          background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%);
+          background: linear-gradient(135deg, #FFF5F7 0%, #E6FFFC 100%);
           border-radius: 20px;
           display: flex;
           align-items: center;
@@ -2815,8 +2819,8 @@ app.get('/tools', (c) => {
         
         .tool-badge {
           display: inline-block;
-          background: #F3F0FF;
-          color: #8B5CF6;
+          background: #FFF5F7;
+          color: #FF6B9D;
           padding: 6px 12px;
           border-radius: 8px;
           font-size: 0.85rem;
@@ -2843,7 +2847,7 @@ app.get('/tools', (c) => {
         .workspace-icon {
           width: 60px;
           height: 60px;
-          background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);
+          background: linear-gradient(135deg, #FF6B9D 0%, #FFB4D0 100%);
           border-radius: 15px;
           display: flex;
           align-items: center;
@@ -2874,7 +2878,7 @@ app.get('/tools', (c) => {
           width: 100%;
           min-height: 200px;
           padding: 1.5rem;
-          border: 2px solid #E0F7FA;
+          border: 2px solid #E6FFFC;
           border-radius: 12px;
           font-size: 1rem;
           font-family: "Pretendard", -apple-system, sans-serif;
@@ -2884,7 +2888,7 @@ app.get('/tools', (c) => {
         
         .ai-textarea:focus {
           outline: none;
-          border-color: #8B5CF6;
+          border-color: #FF6B9D;
         }
         
         .ai-textarea::placeholder {
@@ -2913,7 +2917,7 @@ app.get('/tools', (c) => {
         }
         
         .ai-button.primary {
-          background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);
+          background: linear-gradient(135deg, #FF6B9D 0%, #FFB4D0 100%);
           color: white;
           box-shadow: 0 4px 12px rgba(255, 133, 102, 0.3);
         }
@@ -2925,12 +2929,12 @@ app.get('/tools', (c) => {
         
         .ai-button.secondary {
           background: white;
-          color: #8B5CF6;
-          border: 2px solid #8B5CF6;
+          color: #FF6B9D;
+          border: 2px solid #FF6B9D;
         }
         
         .ai-button.secondary:hover {
-          background: #F3F0FF;
+          background: #FFF5F7;
         }
         
         .result-section {
@@ -2959,7 +2963,7 @@ app.get('/tools', (c) => {
         
         .copy-button {
           padding: 8px 20px;
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
           border: none;
           border-radius: 8px;
@@ -3002,7 +3006,7 @@ app.get('/tools', (c) => {
         }
         
         .view-all-btn {
-          color: #8B5CF6;
+          color: #FF6B9D;
           font-weight: 600;
           cursor: pointer;
           transition: color 0.2s;
@@ -3030,14 +3034,14 @@ app.get('/tools', (c) => {
         }
         
         .history-item:hover {
-          background: #F3F0FF;
+          background: #FFF5F7;
           transform: translateX(4px);
         }
         
         .history-icon {
           width: 50px;
           height: 50px;
-          background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%);
+          background: linear-gradient(135deg, #FFF5F7 0%, #E6FFFC 100%);
           border-radius: 12px;
           display: flex;
           align-items: center;
@@ -3090,8 +3094,8 @@ app.get('/tools', (c) => {
         }
         
         .template-card:hover {
-          background: #F3F0FF;
-          border-color: #8B5CF6;
+          background: #FFF5F7;
+          border-color: #FF6B9D;
         }
         
         .template-name {
@@ -3116,26 +3120,26 @@ app.get('/tools', (c) => {
             <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
             <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
             <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
-            <a href="/tools" style="text-decoration: none; color: #8B5CF6; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #F3F0FF; transition: all 0.3s;">Tools</a>
+            <a href="/tools" style="text-decoration: none; color: #FF6B9D; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #FFF5F7; transition: all 0.3s;">Tools</a>
           </nav>
         </div>
         <div style="display: flex; gap: 1rem; align-items: center;">
           <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
             🛒
-            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
           </button>
           <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
           <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
             🔔
-            <span style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+            <span style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
           </button>
           <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-            <a href="/mywitti" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <a href="/mywitti" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
             <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
           <div class="authMenu" style="display: flex; gap: 0.5rem;">
             <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-            <a href="/signup" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+            <a href="/signup" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
           </div>
         </div>
       </header>
@@ -3441,12 +3445,12 @@ app.get('/mywitti', async (c) => {
     }
     
     .tab-button:hover {
-      background: #F3F0FF;
-      color: #8B5CF6;
+      background: #FFF5F7;
+      color: #FF6B9D;
     }
     
     .tab-button.active {
-      background: #8B5CF6;
+      background: #FF6B9D;
       color: white;
     }
     
@@ -3460,7 +3464,7 @@ app.get('/mywitti', async (c) => {
     
     /* 프로필 섹션 */
     .profile-section {
-      background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%);
+      background: linear-gradient(135deg, #FFF5F7 0%, #E6FFFC 100%);
       border-radius: 20px;
       padding: 2.5rem;
       margin-bottom: 2rem;
@@ -3508,7 +3512,7 @@ app.get('/mywitti', async (c) => {
       padding: 10px 20px;
       border-radius: 25px;
       font-weight: 700;
-      color: #8B5CF6;
+      color: #FF6B9D;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
@@ -3537,7 +3541,7 @@ app.get('/mywitti', async (c) => {
     .stat-number {
       font-size: 3rem;
       font-weight: 700;
-      color: #8B5CF6;
+      color: #FF6B9D;
       margin-bottom: 0.5rem;
     }
     
@@ -3598,7 +3602,7 @@ app.get('/mywitti', async (c) => {
     .tree-node {
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%);
+      background: linear-gradient(135deg, #FFF5F7 0%, #E6FFFC 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -3666,7 +3670,7 @@ app.get('/mywitti', async (c) => {
     
     .enrollment-instructor {
       font-size: 0.95rem;
-      color: #8B5CF6;
+      color: #FF6B9D;
       margin-bottom: 0.75rem;
     }
     
@@ -3707,7 +3711,7 @@ app.get('/mywitti', async (c) => {
     .payment-amount {
       font-size: 1.3rem;
       font-weight: 700;
-      color: #8B5CF6;
+      color: #FF6B9D;
     }
     
     .payment-info {
@@ -3776,7 +3780,7 @@ app.get('/mywitti', async (c) => {
     .mentor-avatar {
       width: 80px;
       height: 80px;
-      background: linear-gradient(135deg, #F3F0FF 0%, #E0F7FA 100%);
+      background: linear-gradient(135deg, #FFF5F7 0%, #E6FFFC 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -3811,7 +3815,7 @@ app.get('/mywitti', async (c) => {
     }
     
     .mentor-btn {
-      background: #8B5CF6;
+      background: #FF6B9D;
       color: white;
       border: none;
       padding: 12px 24px;
@@ -3845,7 +3849,7 @@ app.get('/mywitti', async (c) => {
     }
     
     .btn-primary {
-      background: #8B5CF6;
+      background: #FF6B9D;
       color: white;
       border: none;
       padding: 12px 32px;
@@ -3895,20 +3899,20 @@ app.get('/mywitti', async (c) => {
         <div style="display: flex; gap: 1rem; align-items: center;">
           <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
             🛒
-            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
           </button>
           <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
           <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
             🔔
-            <span style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+            <span style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
           </button>
           <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-            <a href="/mywitti" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <a href="/mywitti" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
             <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
           <div class="authMenu" style="display: flex; gap: 0.5rem;">
             <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-            <a href="/signup" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+            <a href="/signup" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
           </div>
         </div>
       </header>
@@ -4094,7 +4098,7 @@ app.get('/mywitti', async (c) => {
       </p>
 
       <div class="growth-tree">
-        <h3 style="color: #8B5CF6; margin-bottom: 2rem;">🤝 부모상담 전문가 트리</h3>
+        <h3 style="color: #FF6B9D; margin-bottom: 2rem;">🤝 부모상담 전문가 트리</h3>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
           <div style="text-align: center;">
             <div class="tree-node" style="margin: 0 auto 1rem;">🤝</div>
@@ -4115,7 +4119,7 @@ app.get('/mywitti', async (c) => {
       </div>
 
       <div class="growth-tree">
-        <h3 style="color: #8B5CF6; margin-bottom: 2rem;">🎨 놀이지도 전문가 트리</h3>
+        <h3 style="color: #FF6B9D; margin-bottom: 2rem;">🎨 놀이지도 전문가 트리</h3>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
           <div style="text-align: center;">
             <div class="tree-node" style="margin: 0 auto 1rem;">🎨</div>
@@ -4136,7 +4140,7 @@ app.get('/mywitti', async (c) => {
       </div>
 
       <div class="growth-tree">
-        <h3 style="color: #8B5CF6; margin-bottom: 2rem;">🤖 AI 활용 전문가 트리</h3>
+        <h3 style="color: #FF6B9D; margin-bottom: 2rem;">🤖 AI 활용 전문가 트리</h3>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
           <div style="text-align: center;">
             <div class="tree-node" style="margin: 0 auto 1rem;">🤖</div>
@@ -4157,7 +4161,7 @@ app.get('/mywitti', async (c) => {
       </div>
 
       <div class="growth-tree">
-        <h3 style="color: #8B5CF6; margin-bottom: 2rem;">💗 감정케어 전문가 트리</h3>
+        <h3 style="color: #FF6B9D; margin-bottom: 2rem;">💗 감정케어 전문가 트리</h3>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
           <div style="text-align: center;">
             <div class="tree-node" style="margin: 0 auto 1rem;">💗</div>
@@ -4178,7 +4182,7 @@ app.get('/mywitti', async (c) => {
       </div>
 
       <div class="growth-tree">
-        <h3 style="color: #8B5CF6; margin-bottom: 2rem;">👑 리더십 전문가 트리</h3>
+        <h3 style="color: #FF6B9D; margin-bottom: 2rem;">👑 리더십 전문가 트리</h3>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
           <div style="text-align: center;">
             <div class="tree-node" style="margin: 0 auto 1rem;">👑</div>
@@ -4455,7 +4459,7 @@ app.get('/login', (c) => {
         }
         .form-group input:focus {
           outline: none;
-          border-color: #8B5CF6;
+          border-color: #FF6B9D;
           box-shadow: 0 0 0 3px rgba(255, 133, 102, 0.1);
         }
         .form-message {
@@ -4479,7 +4483,7 @@ app.get('/login', (c) => {
           cursor: pointer;
         }
         .remember-forgot a {
-          color: #8B5CF6;
+          color: #FF6B9D;
           text-decoration: none;
         }
         .remember-forgot a:hover {
@@ -4488,7 +4492,7 @@ app.get('/login', (c) => {
         .submit-btn {
           width: 100%;
           padding: 14px;
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
           border: none;
           border-radius: 8px;
@@ -4514,7 +4518,7 @@ app.get('/login', (c) => {
           font-size: 0.95rem;
         }
         .signup-link a {
-          color: #8B5CF6;
+          color: #FF6B9D;
           text-decoration: none;
           font-weight: 600;
         }
@@ -4735,10 +4739,10 @@ app.get('/class/:id', async (c) => {
         .class-icon { font-size: 4rem; margin-bottom: 1rem; }
         .class-meta { display: flex; gap: 2rem; margin: 1.5rem 0; color: #666; }
         .class-meta span { display: flex; align-items: center; gap: 0.5rem; }
-        .class-price { font-size: 2rem; font-weight: 700; color: #8B5CF6; margin: 1rem 0; }
+        .class-price { font-size: 2rem; font-weight: 700; color: #FF6B9D; margin: 1rem 0; }
         .class-content { background: white; padding: 3rem; border-radius: 16px; margin-bottom: 2rem; }
         .enroll-btn { 
-          width: 100%; padding: 18px; background: #8B5CF6; color: white; 
+          width: 100%; padding: 18px; background: #FF6B9D; color: white; 
           border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 700; 
           cursor: pointer; transition: all 0.2s; margin-top: 2rem;
         }
@@ -4774,7 +4778,7 @@ app.get('/class/:id', async (c) => {
 
         <div class="class-content">
           <h2>강사 소개</h2>
-          <p style="color: #8B5CF6; font-weight: 600; margin: 1rem 0;">
+          <p style="color: #FF6B9D; font-weight: 600; margin: 1rem 0;">
             ${classInfo.instructor_name} (${classInfo.instructor_role === 'teacher' ? '교사' : classInfo.instructor_role === 'counselor' ? '상담사' : '전문가'})
           </p>
           <p>교육 현장에서 ${classInfo.student_count}명 이상의 선생님들과 함께한 경험을 바탕으로 실용적인 노하우를 공유합니다.</p>
@@ -4830,10 +4834,10 @@ app.get('/cart', (c) => {
         .cart-container { max-width: 800px; margin: 2rem auto; padding: 0 2rem; }
         .cart-item { background: white; padding: 2rem; border-radius: 12px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
         .cart-item h3 { margin: 0; color: #1a1a1a; }
-        .cart-item .price { font-size: 1.5rem; font-weight: 700; color: #8B5CF6; }
+        .cart-item .price { font-size: 1.5rem; font-weight: 700; color: #FF6B9D; }
         .remove-btn { background: #ff4444; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin-left: 1rem; }
         .cart-summary { background: white; padding: 2rem; border-radius: 12px; margin-top: 2rem; }
-        .checkout-btn { width: 100%; padding: 16px; background: #8B5CF6; color: white; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 700; cursor: pointer; margin-top: 1rem; }
+        .checkout-btn { width: 100%; padding: 16px; background: #FF6B9D; color: white; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 700; cursor: pointer; margin-top: 1rem; }
         .empty-cart { text-align: center; padding: 4rem 2rem; color: #999; }
       </style>
     </head>
@@ -4849,13 +4853,13 @@ app.get('/cart', (c) => {
           <h2>결제 정보</h2>
           <div style="display: flex; justify-content: space-between; margin: 1rem 0; font-size: 1.5rem; font-weight: 700;">
             <span>총 금액</span>
-            <span id="totalPrice" style="color: #8B5CF6;">0원</span>
+            <span id="totalPrice" style="color: #FF6B9D;">0원</span>
           </div>
           <button class="checkout-btn" onclick="goToCheckout()">결제하기</button>
         </div>
         <div id="emptyCart" style="display:none;" class="empty-cart">
           <p>장바구니가 비어있습니다</p>
-          <button onclick="window.location.href='/'" style="padding: 12px 24px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer;">클래스 둘러보기</button>
+          <button onclick="window.location.href='/'" style="padding: 12px 24px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer;">클래스 둘러보기</button>
         </div>
       </div>
 
@@ -4923,8 +4927,8 @@ app.get('/checkout', (c) => {
         .order-item { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid #eee; }
         .payment-methods { display: grid; gap: 1rem; margin-top: 1rem; }
         .payment-method { padding: 1rem; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
-        .payment-method.selected { border-color: #8B5CF6; background: #fff5f3; }
-        .pay-btn { width: 100%; padding: 18px; background: #8B5CF6; color: white; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 700; cursor: pointer; }
+        .payment-method.selected { border-color: #FF6B9D; background: #fff5f3; }
+        .pay-btn { width: 100%; padding: 18px; background: #FF6B9D; color: white; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 700; cursor: pointer; }
         .pay-btn:disabled { background: #ccc; cursor: not-allowed; }
       </style>
     </head>
@@ -4941,7 +4945,7 @@ app.get('/checkout', (c) => {
           <div id="orderItems"></div>
           <div style="display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid #eee; font-size: 1.3rem; font-weight: 700;">
             <span>총 결제 금액</span>
-            <span id="totalAmount" style="color: #8B5CF6;">0원</span>
+            <span id="totalAmount" style="color: #FF6B9D;">0원</span>
           </div>
         </div>
 
@@ -5065,14 +5069,14 @@ app.get('/admin', async (c) => {
         th { background: #f5f5f5; font-weight: 600; }
         .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
         .stat-card { background: white; padding: 1.5rem; border-radius: 12px; text-align: center; }
-        .stat-number { font-size: 2rem; font-weight: 700; color: #8B5CF6; }
+        .stat-number { font-size: 2rem; font-weight: 700; color: #FF6B9D; }
         .stat-label { color: #666; margin-top: 0.5rem; }
       </style>
     </head>
     <body>
       <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white;">
         <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI 관리자</h1>
-        <button onclick="window.location.href='/'" style="padding: 8px 16px; background: #8B5CF6; color: white; border: none; border-radius: 8px; cursor: pointer;">홈으로</button>
+        <button onclick="window.location.href='/'" style="padding: 8px 16px; background: #FF6B9D; color: white; border: none; border-radius: 8px; cursor: pointer;">홈으로</button>
       </header>
 
       <div class="admin-container">
@@ -5194,20 +5198,20 @@ app.get('/signup', (c) => {
         <div style="display: flex; gap: 1rem; align-items: center;">
           <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
             🛒
-            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
           </button>
           <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
           <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
             🔔
-            <span style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+            <span style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
           </button>
           <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-            <a href="/mywitti" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <a href="/mywitti" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
             <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
           <div class="authMenu" style="display: flex; gap: 0.5rem;">
             <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-            <a href="/signup" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+            <a href="/signup" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
           </div>
         </div>
       </header>
@@ -5226,28 +5230,28 @@ app.get('/signup', (c) => {
             <div>
               <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">이메일</label>
               <input type="email" placeholder="your@email.com" required
-                style="width: 100%; padding: 12px; border: 2px solid #E0F7FA; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
+                style="width: 100%; padding: 12px; border: 2px solid #E6FFFC; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
             </div>
 
             <!-- 비밀번호 -->
             <div>
               <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">비밀번호</label>
               <input type="password" placeholder="••••••••" required
-                style="width: 100%; padding: 12px; border: 2px solid #E0F7FA; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
+                style="width: 100%; padding: 12px; border: 2px solid #E6FFFC; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
             </div>
 
             <!-- 이름 -->
             <div>
               <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">이름</label>
               <input type="text" placeholder="홍길동" required
-                style="width: 100%; padding: 12px; border: 2px solid #E0F7FA; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
+                style="width: 100%; padding: 12px; border: 2px solid #E6FFFC; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
             </div>
 
             <!-- 직무 선택 -->
             <div>
               <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">현재 직무</label>
               <select required
-                style="width: 100%; padding: 12px; border: 2px solid #E0F7FA; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
+                style="width: 100%; padding: 12px; border: 2px solid #E6FFFC; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
                 <option value="">선택해주세요</option>
                 <option value="신입">신입 교사 (0-2년)</option>
                 <option value="주임">주임 교사 (3-5년)</option>
@@ -5261,22 +5265,22 @@ app.get('/signup', (c) => {
             <div>
               <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">관심 키워드 (복수 선택 가능)</label>
               <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                <label style="padding: 8px 16px; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-size: 14px;">
+                <label style="padding: 8px 16px; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-size: 14px;">
                   <input type="checkbox" name="interest" value="놀이"> 놀이
                 </label>
-                <label style="padding: 8px 16px; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-size: 14px;">
+                <label style="padding: 8px 16px; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-size: 14px;">
                   <input type="checkbox" name="interest" value="상담"> 부모상담
                 </label>
-                <label style="padding: 8px 16px; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-size: 14px;">
+                <label style="padding: 8px 16px; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-size: 14px;">
                   <input type="checkbox" name="interest" value="AI"> AI 도구
                 </label>
-                <label style="padding: 8px 16px; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-size: 14px;">
+                <label style="padding: 8px 16px; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-size: 14px;">
                   <input type="checkbox" name="interest" value="성장"> 자기성장
                 </label>
-                <label style="padding: 8px 16px; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-size: 14px;">
+                <label style="padding: 8px 16px; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-size: 14px;">
                   <input type="checkbox" name="interest" value="리더십"> 리더십
                 </label>
-                <label style="padding: 8px 16px; border: 2px solid #E0F7FA; border-radius: 20px; cursor: pointer; font-size: 14px;">
+                <label style="padding: 8px 16px; border: 2px solid #E6FFFC; border-radius: 20px; cursor: pointer; font-size: 14px;">
                   <input type="checkbox" name="interest" value="발달"> 아동발달
                 </label>
               </div>
@@ -5284,7 +5288,7 @@ app.get('/signup', (c) => {
 
             <!-- 제출 버튼 -->
             <button type="submit" 
-              style="background-color: #8B5CF6; border: none; color: white; padding: 15px; border-radius: 10px; font-size: 18px; cursor: pointer; font-weight: 600; margin-top: 1rem;">
+              style="background-color: #FF6B9D; border: none; color: white; padding: 15px; border-radius: 10px; font-size: 18px; cursor: pointer; font-weight: 600; margin-top: 1rem;">
               가입하고 시작하기
             </button>
 
@@ -5300,7 +5304,7 @@ app.get('/signup', (c) => {
             <!-- 로그인 링크 -->
             <p style="text-align: center; color: #666; margin-top: 1rem;">
               이미 계정이 있으신가요? 
-              <a href="/login" style="color: #8B5CF6; font-weight: 600; text-decoration: none;">로그인</a>
+              <a href="/login" style="color: #FF6B9D; font-weight: 600; text-decoration: none;">로그인</a>
             </p>
           </form>
         </div>
@@ -5351,20 +5355,20 @@ app.get('/login', (c) => {
         <div style="display: flex; gap: 1rem; align-items: center;">
           <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="장바구니">
             🛒
-            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
+            <span class="cartBadge" style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center;">0</span>
           </button>
           <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="검색">🔍</button>
           <button onclick="alert('알림이 없습니다')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative;" title="알림">
             🔔
-            <span style="position: absolute; top: -5px; right: -5px; background: #8B5CF6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+            <span style="position: absolute; top: -5px; right: -5px; background: #FF6B9D; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
           </button>
           <div class="userMenu" style="display: none; gap: 0.5rem; align-items: center;">
-            <a href="/mywitti" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
+            <a href="/mywitti" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">내 강의실</a>
             <button class="logoutBtn" style="background: #f5f5f5; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그아웃</button>
           </div>
           <div class="authMenu" style="display: flex; gap: 0.5rem;">
             <a href="/login" style="background: #f5f5f5; color: #333; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">로그인</a>
-            <a href="/signup" style="background: #8B5CF6; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
+            <a href="/signup" style="background: #FF6B9D; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">회원가입</a>
           </div>
         </div>
       </header>
@@ -5383,19 +5387,19 @@ app.get('/login', (c) => {
             <div>
               <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">이메일</label>
               <input type="email" placeholder="your@email.com" required
-                style="width: 100%; padding: 12px; border: 2px solid #E0F7FA; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
+                style="width: 100%; padding: 12px; border: 2px solid #E6FFFC; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
             </div>
 
             <!-- 비밀번호 -->
             <div>
               <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">비밀번호</label>
               <input type="password" placeholder="••••••••" required
-                style="width: 100%; padding: 12px; border: 2px solid #E0F7FA; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
+                style="width: 100%; padding: 12px; border: 2px solid #E6FFFC; border-radius: 10px; font-size: 16px; font-family: Pretendard;">
             </div>
 
             <!-- 제출 버튼 -->
             <button type="submit" 
-              style="background-color: #8B5CF6; border: none; color: white; padding: 15px; border-radius: 10px; font-size: 18px; cursor: pointer; font-weight: 600; margin-top: 1rem;">
+              style="background-color: #FF6B9D; border: none; color: white; padding: 15px; border-radius: 10px; font-size: 18px; cursor: pointer; font-weight: 600; margin-top: 1rem;">
               로그인
             </button>
 
@@ -5411,7 +5415,7 @@ app.get('/login', (c) => {
             <!-- 회원가입 링크 -->
             <p style="text-align: center; color: #666; margin-top: 1rem;">
               아직 계정이 없으신가요? 
-              <a href="/signup" style="color: #8B5CF6; font-weight: 600; text-decoration: none;">회원가입</a>
+              <a href="/signup" style="color: #FF6B9D; font-weight: 600; text-decoration: none;">회원가입</a>
             </p>
           </form>
         </div>
@@ -5455,23 +5459,23 @@ app.get('/onboarding', (c) => {
         </p>
 
         <div style="max-width: 900px; width: 100%;">
-          <h3 style="text-align: center; margin-bottom: 2rem; color: #8B5CF6;">✨ AI가 추천하는 첫 시작 콘텐츠</h3>
+          <h3 style="text-align: center; margin-bottom: 2rem; color: #FF6B9D;">✨ AI가 추천하는 첫 시작 콘텐츠</h3>
           
           <div class="cards" style="margin-bottom: 3rem;">
             <div class="card" onclick="window.location.href='/learn'">
               🎓 <b>AI로 부모면담 정리하기</b><br>
               <small>신입 교사에게 추천하는 필수 클래스</small><br>
-              <span style="color: #8B5CF6; font-weight: 600; font-size: 0.9rem;">👉 바로 시작하기</span>
+              <span style="color: #FF6B9D; font-weight: 600; font-size: 0.9rem;">👉 바로 시작하기</span>
             </div>
             <div class="card" onclick="window.location.href='/story'">
               📖 <b>"첫 출근, 그리고 첫 눈물"</b><br>
               <small>같은 고민을 했던 선배의 이야기</small><br>
-              <span style="color: #8B5CF6; font-weight: 600; font-size: 0.9rem;">👉 읽어보기</span>
+              <span style="color: #FF6B9D; font-weight: 600; font-size: 0.9rem;">👉 읽어보기</span>
             </div>
             <div class="card" onclick="window.location.href='/talk'">
               💬 <b>신규교사 멘토링 그룹</b><br>
               <small>함께 성장하는 동료들과 만나보세요</small><br>
-              <span style="color: #8B5CF6; font-weight: 600; font-size: 0.9rem;">👉 참여하기</span>
+              <span style="color: #FF6B9D; font-weight: 600; font-size: 0.9rem;">👉 참여하기</span>
             </div>
           </div>
 
@@ -5480,7 +5484,7 @@ app.get('/onboarding', (c) => {
               나만의 WITTI 루틴을 시작해볼까요?
             </p>
             <button onclick="window.location.href='/'" 
-              style="background-color: #8B5CF6; border: none; color: white; padding: 15px 40px; border-radius: 10px; font-size: 18px; cursor: pointer; font-weight: 600;">
+              style="background-color: #FF6B9D; border: none; color: white; padding: 15px 40px; border-radius: 10px; font-size: 18px; cursor: pointer; font-weight: 600;">
               홈으로 이동하기
             </button>
             <p style="margin-top: 1rem; color: #999; font-size: 0.9rem;">
@@ -5543,7 +5547,7 @@ app.get('/signup', (c) => {
           font-size: 0.95rem;
         }
         .form-group label .required {
-          color: #8B5CF6;
+          color: #FF6B9D;
         }
         .form-group label .optional {
           color: #999;
@@ -5561,7 +5565,7 @@ app.get('/signup', (c) => {
         }
         .form-group input:focus {
           outline: none;
-          border-color: #8B5CF6;
+          border-color: #FF6B9D;
           box-shadow: 0 0 0 3px rgba(255, 133, 102, 0.1);
         }
         .form-group input.error {
@@ -5594,12 +5598,12 @@ app.get('/signup', (c) => {
           transition: all 0.3s;
         }
         .strength-bar.active {
-          background: #8B5CF6;
+          background: #FF6B9D;
         }
         .submit-btn {
           width: 100%;
           padding: 14px;
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
           border: none;
           border-radius: 8px;
@@ -5625,7 +5629,7 @@ app.get('/signup', (c) => {
           font-size: 0.95rem;
         }
         .login-link a {
-          color: #8B5CF6;
+          color: #FF6B9D;
           text-decoration: none;
           font-weight: 600;
         }
@@ -6019,12 +6023,12 @@ app.get('/test/database', (c) => {
           box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
         h2 {
-          color: #8B5CF6;
+          color: #FF6B9D;
           margin-bottom: 1rem;
           font-size: 1.3rem;
         }
         button {
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
           border: none;
           padding: 10px 20px;
@@ -6064,7 +6068,7 @@ app.get('/test/database', (c) => {
         }
         .stat-box {
           flex: 1;
-          background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);
+          background: linear-gradient(135deg, #FF6B9D 0%, #FFB4D0 100%);
           color: white;
           padding: 1.5rem;
           border-radius: 12px;
@@ -6196,7 +6200,7 @@ app.get('/books', (c) => {
         }
         
         .book-hero {
-          background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);
+          background: linear-gradient(135deg, #FF6B9D 0%, #FFB4D0 100%);
           color: white;
           padding: 4rem 2rem 3rem;
           text-align: center;
@@ -6241,7 +6245,7 @@ app.get('/books', (c) => {
         }
         
         .book-tab.active {
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
         }
         
@@ -6327,8 +6331,8 @@ app.get('/books', (c) => {
         }
         
         .book-tag {
-          background: #F3F0FF;
-          color: #8B5CF6;
+          background: #FFF5F7;
+          color: #FF6B9D;
           padding: 4px 10px;
           border-radius: 12px;
           font-size: 0.8rem;
@@ -6352,7 +6356,7 @@ app.get('/books', (c) => {
         }
         
         .book-btn-primary {
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
         }
         
@@ -6362,12 +6366,12 @@ app.get('/books', (c) => {
         
         .book-btn-secondary {
           background: white;
-          color: #8B5CF6;
-          border: 2px solid #8B5CF6;
+          color: #FF6B9D;
+          border: 2px solid #FF6B9D;
         }
         
         .book-btn-secondary:hover {
-          background: #F3F0FF;
+          background: #FFF5F7;
         }
         
         .booktalk-section {
@@ -6412,12 +6416,12 @@ app.get('/books', (c) => {
         }
         
         .booktalk-card:hover {
-          border-color: #8B5CF6;
+          border-color: #FF6B9D;
           transform: translateY(-3px);
         }
         
         .booktalk-date {
-          color: #8B5CF6;
+          color: #FF6B9D;
           font-weight: 600;
           margin-bottom: 0.5rem;
           font-size: 0.9rem;
@@ -6450,7 +6454,7 @@ app.get('/books', (c) => {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: #8B5CF6;
+          background: #FF6B9D;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -6476,7 +6480,7 @@ app.get('/books', (c) => {
         .booktalk-btn {
           width: 100%;
           padding: 1rem;
-          background: #8B5CF6;
+          background: #FF6B9D;
           color: white;
           border: none;
           border-radius: 10px;
@@ -6576,7 +6580,7 @@ app.get('/books', (c) => {
           <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;">🔍</button>
           <div class="auth-buttons" style="display: flex; gap: 0.5rem;">
             <button onclick="alert('로그인 페이지로 이동합니다')" style="background: white; color: #333; border: 1px solid #ddd; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그인</button>
-            <button onclick="alert('회원가입 페이지로 이동합니다')" style="background: #8B5CF6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">회원가입</button>
+            <button onclick="alert('회원가입 페이지로 이동합니다')" style="background: #FF6B9D; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">회원가입</button>
           </div>
         </div>
       </header>
@@ -6594,7 +6598,7 @@ app.get('/books', (c) => {
           </div>
           <div class="mobile-nav-auth">
             <button onclick="alert('로그인 페이지로 이동합니다')" style="width: 100%; background: white; color: #333; border: 1px solid #ddd; padding: 0.75rem; border-radius: 8px; cursor: pointer; font-weight: 600; margin-bottom: 0.5rem;">로그인</button>
-            <button onclick="alert('회원가입 페이지로 이동합니다')" style="width: 100%; background: #8B5CF6; color: white; border: none; padding: 0.75rem; border-radius: 8px; cursor: pointer; font-weight: 600;">회원가입</button>
+            <button onclick="alert('회원가입 페이지로 이동합니다')" style="width: 100%; background: #FF6B9D; color: white; border: none; padding: 0.75rem; border-radius: 8px; cursor: pointer; font-weight: 600;">회원가입</button>
           </div>
         </div>
       </div>
@@ -6919,33 +6923,33 @@ app.get('/books', (c) => {
               <div style="font-size: 3rem; margin-bottom: 1rem;">📖</div>
               <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #333;">교보문고</h4>
               <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">전국 매장 및 온라인</p>
-              <button onclick="window.open('https://www.kyobobook.co.kr', '_blank')" style="background: #8B5CF6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
+              <button onclick="window.open('https://www.kyobobook.co.kr', '_blank')" style="background: #FF6B9D; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
             </div>
 
             <div style="text-align: center; padding: 2rem; background: #fafafa; border-radius: 12px;">
               <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
               <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #333;">예스24</h4>
               <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">빠른 배송 서비스</p>
-              <button onclick="window.open('https://www.yes24.com', '_blank')" style="background: #8B5CF6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
+              <button onclick="window.open('https://www.yes24.com', '_blank')" style="background: #FF6B9D; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
             </div>
 
             <div style="text-align: center; padding: 2rem; background: #fafafa; border-radius: 12px;">
               <div style="font-size: 3rem; margin-bottom: 1rem;">📗</div>
               <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #333;">알라딘</h4>
               <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">중고책도 구매 가능</p>
-              <button onclick="window.open('https://www.aladin.co.kr', '_blank')" style="background: #8B5CF6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
+              <button onclick="window.open('https://www.aladin.co.kr', '_blank')" style="background: #FF6B9D; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
             </div>
 
             <div style="text-align: center; padding: 2rem; background: #fafafa; border-radius: 12px;">
               <div style="font-size: 3rem; margin-bottom: 1rem;">🎁</div>
               <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #333;">밀리의 서재</h4>
               <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">전자책 무제한 구독</p>
-              <button onclick="window.open('https://www.millie.co.kr', '_blank')" style="background: #8B5CF6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
+              <button onclick="window.open('https://www.millie.co.kr', '_blank')" style="background: #FF6B9D; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
             </div>
           </div>
 
-          <div style="background: #F3F0FF; padding: 2rem; border-radius: 12px; border-left: 4px solid #8B5CF6;">
-            <h4 style="color: #8B5CF6; margin-bottom: 1rem; font-size: 1.2rem;">💡 구매 팁</h4>
+          <div style="background: #FFF5F7; padding: 2rem; border-radius: 12px; border-left: 4px solid #FF6B9D;">
+            <h4 style="color: #FF6B9D; margin-bottom: 1rem; font-size: 1.2rem;">💡 구매 팁</h4>
             <ul style="color: #666; line-height: 2; padding-left: 1.5rem;">
               <li>북토크 참여 전에 미리 책을 구매하시면 더욱 풍성한 대화를 나눌 수 있습니다</li>
               <li>각 온라인 서점의 회원 혜택과 포인트를 활용하세요</li>
@@ -6955,13 +6959,13 @@ app.get('/books', (c) => {
           </div>
         </div>
 
-        <div style="background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%); color: white; padding: 3rem; border-radius: 16px; text-align: center;">
+        <div style="background: linear-gradient(135deg, #FF6B9D 0%, #FFB4D0 100%); color: white; padding: 3rem; border-radius: 16px; text-align: center;">
           <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">📚 함께 읽는 독서의 즐거움</h3>
           <p style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 2rem; line-height: 1.6;">
             도서 구매 후 북토크에 참여하시거나, WITTI Talk에서 독후감을 공유해보세요.<br>
             교사 커뮤니티와 함께 성장하는 독서 경험을 만들어가실 수 있습니다.
           </p>
-          <button onclick="window.location.href='/talk'" style="background: white; color: #8B5CF6; border: none; padding: 1rem 2.5rem; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 1rem;">WITTI Talk 바로가기</button>
+          <button onclick="window.location.href='/talk'" style="background: white; color: #FF6B9D; border: none; padding: 1rem 2.5rem; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 1rem;">WITTI Talk 바로가기</button>
         </div>
       </div>
 

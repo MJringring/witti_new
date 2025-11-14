@@ -807,6 +807,9 @@ app.get('/', (c) => {
           function checkViewMode() {
             const viewModeToggle = document.getElementById('viewModeToggle');
             const toggleBtn = document.getElementById('toggleViewMode');
+            
+            if (!viewModeToggle || !toggleBtn) return; // 요소가 없으면 종료
+            
             const viewMode = localStorage.getItem('witti_view_mode') || 'auto';
             
             // 모바일 기기 감지 (화면 크기 기준)
@@ -826,8 +829,12 @@ app.get('/', (c) => {
             }
           }
           
-          // 초기 체크
-          checkViewMode();
+          // DOM 로드 완료 후 초기 체크
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', checkViewMode);
+          } else {
+            checkViewMode();
+          }
           
           // 창 크기 변경 시 체크
           window.addEventListener('resize', checkViewMode);

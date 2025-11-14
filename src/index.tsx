@@ -1,8 +1,9 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { serveStatic } from 'hono/cloudflare-workers'
+import type { Env } from './types'
 
-const app = new Hono()
+const app = new Hono<{ Bindings: Env }>()
 
 // Enable CORS for API routes
 app.use('/api/*', cors())
@@ -17,6 +18,82 @@ app.get('/api/hello', (c) => {
     version: '1.0.0',
     status: 'active'
   })
+})
+
+// 데이터베이스 테스트 - 모든 클래스 조회
+app.get('/api/test/classes', async (c) => {
+  try {
+    const { DB } = c.env
+    const { results } = await DB.prepare(`
+      SELECT id, title, instructor_name, instructor_role, price, duration, 
+             thumbnail_icon, rating, student_count, created_at
+      FROM classes
+      ORDER BY rating DESC
+    `).all()
+    
+    return c.json({ 
+      success: true,
+      count: results.length,
+      classes: results 
+    })
+  } catch (error) {
+    return c.json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, 500)
+  }
+})
+
+// 데이터베이스 테스트 - 모든 사용자 조회 (비밀번호 제외)
+app.get('/api/test/users', async (c) => {
+  try {
+    const { DB } = c.env
+    const { results } = await DB.prepare(`
+      SELECT id, email, name, phone, created_at
+      FROM users
+      ORDER BY created_at DESC
+    `).all()
+    
+    return c.json({ 
+      success: true,
+      count: results.length,
+      users: results 
+    })
+  } catch (error) {
+    return c.json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, 500)
+  }
+})
+
+// 데이터베이스 테스트 - 특정 클래스 조회
+app.get('/api/test/classes/:id', async (c) => {
+  try {
+    const { DB } = c.env
+    const id = c.req.param('id')
+    
+    const { results } = await DB.prepare(`
+      SELECT * FROM classes WHERE id = ?
+    `).bind(id).all()
+    
+    if (results.length === 0) {
+      return c.json({ 
+        success: false, 
+        error: 'Class not found' 
+      }, 404)
+    }
+    
+    return c.json({ 
+      success: true,
+      class: results[0]
+    })
+  } catch (error) {
+    return c.json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, 500)
+  }
 })
 
 app.get('/api/insights', (c) => {
@@ -3206,6 +3283,196 @@ app.get('/onboarding', (c) => {
         <p>© 2025 WITTI | 출퇴근길 5분, 위트 있는 인사이트 한 컷.</p>
       </footer>
 
+    </body>
+    </html>
+  `)
+})
+
+// 데이터베이스 테스트 페이지
+app.get('/test/database', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>WITTI 데이터베이스 테스트</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+          font-family: 'Pretendard', sans-serif; 
+          padding: 2rem; 
+          background: #fafafa;
+          line-height: 1.6;
+        }
+        h1 { 
+          color: #1a1a1a; 
+          margin-bottom: 2rem;
+          font-size: 2rem;
+        }
+        .test-section {
+          background: white;
+          padding: 2rem;
+          margin-bottom: 2rem;
+          border-radius: 12px;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        h2 {
+          color: #ff8566;
+          margin-bottom: 1rem;
+          font-size: 1.3rem;
+        }
+        button {
+          background: #ff8566;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 600;
+          margin-right: 0.5rem;
+          margin-bottom: 0.5rem;
+        }
+        button:hover {
+          background: #ff6b4a;
+        }
+        pre {
+          background: #2d2d2d;
+          color: #f8f8f2;
+          padding: 1.5rem;
+          border-radius: 8px;
+          overflow-x: auto;
+          margin-top: 1rem;
+          font-size: 0.9rem;
+        }
+        .status {
+          display: inline-block;
+          padding: 4px 12px;
+          border-radius: 12px;
+          font-size: 0.85rem;
+          font-weight: 600;
+          margin-left: 0.5rem;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .stats {
+          display: flex;
+          gap: 1rem;
+          margin-top: 1rem;
+        }
+        .stat-box {
+          flex: 1;
+          background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%);
+          color: white;
+          padding: 1.5rem;
+          border-radius: 12px;
+          text-align: center;
+        }
+        .stat-number {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+        }
+        .stat-label {
+          font-size: 0.95rem;
+          opacity: 0.9;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>🗄️ WITTI 데이터베이스 테스트</h1>
+      
+      <div class="stats" id="stats">
+        <div class="stat-box">
+          <div class="stat-number" id="classCount">-</div>
+          <div class="stat-label">등록된 클래스</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="userCount">-</div>
+          <div class="stat-label">가입한 회원</div>
+        </div>
+      </div>
+
+      <div class="test-section">
+        <h2>📚 클래스 데이터 테스트</h2>
+        <button onclick="testAllClasses()">모든 클래스 조회</button>
+        <button onclick="testClass(1)">클래스 #1 조회</button>
+        <button onclick="testClass(999)">존재하지 않는 클래스 (404 테스트)</button>
+        <pre id="classResult">버튼을 클릭하여 테스트를 시작하세요.</pre>
+      </div>
+
+      <div class="test-section">
+        <h2>👥 사용자 데이터 테스트</h2>
+        <button onclick="testAllUsers()">모든 사용자 조회</button>
+        <pre id="userResult">버튼을 클릭하여 테스트를 시작하세요.</pre>
+      </div>
+
+      <div class="test-section">
+        <h2>✅ 데이터베이스 상태</h2>
+        <p>
+          <strong>데이터베이스:</strong> witti-production (로컬)
+          <span class="status success">연결됨</span>
+        </p>
+        <p><strong>위치:</strong> .wrangler/state/v3/d1/</p>
+        <p><strong>테이블:</strong> users, classes, enrollments, payments, reviews</p>
+      </div>
+
+      <script>
+        async function testAllClasses() {
+          const resultEl = document.getElementById('classResult');
+          resultEl.textContent = '로딩 중...';
+          
+          try {
+            const response = await fetch('/api/test/classes');
+            const data = await response.json();
+            resultEl.textContent = JSON.stringify(data, null, 2);
+            
+            if (data.success) {
+              document.getElementById('classCount').textContent = data.count;
+            }
+          } catch (error) {
+            resultEl.textContent = '오류: ' + error.message;
+          }
+        }
+
+        async function testClass(id) {
+          const resultEl = document.getElementById('classResult');
+          resultEl.textContent = '로딩 중...';
+          
+          try {
+            const response = await fetch('/api/test/classes/' + id);
+            const data = await response.json();
+            resultEl.textContent = JSON.stringify(data, null, 2);
+          } catch (error) {
+            resultEl.textContent = '오류: ' + error.message;
+          }
+        }
+
+        async function testAllUsers() {
+          const resultEl = document.getElementById('userResult');
+          resultEl.textContent = '로딩 중...';
+          
+          try {
+            const response = await fetch('/api/test/users');
+            const data = await response.json();
+            resultEl.textContent = JSON.stringify(data, null, 2);
+            
+            if (data.success) {
+              document.getElementById('userCount').textContent = data.count;
+            }
+          } catch (error) {
+            resultEl.textContent = '오류: ' + error.message;
+          }
+        }
+
+        // 페이지 로드 시 통계 자동 로드
+        window.addEventListener('DOMContentLoaded', () => {
+          testAllClasses();
+          testAllUsers();
+        });
+      </script>
     </body>
     </html>
   `)

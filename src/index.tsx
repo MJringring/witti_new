@@ -3653,7 +3653,7 @@ app.get('/login', (c) => {
           if (token) {
             // 토큰이 있으면 유효성 검증
             fetch('/api/auth/me', {
-              headers: { 'Authorization': \`Bearer \${token}\` }
+              headers: { 'Authorization': \`Bearer ${token}\` }
             }).then(response => response.json())
               .then(data => {
                 if (data.success) {
@@ -3747,7 +3747,7 @@ app.get('/class/:id', async (c) => {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>\${classInfo.title} - WITTI</title>
+      <title>${classInfo.title} - WITTI</title>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
       <link rel="stylesheet" href="/static/style.css">
       <style>
@@ -3777,18 +3777,18 @@ app.get('/class/:id', async (c) => {
 
       <div class="class-detail">
         <div class="class-header">
-          <div class="class-icon">\${classInfo.thumbnail_icon}</div>
-          <h1>\${classInfo.title}</h1>
+          <div class="class-icon">${classInfo.thumbnail_icon}</div>
+          <h1>${classInfo.title}</h1>
           <div class="class-meta">
-            <span>⭐ \${classInfo.rating}</span>
-            <span>👥 \${classInfo.student_count}명 수강</span>
-            <span>⏱️ \${classInfo.duration}분</span>
+            <span>⭐ ${classInfo.rating}</span>
+            <span>👥 ${classInfo.student_count}명 수강</span>
+            <span>⏱️ ${classInfo.duration}분</span>
           </div>
-          <div class="class-price">\${classInfo.price.toLocaleString()}원</div>
+          <div class="class-price">${classInfo.price.toLocaleString()}원</div>
           <p style="color: #666; font-size: 1.1rem; line-height: 1.6; margin-top: 1rem;">
-            \${classInfo.description}
+            ${classInfo.description}
           </p>
-          <button class="enroll-btn" onclick="enrollClass(\${classInfo.id}, '\${classInfo.title}', \${classInfo.price})">
+          <button class="enroll-btn" onclick="enrollClass(${classInfo.id}, '${classInfo.title}', ${classInfo.price})">
             수강 신청하기
           </button>
         </div>
@@ -3796,9 +3796,9 @@ app.get('/class/:id', async (c) => {
         <div class="class-content">
           <h2>강사 소개</h2>
           <p style="color: #ff8566; font-weight: 600; margin: 1rem 0;">
-            \${classInfo.instructor_name} (\${classInfo.instructor_role === 'teacher' ? '교사' : classInfo.instructor_role === 'counselor' ? '상담사' : '전문가'})
+            ${classInfo.instructor_name} (${classInfo.instructor_role === 'teacher' ? '교사' : classInfo.instructor_role === 'counselor' ? '상담사' : '전문가'})
           </p>
-          <p>교육 현장에서 \${classInfo.student_count}명 이상의 선생님들과 함께한 경험을 바탕으로 실용적인 노하우를 공유합니다.</p>
+          <p>교육 현장에서 ${classInfo.student_count}명 이상의 선생님들과 함께한 경험을 바탕으로 실용적인 노하우를 공유합니다.</p>
         </div>
       </div>
 
@@ -3900,11 +3900,11 @@ app.get('/cart', (c) => {
             return \`
               <div class="cart-item">
                 <div>
-                  <h3>\${item.title}</h3>
+                  <h3>${item.title}</h3>
                 </div>
                 <div style="display: flex; align-items: center;">
-                  <span class="price">\${item.price.toLocaleString()}원</span>
-                  <button class="remove-btn" onclick="removeFromCart(\${index})">삭제</button>
+                  <span class="price">${item.price.toLocaleString()}원</span>
+                  <button class="remove-btn" onclick="removeFromCart(${index})">삭제</button>
                 </div>
               </div>
             \`;
@@ -4007,8 +4007,8 @@ app.get('/checkout', (c) => {
             totalPrice += item.price;
             return \`
               <div class="order-item">
-                <span>\${item.title}</span>
-                <span style="font-weight: 600;">\${item.price.toLocaleString()}원</span>
+                <span>${item.title}</span>
+                <span style="font-weight: 600;">${item.price.toLocaleString()}원</span>
               </div>
             \`;
           }).join('');
@@ -4021,7 +4021,7 @@ app.get('/checkout', (c) => {
           document.querySelectorAll('.payment-method').forEach(el => {
             el.classList.remove('selected');
           });
-          document.querySelector(\`[data-method="\${method}"]\`).classList.add('selected');
+          document.querySelector(\`[data-method="${method}"]\`).classList.add('selected');
         }
         
         async function processPayment() {
@@ -4040,7 +4040,7 @@ app.get('/checkout', (c) => {
               method: 'POST',
               headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': \`Bearer \${token}\`
+                'Authorization': \`Bearer ${token}\`
               },
               body: JSON.stringify({
                 order_id: orderId,
@@ -4067,6 +4067,126 @@ app.get('/checkout', (c) => {
         }
         
         loadOrderItems();
+      </script>
+    </body>
+    </html>
+  `)
+})
+
+// 관리자 페이지 (10단계)
+app.get('/admin', async (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <title>관리자 - WITTI</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+      <link rel="stylesheet" href="/static/style.css">
+      <style>
+        .admin-container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
+        .admin-section { background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; }
+        .admin-section h2 { margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f5f5f5; font-weight: 600; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: white; padding: 1.5rem; border-radius: 12px; text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: 700; color: #ff8566; }
+        .stat-label { color: #666; margin-top: 0.5rem; }
+      </style>
+    </head>
+    <body>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white;">
+        <h1 style="margin: 0; cursor: pointer;" onclick="window.location.href='/'">🌿 WITTI 관리자</h1>
+        <button onclick="window.location.href='/'" style="padding: 8px 16px; background: #ff8566; color: white; border: none; border-radius: 8px; cursor: pointer;">홈으로</button>
+      </header>
+
+      <div class="admin-container">
+        <h1>관리자 대시보드</h1>
+        
+        <div class="stats">
+          <div class="stat-card">
+            <div class="stat-number" id="totalUsers">0</div>
+            <div class="stat-label">총 회원 수</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="totalClasses">0</div>
+            <div class="stat-label">총 클래스 수</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="totalEnrollments">0</div>
+            <div class="stat-label">총 수강 건수</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="totalRevenue">0원</div>
+            <div class="stat-label">총 매출</div>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <h2>최근 회원</h2>
+          <table id="usersTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>이메일</th>
+                <th>이름</th>
+                <th>가입일</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="admin-section">
+          <h2>최근 결제</h2>
+          <table id="paymentsTable">
+            <thead>
+              <tr>
+                <th>주문번호</th>
+                <th>금액</th>
+                <th>결제수단</th>
+                <th>상태</th>
+                <th>결제일</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <script>
+        async function loadStats() {
+          try {
+            // 회원 수
+            const usersRes = await fetch('/api/test/users');
+            const usersData = await usersRes.json();
+            document.getElementById('totalUsers').textContent = usersData.count || 0;
+            
+            // 클래스 수
+            const classesRes = await fetch('/api/classes');
+            const classesData = await classesRes.json();
+            document.getElementById('totalClasses').textContent = classesData.count || 0;
+            
+            // 회원 목록
+            if (usersData.users) {
+              const tbody = document.querySelector('#usersTable tbody');
+              tbody.innerHTML = usersData.users.slice(0, 10).map(user => \`
+                <tr>
+                  <td>${user.id}</td>
+                  <td>${user.email}</td>
+                  <td>${user.name}</td>
+                  <td>${new Date(user.created_at).toLocaleDateString('ko-KR')}</td>
+                </tr>
+              \`).join('');
+            }
+          } catch (error) {
+            console.error('Failed to load stats:', error);
+          }
+        }
+        
+        loadStats();
       </script>
     </body>
     </html>
@@ -4672,7 +4792,7 @@ app.get('/signup', (c) => {
           if (!password) {
             messageEl.textContent = '';
             for (let i = 1; i <= 4; i++) {
-              document.getElementById(\`strength\${i}\`).classList.remove('active');
+              document.getElementById(\`strength${i}\`).classList.remove('active');
             }
             return;
           }
@@ -4686,9 +4806,9 @@ app.get('/signup', (c) => {
           // 강도 표시 업데이트
           for (let i = 1; i <= 4; i++) {
             if (i <= strength) {
-              document.getElementById(\`strength\${i}\`).classList.add('active');
+              document.getElementById(\`strength${i}\`).classList.add('active');
             } else {
-              document.getElementById(\`strength\${i}\`).classList.remove('active');
+              document.getElementById(\`strength${i}\`).classList.remove('active');
             }
           }
           

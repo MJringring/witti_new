@@ -6610,7 +6610,7 @@ app.get('/books', (c) => {
           <div class="book-card">
             <div class="book-cover"><img src="/static/books/book1.jpg" alt="혼적 MARKS 말 WORDS MATERIAL 재료와 모자이크 MOSAIC"></div>
             <div class="book-title">혼적 MARKS 말 WORDS MATERIAL 재료와 모자이크 MOSAIC</div>
-            <div class="book-author">한솔어린이보육재단 도담도담이야기</div>
+            <div class="book-author">레지오칠드런 | 한솔어린이보육재단 도담도담이야기 I</div>
             <div class="book-description">
               레지오 에밀리아 접근의 핵심 개념들을 실제 교육 현장에서 어떻게 구현할 수 있는지 보여주는 실천 가이드.
             </div>
@@ -6629,7 +6629,7 @@ app.get('/books', (c) => {
           <div class="book-card">
             <div class="book-cover"><img src="/static/books/book2.jpg" alt="기록작업을 통해 다시 만난 어린이"></div>
             <div class="book-title">기록작업을 통해 다시 만난 어린이</div>
-            <div class="book-author">한솔어린이보육재단 도담도담이야기</div>
+            <div class="book-author">한솔어린이보육재단 도담도담이야기 I</div>
             <div class="book-description">
               관찰과 기록을 통해 어린이를 더 깊이 이해하고, 교육의 질을 높이는 방법을 제시하는 교사 실천서.
             </div>
@@ -6648,7 +6648,7 @@ app.get('/books', (c) => {
           <div class="book-card">
             <div class="book-cover"><img src="/static/books/book3.jpg" alt="레지오 에밀리아 시립 유아학교와 영유아센터 지침"></div>
             <div class="book-title">레지오 에밀리아 시립 유아학교와 영유아센터 지침</div>
-            <div class="book-author">레지오 에밀리아</div>
+            <div class="book-author">레지오칠드런 | 공평호·한건정 옮김 | 공판진 그림</div>
             <div class="book-description">
               세계적으로 인정받는 레지오 에밀리아 접근법의 공식 지침서. 교육 철학과 실천의 기초를 다지는 필독서.
             </div>
@@ -6667,7 +6667,7 @@ app.get('/books', (c) => {
           <div class="book-card">
             <div class="book-cover"><img src="/static/books/book4.jpg" alt="모든 것에 그림자가 있었어요 개미만 빼고"></div>
             <div class="book-title">모든 것에 그림자가 있었어요 개미만 빼고</div>
-            <div class="book-author">레지오 칠드런</div>
+            <div class="book-author">레지오칠드런</div>
             <div class="book-description">
               어린이의 호기심과 탐구를 통해 빛과 그림자를 배우는 과정. 레지오 에밀리아 프로젝트의 생생한 기록.
             </div>
@@ -6685,7 +6685,7 @@ app.get('/books', (c) => {
           <!-- Book Card 5 -->
           <div class="book-card">
             <div class="book-cover"><img src="/static/books/book5.jpg" alt="어린이와 자연 사이의 벽을 허물다 : 만나고 놀아하며"></div>
-            <div class="book-title">어린이와 자연 사이의 벽을 허물다</div>
+            <div class="book-title">어린이와 자연 사이의 벽을 허물다 : 만나고 놀아하며</div>
             <div class="book-author">한솔어린이보육재단 도담도담이야기 III</div>
             <div class="book-description">
               어린이와 자연의 만남을 통해 환경교육의 진정한 의미를 탐구하고, 생태적 감수성을 키우는 방법을 제시합니다.
@@ -6705,7 +6705,7 @@ app.get('/books', (c) => {
           <div class="book-card">
             <div class="book-cover"><img src="/static/books/book6.jpg" alt="지켜보는 육아 예주는 육아에서 지켜보는 육아로"></div>
             <div class="book-title">지켜보는 육아 : 예주는 육아에서 지켜보는 육아로</div>
-            <div class="book-author">호지모리 해이지</div>
+            <div class="book-author">호지모리 해이지 지음 | 공평호·한건정 옮김 | 공판진 그림</div>
             <div class="book-description">
               일본의 유명 유아교육학자가 제시하는 새로운 육아 패러다임. 예측과 통제가 아닌 관찰과 공감에 기반한 육아.
             </div>
@@ -6724,7 +6724,7 @@ app.get('/books', (c) => {
           <div class="book-card">
             <div class="book-cover"><img src="/static/books/book7.jpg" alt="MIMAMORU 지켜보는 보육"></div>
             <div class="book-title">MIMAMORU 지켜보는 보육</div>
-            <div class="book-author">호지모리 해이지</div>
+            <div class="book-author">호지모리 해이지 지음 | 윤선아·공평호 옮김 | 김정명 그림</div>
             <div class="book-description">
               아이들을 믿고 기다리는 보육. 일본 유아교육 전문가가 제시하는 아이 중심 교육의 핵심 가치와 실천 방법.
             </div>
@@ -6761,7 +6761,7 @@ app.get('/books', (c) => {
           <!-- Book Card 9 -->
           <div class="book-card">
             <div class="book-cover"><img src="/static/books/book9.jpg" alt="박선과 나눔의 순환을 통한 배움 : 아틀리에 정신과 함께놀이"></div>
-            <div class="book-title">박선과 나눔의 순환을 통한 배움</div>
+            <div class="book-title">박선과 나눔의 순환을 통한 배움 : 아틀리에 정신과 함께놀이</div>
             <div class="book-author">한솔어린이보육재단 도담도담이야기 II</div>
             <div class="book-description">
               레지오 에밀리아의 아틀리에 정신을 바탕으로 한 창의적 배움의 과정. 나눔과 순환을 통한 공동체 학습.
@@ -6781,7 +6781,7 @@ app.get('/books', (c) => {
           <div class="book-card">
             <div class="book-cover"><img src="/static/books/book10.jpg" alt="UTOPIE QUOTIDIANE 일상속 유토피아"></div>
             <div class="book-title">UTOPIE QUOTIDIANE 일상속 유토피아</div>
-            <div class="book-author">레지오 칠드런</div>
+            <div class="book-author">레지오칠드런 | 영상물이 학습을 어떻게 만드나? | 영상의 발견과 사유</div>
             <div class="book-description">
               레지오 에밀리아 유아학교의 일상 속 작은 순간들이 어떻게 아름다운 배움으로 이어지는지 보여주는 영상 다큐멘터리 북.
             </div>

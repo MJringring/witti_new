@@ -1056,7 +1056,7 @@ app.get('/', (c) => {
           <div style="text-align: center;">
             <h4 style="color: #ff8566; margin-bottom: 1rem;">📚 도담서가 큐레이션</h4>
             <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">교사를 위한 추천 도서</p>
-            <button onclick="window.location.href='/story'" style="background: white; color: #ff8566; border: 2px solid #ff8566; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+            <button onclick="window.location.href='/books'" style="background: white; color: #ff8566; border: 2px solid #ff8566; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
               책 추천 보기
             </button>
           </div>
@@ -6168,6 +6168,728 @@ app.get('/test/database', (c) => {
           testAllClasses();
           testAllUsers();
         });
+      </script>
+    </body>
+    </html>
+  `)
+})
+
+// 도담서가 큐레이션 페이지
+app.get('/books', (c) => {
+  return c.html(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>도담서가 큐레이션 - WITTI</title>
+      <link href="/static/style.css" rel="stylesheet">
+      <style>
+        body {
+          margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          background: #fafafa;
+        }
+        
+        .book-hero {
+          background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%);
+          color: white;
+          padding: 4rem 2rem 3rem;
+          text-align: center;
+        }
+        
+        .book-hero h1 {
+          font-size: 2.5rem;
+          margin: 0 0 1rem 0;
+          font-weight: 800;
+        }
+        
+        .book-hero p {
+          font-size: 1.1rem;
+          opacity: 0.95;
+          max-width: 600px;
+          margin: 0 auto;
+          line-height: 1.6;
+        }
+        
+        .book-tabs {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          padding: 2rem;
+          background: white;
+          border-bottom: 2px solid #f0f0f0;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+        }
+        
+        .book-tab {
+          padding: 0.75rem 2rem;
+          border: none;
+          background: #f5f5f5;
+          color: #666;
+          border-radius: 25px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+        
+        .book-tab.active {
+          background: #ff8566;
+          color: white;
+        }
+        
+        .book-tab:hover {
+          transform: translateY(-2px);
+        }
+        
+        .book-section {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 3rem 2rem;
+        }
+        
+        .book-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 2rem;
+          margin-bottom: 3rem;
+        }
+        
+        .book-card {
+          background: white;
+          border-radius: 16px;
+          padding: 1.5rem;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          transition: all 0.3s;
+          cursor: pointer;
+        }
+        
+        .book-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 20px rgba(255,133,102,0.15);
+        }
+        
+        .book-cover {
+          width: 100%;
+          height: 350px;
+          background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+          border-radius: 12px;
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 4rem;
+        }
+        
+        .book-title {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 0.5rem;
+          line-height: 1.4;
+        }
+        
+        .book-author {
+          color: #666;
+          font-size: 0.95rem;
+          margin-bottom: 0.75rem;
+        }
+        
+        .book-description {
+          color: #888;
+          font-size: 0.9rem;
+          line-height: 1.6;
+          margin-bottom: 1rem;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        
+        .book-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+        }
+        
+        .book-tag {
+          background: #fff0e6;
+          color: #ff8566;
+          padding: 4px 10px;
+          border-radius: 12px;
+          font-size: 0.8rem;
+          font-weight: 600;
+        }
+        
+        .book-actions {
+          display: flex;
+          gap: 0.5rem;
+        }
+        
+        .book-btn {
+          flex: 1;
+          padding: 0.75rem;
+          border: none;
+          border-radius: 10px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+          font-size: 0.9rem;
+        }
+        
+        .book-btn-primary {
+          background: #ff8566;
+          color: white;
+        }
+        
+        .book-btn-primary:hover {
+          background: #ff6b47;
+        }
+        
+        .book-btn-secondary {
+          background: white;
+          color: #ff8566;
+          border: 2px solid #ff8566;
+        }
+        
+        .book-btn-secondary:hover {
+          background: #fff0e6;
+        }
+        
+        .booktalk-section {
+          background: white;
+          padding: 3rem 2rem;
+          margin-bottom: 2rem;
+        }
+        
+        .booktalk-container {
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        
+        .booktalk-header {
+          text-align: center;
+          margin-bottom: 3rem;
+        }
+        
+        .booktalk-header h2 {
+          font-size: 2rem;
+          color: #333;
+          margin-bottom: 1rem;
+        }
+        
+        .booktalk-header p {
+          color: #666;
+          font-size: 1.1rem;
+        }
+        
+        .booktalk-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 2rem;
+        }
+        
+        .booktalk-card {
+          background: #fafafa;
+          border-radius: 16px;
+          padding: 2rem;
+          border: 2px solid #f0f0f0;
+          transition: all 0.3s;
+        }
+        
+        .booktalk-card:hover {
+          border-color: #ff8566;
+          transform: translateY(-3px);
+        }
+        
+        .booktalk-date {
+          color: #ff8566;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+          font-size: 0.9rem;
+        }
+        
+        .booktalk-title {
+          font-size: 1.3rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 1rem;
+        }
+        
+        .booktalk-info {
+          color: #666;
+          font-size: 0.95rem;
+          line-height: 1.6;
+          margin-bottom: 1rem;
+        }
+        
+        .booktalk-host {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 1.5rem;
+          padding-top: 1rem;
+          border-top: 1px solid #e0e0e0;
+        }
+        
+        .booktalk-host-avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: #ff8566;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-weight: 700;
+        }
+        
+        .booktalk-host-info {
+          flex: 1;
+        }
+        
+        .booktalk-host-name {
+          font-weight: 600;
+          color: #333;
+          font-size: 0.95rem;
+        }
+        
+        .booktalk-host-role {
+          color: #888;
+          font-size: 0.85rem;
+        }
+        
+        .booktalk-btn {
+          width: 100%;
+          padding: 1rem;
+          background: #ff8566;
+          color: white;
+          border: none;
+          border-radius: 10px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+        
+        .booktalk-btn:hover {
+          background: #ff6b47;
+        }
+        
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+        
+        .section-title {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #333;
+        }
+        
+        .section-subtitle {
+          color: #666;
+          font-size: 1rem;
+          margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 968px) {
+          .book-hero h1 {
+            font-size: 1.8rem;
+          }
+          
+          .book-hero p {
+            font-size: 1rem;
+          }
+          
+          .book-tabs {
+            overflow-x: auto;
+            justify-content: flex-start;
+            padding: 1rem;
+            -webkit-overflow-scrolling: touch;
+          }
+          
+          .book-tab {
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            white-space: nowrap;
+          }
+          
+          .book-grid {
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+          }
+          
+          .booktalk-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .section-title {
+            font-size: 1.5rem;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <!-- Header -->
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0; position: relative;">
+        <div style="display: flex; align-items: center; gap: 2.5rem;">
+          <h1 style="margin: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; color: #333;" onclick="window.location.href='/'">🌿 WITTI</h1>
+          <nav class="desktop-nav" style="display: flex; gap: 2rem; align-items: center;">
+            <a href="/" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">New</a>
+            <a href="/learn" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Learn</a>
+            <a href="/story" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Story</a>
+            <a href="/talk" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Talk</a>
+            <a href="/tools" style="text-decoration: none; color: #333; font-size: 1.1rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s;">Tools</a>
+          </nav>
+        </div>
+        <div class="header-actions" style="display: flex; gap: 1rem; align-items: center;">
+          <button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 0.5rem; color: #333;">☰</button>
+          <button onclick="window.location.href='/cart'" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;">🛒</button>
+          <button onclick="alert('검색 기능 준비 중')" style="background: none; border: none; cursor: pointer; font-size: 1.2rem;">🔍</button>
+          <div class="auth-buttons" style="display: flex; gap: 0.5rem;">
+            <button onclick="alert('로그인 페이지로 이동합니다')" style="background: white; color: #333; border: 1px solid #ddd; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">로그인</button>
+            <button onclick="alert('회원가입 페이지로 이동합니다')" style="background: #ff8566; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">회원가입</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Mobile Navigation -->
+      <div class="mobile-nav" id="mobileNav" onclick="if(event.target === this) toggleMobileMenu()">
+        <div class="mobile-nav-content">
+          <button class="mobile-nav-close" onclick="toggleMobileMenu()">✕</button>
+          <div class="mobile-nav-links">
+            <a href="/">New</a>
+            <a href="/learn">Learn</a>
+            <a href="/story">Story</a>
+            <a href="/talk">Talk</a>
+            <a href="/tools">Tools</a>
+          </div>
+          <div class="mobile-nav-auth">
+            <button onclick="alert('로그인 페이지로 이동합니다')" style="width: 100%; background: white; color: #333; border: 1px solid #ddd; padding: 0.75rem; border-radius: 8px; cursor: pointer; font-weight: 600; margin-bottom: 0.5rem;">로그인</button>
+            <button onclick="alert('회원가입 페이지로 이동합니다')" style="width: 100%; background: #ff8566; color: white; border: none; padding: 0.75rem; border-radius: 8px; cursor: pointer; font-weight: 600;">회원가입</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Section -->
+      <div class="book-hero">
+        <h1>📚 도담서가 큐레이션</h1>
+        <p>교사의 성장을 돕는 엄선된 도서를 만나보세요. 북토크와 함께 더 깊은 인사이트를 얻어가세요.</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="book-tabs">
+        <button class="book-tab active" onclick="showTab('curated')">📖 추천 도서</button>
+        <button class="book-tab" onclick="showTab('booktalk')">🎤 북토크</button>
+        <button class="book-tab" onclick="showTab('purchase')">🛒 구매하기</button>
+      </div>
+
+      <!-- 추천 도서 섹션 -->
+      <div id="curated-section" class="book-section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🌟 이달의 추천 도서</h2>
+            <p class="section-subtitle">WITTI 교사 커뮤니티가 선정한 필독서</p>
+          </div>
+        </div>
+        
+        <div class="book-grid">
+          <!-- Book Card 1 -->
+          <div class="book-card">
+            <div class="book-cover">📘</div>
+            <div class="book-title">교사, 수업에서 나를 만나다</div>
+            <div class="book-author">파커 파머 저 | 한문화</div>
+            <div class="book-description">
+              교사의 정체성과 온전함에 관한 깊이 있는 성찰. 진정한 교육은 교사 내면에서 시작됨을 일깨우는 책.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#교사성장</span>
+              <span class="book-tag">#자기계발</span>
+              <span class="book-tag">#교육철학</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+
+          <!-- Book Card 2 -->
+          <div class="book-card">
+            <div class="book-cover">📗</div>
+            <div class="book-title">교사독립선언</div>
+            <div class="book-author">이혁규 저 | 더불어책</div>
+            <div class="book-description">
+              학교와 교실에서 교사로 산다는 것의 의미를 되묻고, 진정한 교사의 자율성과 전문성을 탐구하는 책.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#교권</span>
+              <span class="book-tag">#전문성</span>
+              <span class="book-tag">#교육현장</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+
+          <!-- Book Card 3 -->
+          <div class="book-card">
+            <div class="book-cover">📙</div>
+            <div class="book-title">학급긍정훈육법</div>
+            <div class="book-author">제인 넬슨 외 저 | 에듀니티</div>
+            <div class="book-description">
+              처벌도 허용도 아닌 제3의 교육방식. 아들러 심리학에 기반한 실용적 학급경영 가이드.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#학급경영</span>
+              <span class="book-tag">#생활지도</span>
+              <span class="book-tag">#긍정훈육</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+
+          <!-- Book Card 4 -->
+          <div class="book-card">
+            <div class="book-cover">📕</div>
+            <div class="book-title">교실이 없는 시대가 온다</div>
+            <div class="book-author">정제영 저 | 쌤앤파커스</div>
+            <div class="book-description">
+              AI 시대, 교육의 미래를 예측하고 교사의 새로운 역할을 제시하는 미래교육 가이드북.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#미래교육</span>
+              <span class="book-tag">#에듀테크</span>
+              <span class="book-tag">#AI교육</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+
+          <!-- Book Card 5 -->
+          <div class="book-card">
+            <div class="book-cover">📓</div>
+            <div class="book-title">우리는 왜 질문하지 않는가</div>
+            <div class="book-author">한국교육연구네트워크 저 | 살림터</div>
+            <div class="book-description">
+              한국 교육의 근본적 문제를 진단하고, 질문이 살아있는 교실을 만들기 위한 실천방법을 제시.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#질문</span>
+              <span class="book-tag">#토론수업</span>
+              <span class="book-tag">#교육혁신</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+
+          <!-- Book Card 6 -->
+          <div class="book-card">
+            <div class="book-cover">📔</div>
+            <div class="book-title">교사를 위한 감정코칭</div>
+            <div class="book-author">최성애, 조벽 저 | 해냄</div>
+            <div class="book-description">
+              학생과 교사 자신의 감정을 이해하고 다루는 법. 관계의 질을 높이는 감정코칭 실천서.
+            </div>
+            <div class="book-tags">
+              <span class="book-tag">#감정코칭</span>
+              <span class="book-tag">#상담</span>
+              <span class="book-tag">#관계맺기</span>
+            </div>
+            <div class="book-actions">
+              <button class="book-btn book-btn-primary" onclick="alert('구매 페이지로 이동합니다')">구매하기</button>
+              <button class="book-btn book-btn-secondary" onclick="alert('북토크 일정을 확인하세요')">북토크</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 북토크 섹션 -->
+      <div id="booktalk-section" class="booktalk-section" style="display: none;">
+        <div class="booktalk-container">
+          <div class="booktalk-header">
+            <h2>🎤 다가오는 북토크</h2>
+            <p>책을 함께 읽고 나누는 시간, 교사들의 깊이 있는 대화</p>
+          </div>
+          
+          <div class="booktalk-grid">
+            <!-- BookTalk 1 -->
+            <div class="booktalk-card">
+              <div class="booktalk-date">📅 2025년 1월 15일 (수) 오후 8시</div>
+              <div class="booktalk-title">교사, 수업에서 나를 만나다</div>
+              <div class="booktalk-info">
+                <p>✨ 진정한 교육의 출발점, 교사 자신을 돌아보는 시간</p>
+                <p>💬 참여 방식: 온라인 Zoom (링크는 신청자에게 발송)</p>
+                <p>👥 정원: 30명</p>
+              </div>
+              <div class="booktalk-host">
+                <div class="booktalk-host-avatar">김</div>
+                <div class="booktalk-host-info">
+                  <div class="booktalk-host-name">김선영 선생님</div>
+                  <div class="booktalk-host-role">15년차 초등교사 | 교육철학 전문가</div>
+                </div>
+              </div>
+              <button class="booktalk-btn" onclick="alert('북토크 신청이 완료되었습니다!')">북토크 신청하기</button>
+            </div>
+
+            <!-- BookTalk 2 -->
+            <div class="booktalk-card">
+              <div class="booktalk-date">📅 2025년 1월 22일 (수) 오후 8시</div>
+              <div class="booktalk-title">학급긍정훈육법</div>
+              <div class="booktalk-info">
+                <p>✨ 처벌 없이도 가능한 학급경영의 비밀</p>
+                <p>💬 참여 방식: 온라인 Zoom</p>
+                <p>👥 정원: 40명</p>
+              </div>
+              <div class="booktalk-host">
+                <div class="booktalk-host-avatar">박</div>
+                <div class="booktalk-host-info">
+                  <div class="booktalk-host-name">박준형 선생님</div>
+                  <div class="booktalk-host-role">12년차 중등교사 | 긍정훈육 강사</div>
+                </div>
+              </div>
+              <button class="booktalk-btn" onclick="alert('북토크 신청이 완료되었습니다!')">북토크 신청하기</button>
+            </div>
+
+            <!-- BookTalk 3 -->
+            <div class="booktalk-card">
+              <div class="booktalk-date">📅 2025년 1월 29일 (수) 오후 8시</div>
+              <div class="booktalk-title">교실이 없는 시대가 온다</div>
+              <div class="booktalk-info">
+                <p>✨ AI 시대, 교사는 무엇을 준비해야 할까?</p>
+                <p>💬 참여 방식: 온라인 Zoom</p>
+                <p>👥 정원: 50명</p>
+              </div>
+              <div class="booktalk-host">
+                <div class="booktalk-host-avatar">이</div>
+                <div class="booktalk-host-info">
+                  <div class="booktalk-host-name">이수진 선생님</div>
+                  <div class="booktalk-host-role">10년차 고등교사 | 에듀테크 코치</div>
+                </div>
+              </div>
+              <button class="booktalk-btn" onclick="alert('북토크 신청이 완료되었습니다!')">북토크 신청하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 구매하기 섹션 -->
+      <div id="purchase-section" class="book-section" style="display: none;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🛒 도서 구매 안내</h2>
+            <p class="section-subtitle">신뢰할 수 있는 파트너를 통한 도서 구매</p>
+          </div>
+        </div>
+
+        <div style="background: white; border-radius: 16px; padding: 3rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem;">
+          <h3 style="font-size: 1.5rem; margin-bottom: 2rem; color: #333;">📚 구매 방법</h3>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <div style="text-align: center; padding: 2rem; background: #fafafa; border-radius: 12px;">
+              <div style="font-size: 3rem; margin-bottom: 1rem;">📖</div>
+              <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #333;">교보문고</h4>
+              <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">전국 매장 및 온라인</p>
+              <button onclick="window.open('https://www.kyobobook.co.kr', '_blank')" style="background: #ff8566; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
+            </div>
+
+            <div style="text-align: center; padding: 2rem; background: #fafafa; border-radius: 12px;">
+              <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+              <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #333;">예스24</h4>
+              <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">빠른 배송 서비스</p>
+              <button onclick="window.open('https://www.yes24.com', '_blank')" style="background: #ff8566; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
+            </div>
+
+            <div style="text-align: center; padding: 2rem; background: #fafafa; border-radius: 12px;">
+              <div style="font-size: 3rem; margin-bottom: 1rem;">📗</div>
+              <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #333;">알라딘</h4>
+              <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">중고책도 구매 가능</p>
+              <button onclick="window.open('https://www.aladin.co.kr', '_blank')" style="background: #ff8566; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
+            </div>
+
+            <div style="text-align: center; padding: 2rem; background: #fafafa; border-radius: 12px;">
+              <div style="font-size: 3rem; margin-bottom: 1rem;">🎁</div>
+              <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #333;">밀리의 서재</h4>
+              <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">전자책 무제한 구독</p>
+              <button onclick="window.open('https://www.millie.co.kr', '_blank')" style="background: #ff8566; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">바로가기</button>
+            </div>
+          </div>
+
+          <div style="background: #fff0e6; padding: 2rem; border-radius: 12px; border-left: 4px solid #ff8566;">
+            <h4 style="color: #ff8566; margin-bottom: 1rem; font-size: 1.2rem;">💡 구매 팁</h4>
+            <ul style="color: #666; line-height: 2; padding-left: 1.5rem;">
+              <li>북토크 참여 전에 미리 책을 구매하시면 더욱 풍성한 대화를 나눌 수 있습니다</li>
+              <li>각 온라인 서점의 회원 혜택과 포인트를 활용하세요</li>
+              <li>전자책으로도 많은 도서를 만나볼 수 있습니다</li>
+              <li>WITTI 커뮤니티에서 함께 읽을 독서 모임을 찾아보세요</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #ff8566 0%, #ff9f80 100%); color: white; padding: 3rem; border-radius: 16px; text-align: center;">
+          <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">📚 함께 읽는 독서의 즐거움</h3>
+          <p style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 2rem; line-height: 1.6;">
+            도서 구매 후 북토크에 참여하시거나, WITTI Talk에서 독후감을 공유해보세요.<br>
+            교사 커뮤니티와 함께 성장하는 독서 경험을 만들어가실 수 있습니다.
+          </p>
+          <button onclick="window.location.href='/talk'" style="background: white; color: #ff8566; border: none; padding: 1rem 2.5rem; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 1rem;">WITTI Talk 바로가기</button>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer style="background: #333; color: white; padding: 3rem 2rem; text-align: center;">
+        <p style="margin: 0 0 1rem 0; opacity: 0.8;">&copy; 2024 WITTI. All rights reserved.</p>
+        <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+          <a href="#" style="color: white; text-decoration: none; opacity: 0.8;">이용약관</a>
+          <a href="#" style="color: white; text-decoration: none; opacity: 0.8;">개인정보처리방침</a>
+          <a href="#" style="color: white; text-decoration: none; opacity: 0.8;">문의하기</a>
+        </div>
+      </footer>
+
+      <script>
+        function toggleMobileMenu() {
+          const mobileNav = document.getElementById('mobileNav');
+          mobileNav.classList.toggle('active');
+        }
+
+        function showTab(tabName) {
+          // Hide all sections
+          document.getElementById('curated-section').style.display = 'none';
+          document.getElementById('booktalk-section').style.display = 'none';
+          document.getElementById('purchase-section').style.display = 'none';
+
+          // Remove active class from all tabs
+          document.querySelectorAll('.book-tab').forEach(tab => {
+            tab.classList.remove('active');
+          });
+
+          // Show selected section and activate tab
+          if (tabName === 'curated') {
+            document.getElementById('curated-section').style.display = 'block';
+            document.querySelectorAll('.book-tab')[0].classList.add('active');
+          } else if (tabName === 'booktalk') {
+            document.getElementById('booktalk-section').style.display = 'block';
+            document.querySelectorAll('.book-tab')[1].classList.add('active');
+          } else if (tabName === 'purchase') {
+            document.getElementById('purchase-section').style.display = 'block';
+            document.querySelectorAll('.book-tab')[2].classList.add('active');
+          }
+
+          // Scroll to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       </script>
     </body>
     </html>

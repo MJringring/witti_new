@@ -921,7 +921,7 @@ app.get('/', (c) => {
               <span class="card-students">1,234명 수강</span>
               <span class="card-duration">15분</span>
             </div>
-            <div class="card-instructor instructor-kim">👩‍🏫 김민지 선생님</div>
+            <div class="card-instructor" style="color: #000000;">👩‍🏫 김민지 선생님</div>
           </div>
           <div class="card" onclick="window.location.href='/learn'">
             <div class="card-icon">📋</div>
@@ -1007,7 +1007,7 @@ app.get('/', (c) => {
               <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">05:23</div>
             </div>
             <b>"첫 출근, 그리고 첫 눈물"</b><br>
-            <small style="color: #666;">신규 교사 김민지 선생님 | 조회수 3.2K</small>
+            <small style="color: #000000;">신규 교사 <span style="font-weight: 600;">김민지 선생님</span> | 조회수 3.2K</small>
           </div>
           <div class="card" onclick="window.location.href='/story'" style="cursor: pointer; position: relative;">
             <div style="width: 100%; height: 160px; background: #f5f5f5; border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
@@ -1281,7 +1281,7 @@ app.get('/learn', (c) => {
               <span style="font-size: 3rem;">▶️</span>
             </div>
             <b>부모님과의 첫 만남 준비</b><br>
-            <small>5분 | 조회수 2.3K | 김민지 선생님</small>
+            <small>5분 | 조회수 2.3K | <span style="color: #000000; font-weight: 600;">김민지 선생님</span></small>
           </div>
           <div class="card" onclick="alert('영상 재생')" style="position: relative; cursor: pointer;">
             <div style="background: #F5F5F5; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
@@ -1363,7 +1363,7 @@ app.get('/learn', (c) => {
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
               <div style="width: 50px; height: 50px; background: #F5F5F5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👩</div>
               <div style="text-align: left;">
-                <b>김민지 선생님</b><br>
+                <b style="color: #000000;">김민지 선생님</b><br>
                 <small style="color: #999;">10년차 | 주임교사</small>
               </div>
             </div>
@@ -1782,7 +1782,7 @@ app.get('/story', (c) => {
             <div class="story-title">"첫 출근, 그리고 첫 눈물"</div>
             <div class="story-summary">신규 교사로서 처음 맞이한 3월. 설렘과 두려움이 교차하던 그 날의 이야기를 솔직하게 풀어봅니다.</div>
             <div class="story-meta">
-              <span>김민지 선생님</span>
+              <span style="color: #000000; font-weight: 600;">김민지 선생님</span>
               <span>💬 234 · ❤️ 1.2k</span>
             </div>
           </div>
@@ -2414,7 +2414,7 @@ app.get('/talk', (c) => {
           <div class="feed-header">
             <div class="feed-avatar">👩</div>
             <div class="feed-user-info">
-              <h4>김민지 선생님</h4>
+              <h4 style="color: #000000;">김민지 선생님</h4>
               <p>유치원 교사 · 3년차 · 5분 전</p>
             </div>
           </div>

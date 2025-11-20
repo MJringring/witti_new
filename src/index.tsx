@@ -6298,7 +6298,7 @@ app.get('/books', (c) => {
         
         .book-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
           gap: 2rem;
           margin-bottom: 3rem;
         }
@@ -6319,7 +6319,7 @@ app.get('/books', (c) => {
         
         .book-cover {
           width: 100%;
-          height: 350px;
+          height: 250px;
           border-radius: 12px;
           margin-bottom: 1rem;
           overflow: hidden;

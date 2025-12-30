@@ -1,7 +1,7 @@
 # 🌿 WITTI - 교사의 하루를 덜어주는 플랫폼
 
 ## 프로젝트 개요
-- **이름**: WITTI (Wise Teachers' Interactive Tools & Insights)
+- **이름**: WITTI (Wise Teachers' Interactive Tools & Insights)_수정테스트
 - **목표**: 교사의 업무 부담을 줄이고 마음의 여유를 제공하는 통합 플랫폼
 - **슬로건**: "출근길 5분, 위트 있는 인사이트 한 컷"
 
